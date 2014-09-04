@@ -45,6 +45,22 @@ public class MapUtils {
 	}
 
 	/**
+	 * Update a list-based map by adding the given value to the list represented by a key.
+	 * @param map the map to update
+	 * @param key the key to update
+	 * @param value the set of value to add to the key's set
+	 * @param <K> the key type
+	 * @param <V> the value type
+	 */
+	public static <K, V> void updateListBasedMap(Map<K, List<V>> map, K key, V value) {
+		if (map.containsKey(key)) {
+			map.get(key).add(value);
+		} else {
+			map.put(key, Arrays.asList(value));
+		}
+	}
+
+	/**
 	 * Update a set-based map by adding (by union) the given set to the set represented by a key.
 	 * @param map the map to update
 	 * @param key the key to update
