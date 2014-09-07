@@ -1,15 +1,13 @@
 package util;
 
+import static util.function.FunctionUtils.safeGet;
+
 /**
  * @author Steven Weston
  */
 public class ClassUtils {
 
 	public static String safeSimpleName(Class clazz) {
-		if (clazz == null) {
-			return null;
-		} else {
-			return clazz.getSimpleName();
-		}
+		return safeGet(clazz, Class::getSimpleName);
 	}
 }
