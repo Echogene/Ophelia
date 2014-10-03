@@ -67,7 +67,7 @@ public class CollectionUtils {
 	public static <T, U> List<U> filterList(List<T> collection, Class<U> clazz) {
 
 		return collection.stream()
-				.filter(t -> clazz.isInstance(t))
+				.filter(clazz::isInstance)
 				.map(clazz::cast)
 				.collect(Collectors.toList());
 	}
