@@ -76,6 +76,15 @@ public class CollectionUtils {
 		return output;
 	}
 
+	/**
+	 * Given a collection and a comparator, return a list that is the collection sorted using the comparator.
+	 */
+	public static <T> List<T> asSortedList(Collection<T> collection, Comparator<T> comparator) {
+		List<T> output = new ArrayList<>(collection);
+		Collections.sort(output, comparator);
+		return output;
+	}
+
 	@SafeVarargs
 	public static <T> Set<T> createSet(T... elements) {
 		HashSet<T> output = new HashSet<>();
