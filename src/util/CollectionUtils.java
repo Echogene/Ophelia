@@ -4,6 +4,7 @@ import util.function.ExceptionalTriConsumer;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Steven Weston
@@ -67,13 +68,11 @@ public class CollectionUtils {
 	}
 
 	public static <T, U> List<U> filterList(List<T> collection, Class<U> clazz) {
-		List<U> output = new ArrayList<>();
-		for (T t : collection) {
-			if (clazz.isInstance(t)) {
-				output.add(clazz.cast(t));
-			}
-		}
-		return output;
+
+		return collection.stream()
+				.filter(t -> clazz.isInstance(t))
+				.map(clazz::cast)
+				.collect(Collectors.toList());
 	}
 
 	/**
