@@ -43,10 +43,7 @@ public class CollectionUtils {
 	}
 
 	public static String simpleNames(Collection<Class> classes) {
-		List<String> output = new ArrayList<>();
-		for (Class clazz : classes) {
-			output.add(clazz.getSimpleName());
-		}
+		List<String> output = classes.stream().map(Class::getSimpleName).collect(Collectors.toList());
 		return "[" + StringUtils.join(output, ", ") + "]";
 	}
 
