@@ -56,7 +56,9 @@ public class MapUtils {
 		if (map.containsKey(key)) {
 			map.get(key).add(value);
 		} else {
-			map.put(key, Arrays.asList(value));
+			ArrayList<V> newList = new ArrayList<>();
+			newList.add(value);
+			map.put(key, newList);
 		}
 	}
 
