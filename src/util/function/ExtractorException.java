@@ -1,4 +1,4 @@
-package util;
+package util.function;
 
 /**
  * @author Steven Weston

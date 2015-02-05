@@ -4,7 +4,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Steven Weston
@@ -18,5 +20,15 @@ public class FunctionUtils {
 		} else {
 			return getter.apply(s);
 		}
+	}
+
+	/**
+	 * @return the image of the function on the given list.
+	 */
+	@NotNull
+	public static <S, T> List<T> image(@NotNull List<S> list, @NotNull Function<? super S, T> function) {
+		return list.stream()
+				.map(function)
+				.collect(Collectors.toList());
 	}
 }
