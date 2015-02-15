@@ -11,10 +11,10 @@ public class NumberUtils {
 	public static String ordinal(int integer) {
 		int modOneHundred = integer % 100;
 		int tens = modOneHundred / 10;
-		int units = modOneHundred % 10;
 		if (tens == 1) {
 			return integer + "th";
 		} else {
+			int units = modOneHundred % 10;
 			switch (units) {
 				case 1:
 					return integer + "st";
