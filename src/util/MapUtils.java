@@ -1,6 +1,6 @@
 package util;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import javafx.util.Pair;
 import util.function.Extractor;
 
