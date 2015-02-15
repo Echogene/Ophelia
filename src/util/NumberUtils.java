@@ -1,10 +1,13 @@
 package util;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * @author Steven Weston
  */
 public class NumberUtils {
 
+	@Contract(pure = true)
 	public static String ordinal(int integer) {
 		int modOneHundred = integer % 100;
 		int tens = modOneHundred / 10;
@@ -25,10 +28,12 @@ public class NumberUtils {
 		}
 	}
 
+	@Contract(pure = true)
 	public static boolean isEven(int integer) {
 		return 0 == (integer % 2);
 	}
 
+	@Contract(pure = true)
 	public static boolean isOdd(int integer) {
 		return 1 == (integer % 2);
 	}
