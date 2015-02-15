@@ -1,5 +1,7 @@
 package util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.function.Function;
 
@@ -8,10 +10,19 @@ import java.util.function.Function;
  */
 public class TreeUtils {
 
+	/**
+	 * @param list the list of root nodes of the tree
+	 * @param presentationFunction how to represent each node
+	 * @param childrenFunction the function to recurse down
+	 * @param indentation the number of spaces by which to indent the child nodes
+	 * @param <T> the type of nodes in the tree
+	 * @return a string to represent the tree visually in monospaced fonts
+	 */
+	@NotNull
 	public static <T> String prettyPrint(
-			List<T> list,
-			Function<T, String> presentationFunction,
-			Function<T, List<T>> childrenFunction,
+			@NotNull List<T> list,
+			@NotNull Function<T, String> presentationFunction,
+			@NotNull Function<T, List<T>> childrenFunction,
 			int indentation
 	) {
 		StringBuilder output = new StringBuilder();
@@ -57,7 +68,7 @@ public class TreeUtils {
 	}
 
 	// Not sure what to call this...
-	private static boolean isPartOfTree(String trimmed) {
+	private static boolean isPartOfTree(@NotNull String trimmed) {
 		return trimmed.startsWith("└") || trimmed.startsWith("├") || trimmed.startsWith("│");
 	}
 }
