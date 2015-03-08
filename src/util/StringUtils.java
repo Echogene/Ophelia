@@ -16,12 +16,23 @@ import static util.NumberUtils.isOdd;
  */
 public class StringUtils {
 
+	/**
+	 * Before the given string and after every new line character in the given string, insert the given character.
+	 */
 	@NotNull
 	public static String addCharacterAfterEveryNewline(
 			@NotNull String lines,
 			char character
 	) {
 		return character + lines.replace("\n", "\n" + character);
+	}
+
+	/**
+	 * Insert a tab character before the given string and every newline in it.
+	 */
+	@NotNull
+	public static String indent(@NotNull String string) {
+		return addCharacterAfterEveryNewline(string, '\t');
 	}
 
 	/**
