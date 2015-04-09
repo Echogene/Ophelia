@@ -31,4 +31,13 @@ public class FunctionUtils {
 				.map(function)
 				.collect(Collectors.toList());
 	}
+
+	@Nullable
+	public static <S, T> T ignoreExceptions(@Nullable S s, @NotNull Function<S, T> function) {
+		try {
+			return function.apply(s);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
