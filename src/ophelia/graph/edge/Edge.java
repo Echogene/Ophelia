@@ -1,8 +1,8 @@
 package ophelia.graph.edge;
 
+import ophelia.collections.Collection;
 import ophelia.graph.Node;
 
-import java.util.Collection;
 
 /**
  * An edge connects a collection of nodes (the ends) together in a graph.

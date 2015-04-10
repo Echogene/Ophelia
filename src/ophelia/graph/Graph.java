@@ -1,8 +1,8 @@
 package ophelia.graph;
 
+import ophelia.collections.Collection;
 import ophelia.graph.edge.Edge;
 
-import java.util.Collection;
 
 /**
  * A graph is a collection of nodes linked by a collection of edges.
