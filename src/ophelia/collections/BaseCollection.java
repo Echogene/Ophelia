@@ -1,11 +1,13 @@
 package ophelia.collections;
 
+import java.util.Collection;
+
 /**
  * Represents a potentially infinite collection of things.  It is a stripped-down version of
  * {@link java.util.Collection}.
  * @author Steven Weston
  */
-public interface Collection<E> {
+public interface BaseCollection<E> {
 
 	/**
 	 * See {@link java.util.Collection#contains(Object)}
@@ -20,5 +22,5 @@ public interface Collection<E> {
 	/**
 	 * See {@link java.util.Collection#containsAll(java.util.Collection)}
 	 */
-	boolean containsAll(java.util.Collection<?> c);
+	boolean containsAll(Collection<?> c);
 }

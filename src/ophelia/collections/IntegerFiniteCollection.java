@@ -5,7 +5,7 @@ package ophelia.collections;
  * {@link java.util.Collection}.
  * @author Steven Weston
  */
-public interface IntegerFiniteCollection<E> extends Collection<E>, Iterable<E> {
+public interface IntegerFiniteCollection<E> extends BaseCollection<E>, Iterable<E> {
 
 	/**
 	 * See {@link java.util.Collection#size()}

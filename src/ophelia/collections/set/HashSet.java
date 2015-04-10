@@ -1,17 +1,19 @@
 package ophelia.collections.set;
 
-import ophelia.collections.Collection;
+import ophelia.collections.BaseCollection;
 import ophelia.collections.IntegerFiniteCollection;
 import ophelia.collections.ModifiableCollection;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Steven Weston
  */
 public class HashSet<E>
-		implements Collection<E>, ModifiableCollection<E>, IntegerFiniteCollection<E>, java.util.Set<E> {
+		implements BaseCollection<E>, ModifiableCollection<E>, IntegerFiniteCollection<E>, Set<E> {
 
 	private final java.util.HashSet<E> set;
 
@@ -27,7 +29,7 @@ public class HashSet<E>
 		set = new java.util.HashSet<>(initialCapacity, loadFactor);
 	}
 
-	public HashSet(@NotNull java.util.Collection<? extends E> c) {
+	public HashSet(@NotNull Collection<? extends E> c) {
 		set = new java.util.HashSet<>(c);
 	}
 
@@ -57,7 +59,7 @@ public class HashSet<E>
 	}
 
 	@Override
-	public boolean containsAll(java.util.Collection<?> c) {
+	public boolean containsAll(Collection<?> c) {
 		return set.containsAll(c);
 	}
 
@@ -77,17 +79,17 @@ public class HashSet<E>
 	}
 
 	@Override
-	public boolean addAll(java.util.Collection<? extends E> c) {
+	public boolean addAll(Collection<? extends E> c) {
 		return set.addAll(c);
 	}
 
 	@Override
-	public boolean removeAll(java.util.Collection<?> c) {
+	public boolean removeAll(Collection<?> c) {
 		return set.removeAll(c);
 	}
 
 	@Override
-	public boolean retainAll(java.util.Collection<?> c) {
+	public boolean retainAll(Collection<?> c) {
 		return set.retainAll(c);
 	}
 
