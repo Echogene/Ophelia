@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @author Steven Weston
  */
 public class HashSet<E>
-		implements Collection<E>, ModifiableCollection<E>, IntegerFiniteCollection<E> {
+		implements Collection<E>, ModifiableCollection<E>, IntegerFiniteCollection<E>, java.util.Set<E> {
 
 	private final java.util.HashSet<E> set;
 
