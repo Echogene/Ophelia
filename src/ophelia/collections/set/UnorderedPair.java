@@ -1,16 +1,16 @@
 package ophelia.collections.set;
 
 import ophelia.collections.IntegerFiniteCollection;
+import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author Steven Weston
  */
-public class UnorderedPair<E> implements IntegerFiniteCollection<E> {
+public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIterator<E>> {
 
 	private final E first;
 	private final E second;
@@ -42,8 +42,8 @@ public class UnorderedPair<E> implements IntegerFiniteCollection<E> {
 
 	@NotNull
 	@Override
-	public Iterator<E> iterator() {
-		return Arrays.asList(first, second).iterator();
+	public StandardIterator<E> iterator() {
+		return new StandardIterator<>(Arrays.asList(first, second).iterator());
 	}
 
 	@NotNull
