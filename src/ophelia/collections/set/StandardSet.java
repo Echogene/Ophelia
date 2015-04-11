@@ -9,24 +9,12 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class HashSet<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
+public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
 
-	private final java.util.HashSet<E> set;
+	private final Set<E> set;
 
-	public HashSet() {
-		set = new java.util.HashSet<>();
-	}
-
-	public HashSet(int initialCapacity) {
-		set = new java.util.HashSet<>(initialCapacity);
-	}
-
-	public HashSet(int initialCapacity, float loadFactor) {
-		set = new java.util.HashSet<>(initialCapacity, loadFactor);
-	}
-
-	public HashSet(@NotNull Collection<? extends E> c) {
-		set = new java.util.HashSet<>(c);
+	public StandardSet(@NotNull Set<E> set) {
+		this.set = set;
 	}
 
 	@Override
