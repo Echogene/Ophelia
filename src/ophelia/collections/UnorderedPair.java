@@ -1,6 +1,5 @@
-package ophelia.collections.set;
+package ophelia.collections;
 
-import ophelia.collections.IntegerFiniteCollection;
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 

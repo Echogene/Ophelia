@@ -1,6 +1,6 @@
 package ophelia.graph.edge;
 
-import ophelia.collections.set.UnorderedPair;
+import ophelia.collections.UnorderedPair;
 import ophelia.graph.Node;
 
 /**
