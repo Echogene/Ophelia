@@ -1,8 +1,5 @@
 package ophelia.collections.set;
 
-import ophelia.collections.BaseCollection;
-import ophelia.collections.IntegerFiniteCollection;
-import ophelia.collections.ModifiableCollection;
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,9 +10,8 @@ import java.util.Set;
  * @author Steven Weston
  */
 public class HashSet<E>
-		implements BaseCollection<E>,
-			ModifiableCollection<E>,
-			IntegerFiniteCollection<E, StandardIterator<E>>,
+		implements BaseSet<E, StandardIterator<E>>,
+			ModifiableSet<E>,
 			Set<E> {
 
 	private final java.util.HashSet<E> set;
