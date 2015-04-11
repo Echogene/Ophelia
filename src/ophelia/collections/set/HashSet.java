@@ -9,10 +9,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class HashSet<E>
-		implements BaseSet<E, StandardIterator<E>>,
-			ModifiableSet<E>,
-			Set<E> {
+public class HashSet<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
 
 	private final java.util.HashSet<E> set;
 
