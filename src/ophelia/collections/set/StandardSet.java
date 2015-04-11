@@ -22,11 +22,13 @@ public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Se
 		return set.size();
 	}
 
+	@NotNull
 	@Override
 	public Object[] toArray() {
 		return set.toArray();
 	}
 
+	@NotNull
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return set.toArray(a);
@@ -47,6 +49,7 @@ public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Se
 		return set.containsAll(c);
 	}
 
+	@NotNull
 	@Override
 	public StandardIterator<E> iterator() {
 		return new StandardIterator<>(set.iterator());
