@@ -1,5 +1,6 @@
 package ophelia.collections.set;
 
+import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
+@Wrapper(Set.class)
 public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
 
 	private final Set<E> set;

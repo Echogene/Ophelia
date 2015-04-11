@@ -1,11 +1,14 @@
 package ophelia.collections.iterator;
 
+import ophelia.annotation.Wrapper;
+
 import java.util.Iterator;
 
 /**
  * A wrapper for {@link java.util.Iterator} that extends the split-up interfaces.
  * @author Steven Weston
  */
+@Wrapper(Iterator.class)
 public class StandardIterator<E> implements ModifiableIterator<E>, Iterator<E> {
 
 	private final Iterator<E> iterator;
