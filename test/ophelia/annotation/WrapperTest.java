@@ -23,6 +23,7 @@ import static ophelia.util.CollectionUtils.first;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
 
 /**
  * A test that tests that wrappers only wrap classes.
@@ -40,16 +41,30 @@ public class WrapperTest {
 			try (FileInputStream fis = new FileInputStream(file)) {
 				cu = JavaParser.parse(fis);
 			}
-			assertThat(cu.getTypes(), hasSize(1));
-			checkClass(first(cu.getTypes()), wrapperClass.getAnnotation(Wrapper.class));
+			List<TypeDeclaration> types = cu.getTypes();
+			assertThat(
+					format("There should be only one type defined in {0}", file),
+					types,
+					hasSize(1)
+			);
+			checkClass(first(types), wrapperClass);
 		}
 	}
 
-	private void checkClass(TypeDeclaration typeDeclaration, Wrapper annotation) {
+	private void checkClass(TypeDeclaration typeDeclaration, Class<?> clazz) {
 
-		assertThat(typeDeclaration.getModifiers() & Modifier.PUBLIC, is(1));
+		assertThat(
+				format("Wrapper {0} must be public", clazz),
+				typeDeclaration.getModifiers() & Modifier.PUBLIC,
+				is(1)
+		);
 
-		// todo: assert that the class extends the given value of the annotation
+		Wrapper annotation = clazz.getAnnotation(Wrapper.class);
+		assertThat(
+				format("Wrapper {0} must extend {1}", clazz, annotation.value()),
+				clazz,
+				is(typeCompatibleWith(annotation.value()))
+		);
 	}
 
 	private File getSourceFile(Class clazz) throws IOException {
