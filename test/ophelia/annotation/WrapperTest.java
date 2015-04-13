@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.lang.reflect.Modifier.FINAL;
+import static java.lang.reflect.Modifier.PRIVATE;
 import static java.lang.reflect.Modifier.PUBLIC;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
@@ -84,6 +85,7 @@ public class WrapperTest {
 		Field wrappeeField = first(wrappeeFields);
 		int modifiers = wrappeeField.getModifiers();
 		assertThat(modifiers & FINAL, is(FINAL));
+		assertThat(modifiers & PRIVATE, is(PRIVATE));
 	}
 
 	private File getSourceFile(Class clazz) throws IOException {
