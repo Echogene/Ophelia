@@ -10,12 +10,15 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
@@ -51,19 +54,30 @@ public class WrapperTest {
 		}
 	}
 
-	private void checkClass(TypeDeclaration typeDeclaration, Class<?> clazz) {
+	private void checkClass(TypeDeclaration typeDeclaration, Class<?> wrapper) {
 
 		assertThat(
-				format("Wrapper {0} must be public", clazz),
+				format("Wrapper {0} must be public", wrapper),
 				typeDeclaration.getModifiers() & Modifier.PUBLIC,
 				is(1)
 		);
 
-		Wrapper annotation = clazz.getAnnotation(Wrapper.class);
+		Wrapper annotation = wrapper.getAnnotation(Wrapper.class);
+		Class<?> wrappee = annotation.value();
 		assertThat(
-				format("Wrapper {0} must extend {1}", clazz, annotation.value()),
-				clazz,
-				is(typeCompatibleWith(annotation.value()))
+				format("Wrapper {0} must extend {1}", wrapper, wrappee),
+				wrapper,
+				is(typeCompatibleWith(wrappee))
+		);
+
+		List<Field> fields = Arrays.asList(wrapper.getDeclaredFields());
+		List<Field> wrappeeFields = fields.stream()
+				.filter(field -> field.getType().equals(wrappee))
+				.collect(Collectors.toList());
+		assertThat(
+				format("Wrapper {0} must have a single field of type {1}", wrapper, wrappee),
+				wrappeeFields,
+				hasSize(1)
 		);
 	}
 
