@@ -10,6 +10,7 @@ import org.reflections.Reflections;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -27,6 +28,7 @@ import static java.text.MessageFormat.format;
 import static ophelia.util.CollectionUtils.first;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
 
@@ -86,6 +88,13 @@ public class WrapperTest {
 		int modifiers = wrappeeField.getModifiers();
 		assertThat(modifiers & FINAL, is(FINAL));
 		assertThat(modifiers & PRIVATE, is(PRIVATE));
+
+		List<Constructor> constructors = Arrays.asList(wrapper.getConstructors());
+		assertThat("Wrapper {0} must have a single constructor", constructors, hasSize(1));
+		Constructor constructor = first(constructors);
+		List<Class> parameterTypes = Arrays.asList(constructor.getParameterTypes());
+		assertThat(parameterTypes, hasSize(1));
+		assertThat(parameterTypes, contains(wrappee));
 	}
 
 	private File getSourceFile(Class clazz) throws IOException {
