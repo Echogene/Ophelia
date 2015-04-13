@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import static java.lang.reflect.Modifier.*;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
+import static ophelia.util.CollectionUtils.filterList;
 import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.function.FunctionUtils.image;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -100,10 +101,7 @@ public class WrapperTest {
 		assertThat(parameterTypes, hasSize(1));
 		assertThat(parameterTypes, contains(wrappee));
 
-		List<MethodDeclaration> methodDeclarations = typeDeclaration.getMembers().stream()
-				.filter(member -> member instanceof MethodDeclaration)
-				.map(member -> (MethodDeclaration) member)
-				.collect(Collectors.toList());
+		List<MethodDeclaration> methodDeclarations = filterList(typeDeclaration.getMembers(), MethodDeclaration.class);
 		methodDeclarations.forEach(e -> checkMethod(e, wrapper));
 	}
 
@@ -116,10 +114,7 @@ public class WrapperTest {
 				hasItems("Override")
 		);
 
-		List<BlockStmt> methodStatements = method.getChildrenNodes().stream()
-				.filter(child -> child instanceof BlockStmt)
-				.map(child -> (BlockStmt) child)
-				.collect(Collectors.toList());
+		List<BlockStmt> methodStatements = filterList(method.getChildrenNodes(), BlockStmt.class);
 		assertThat(
 				format("Method\n{0}\nin {1} should have one block", method, wrapper),
 				methodStatements,
