@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -20,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.lang.reflect.Modifier.FINAL;
+import static java.lang.reflect.Modifier.PUBLIC;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
 import static ophelia.util.CollectionUtils.first;
@@ -58,8 +59,8 @@ public class WrapperTest {
 
 		assertThat(
 				format("Wrapper {0} must be public", wrapper),
-				typeDeclaration.getModifiers() & Modifier.PUBLIC,
-				is(1)
+				typeDeclaration.getModifiers() & PUBLIC,
+				is(PUBLIC)
 		);
 
 		Wrapper annotation = wrapper.getAnnotation(Wrapper.class);
@@ -79,6 +80,10 @@ public class WrapperTest {
 				wrappeeFields,
 				hasSize(1)
 		);
+
+		Field wrappeeField = first(wrappeeFields);
+		int modifiers = wrappeeField.getModifiers();
+		assertThat(modifiers & FINAL, is(FINAL));
 	}
 
 	private File getSourceFile(Class clazz) throws IOException {
