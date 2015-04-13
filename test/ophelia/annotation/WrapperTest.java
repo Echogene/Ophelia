@@ -5,9 +5,6 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import com.github.javaparser.ast.expr.AnnotationExpr;
-import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.stmt.Statement;
 import org.junit.Test;
 import org.reflections.Reflections;
 
@@ -27,14 +24,12 @@ import java.util.stream.Collectors;
 import static java.lang.reflect.Modifier.*;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
-import static ophelia.util.CollectionUtils.subListOfClass;
 import static ophelia.util.CollectionUtils.first;
-import static ophelia.util.function.FunctionUtils.image;
+import static ophelia.util.CollectionUtils.subListOfClass;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
 
 /**
@@ -105,32 +100,8 @@ public class WrapperTest {
 				typeDeclaration.getMembers(),
 				MethodDeclaration.class
 		);
-		methodDeclarations.forEach(e -> checkMethod(e, wrapper));
-	}
-
-	private void checkMethod(MethodDeclaration method, Class<?> wrapper) {
-
-		List<AnnotationExpr> annotations = method.getAnnotations();
-		assertThat(
-				format("Method\n{0}\nin {1} should override something", method, wrapper),
-				image(annotations, a -> a.getName().getName()),
-				hasItems("Override")
-		);
-
-		List<BlockStmt> methodStatements = subListOfClass(method.getChildrenNodes(), BlockStmt.class);
-		assertThat(
-				format("Method\n{0}\nin {1} should have one block", method, wrapper),
-				methodStatements,
-				hasSize(1)
-		);
-
-		BlockStmt block = first(methodStatements);
-		List<Statement> statements = block.getStmts();
-		assertThat(
-				format("Method\n{0}\nin {1} should have one line", method, wrapper),
-				statements,
-				hasSize(1)
-		);
+		WrapperMethodChecker checker = new WrapperMethodChecker(wrapper, wrappeeField);
+		methodDeclarations.forEach(checker::checkMethod);
 	}
 
 	private File getSourceFile(Class clazz) throws IOException {
