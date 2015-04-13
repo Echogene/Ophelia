@@ -3,6 +3,7 @@ package ophelia.annotation;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
+import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
@@ -62,27 +63,68 @@ public class WrapperMethodChecker {
 		);
 		Statement statement = first(statements);
 
-		statement.accept(new MethodVisitor(), null);
 		assertThat(statement, is(anyOf(instanceOf(ExpressionStmt.class), instanceOf(ReturnStmt.class))));
+		statement.accept(new MethodVisitor(), method);
 	}
 
-	private static class MethodVisitor extends VoidVisitorAdapter {
+	private class MethodVisitor extends VoidVisitorAdapter<MethodDeclaration> {
 		@Override
-		public void visit(ExpressionStmt n, Object arg) {
-			assertThat(n.getExpression(), is(instanceOf(MethodCallExpr.class)));
-			n.getExpression().accept(
-					new VoidVisitorAdapter() {
-						@Override
-						public void visit(MethodCallExpr n, Object arg) {
-						}
-					}, null
+		public void visit(ExpressionStmt n, final MethodDeclaration method) {
+			assertThat(
+					format("Method\n{0}\nin {1} should call the wrappee", method, wrapper),
+					n.getExpression(),
+					is(instanceOf(MethodCallExpr.class))
+			);
+			n.getExpression().accept(methodCallChecker, method);
+		}
+
+		@Override
+		public void visit(ReturnStmt n, final MethodDeclaration method) {
+
+
+		}
+	}
+
+	private final VoidVisitorAdapter<MethodDeclaration> nameChecker = new VoidVisitorAdapter<MethodDeclaration>() {
+		@Override
+		public void visit(NameExpr n, MethodDeclaration method) {
+			assertThat(
+					format(
+							"Method\n{0}\nin {1} should call on ''{2}'', not ''{3}''",
+							method,
+							wrapper,
+							wrappeeField.getName(),
+							n.getName()
+					),
+					n.getName(),
+					is(wrappeeField.getName())
 			);
 		}
+	};
 
+	private final VoidVisitorAdapter<MethodDeclaration> methodCallChecker = new VoidVisitorAdapter<MethodDeclaration>() {
 		@Override
-		public void visit(ReturnStmt n, Object arg) {
+		public void visit(MethodCallExpr n, MethodDeclaration method) {
+			assertThat(
+					format("Method\n{0}\nin {1} should call the wrappee", method, wrapper),
+					n.getScope(),
+					is(instanceOf(NameExpr.class))
+			);
+			n.getScope().accept(nameChecker, method);
 
+			assertThat(
+					format(
+							"Method\n{0}\nin {1} should call the method ''{2}'', not ''{3}''",
+							method,
+							wrapper,
+							method.getName(),
+							n.getName()
+					),
+					n.getName(),
+					is(method.getName())
+			);
 
+			// todo: check the call to the wrappee method uses the correct parameters
 		}
-	}
+	};
 }
