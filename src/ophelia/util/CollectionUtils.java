@@ -64,9 +64,12 @@ public class CollectionUtils {
 		return sb.toString();
 	}
 
-	public static <T, U> List<U> filterList(List<T> collection, Class<U> clazz) {
+	/**
+	 * Return a sublist of the given list that instances of the given class.
+	 */
+	public static <T, U> List<U> subListOfClass(List<T> list, Class<U> clazz) {
 
-		return collection.stream()
+		return list.stream()
 				.filter(clazz::isInstance)
 				.map(clazz::cast)
 				.collect(Collectors.toList());
