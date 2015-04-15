@@ -5,6 +5,7 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import ophelia.util.javaparser.SourceFinder;
 import org.junit.Test;
 import org.reflections.Reflections;
 
@@ -13,16 +14,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.lang.reflect.Modifier.*;
-import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
 import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.CollectionUtils.subListOfClass;
@@ -43,7 +40,7 @@ public class WrapperTest {
 		Reflections reflections = new Reflections("ophelia");
 		Set<Class<?>> wrapperClasses = reflections.getTypesAnnotatedWith(Wrapper.class);
 		for (Class<?> wrapperClass : wrapperClasses) {
-			File file = getSourceFile(wrapperClass);
+			File file = SourceFinder.findSourceFile(wrapperClass);
 			CompilationUnit cu;
 			try (FileInputStream fis = new FileInputStream(file)) {
 				cu = JavaParser.parse(fis);
@@ -104,30 +101,4 @@ public class WrapperTest {
 		methodDeclarations.forEach(checker::checkMethod);
 	}
 
-	private File getSourceFile(Class clazz) throws IOException {
-		String currentDirectoryName = System.getProperty("user.dir");
-		Path currentDirectory = Paths.get(currentDirectoryName);
-		String fileName = clazz.getSimpleName() + ".java";
-
-		final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + "**/" + fileName);
-
-		final List<File> matchedPaths = new ArrayList<>();
-		Files.walkFileTree(
-				currentDirectory, new SimpleFileVisitor<Path>() {
-					@Override
-					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-
-						if (file.getFileName() != null && matcher.matches(file)) {
-							matchedPaths.add(new File(file.toUri()));
-						}
-						return CONTINUE;
-					}
-				}
-		);
-		if (matchedPaths.size() == 1) {
-			return matchedPaths.get(0);
-		} else {
-			throw new IOException(format("Cannot find unique file for class {0}", clazz.getSimpleName()));
-		}
-	}
 }
