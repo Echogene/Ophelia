@@ -5,8 +5,6 @@ import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 
-import static java.text.MessageFormat.format;
-
 /**
  * @author Steven Weston
  */
@@ -29,7 +27,7 @@ public class JavaParserReflector {
 				GET_PACKAGE_FROM_COMPILATION_UNIT, null
 		);
 		if (packageDeclaration == null) {
-			throw new PackageNotFoundException(format("Package not found for class {0}", className));
+			throw new PackageNotFoundException(className);
 		}
 		String packageName = packageDeclaration.getName().toStringWithoutComments();
 
