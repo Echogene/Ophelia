@@ -1,6 +1,5 @@
 package ophelia.annotation;
 
-import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -10,7 +9,6 @@ import org.junit.Test;
 import org.reflections.Reflections;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -23,6 +21,7 @@ import static java.lang.reflect.Modifier.*;
 import static java.text.MessageFormat.format;
 import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.CollectionUtils.subListOfClass;
+import static ophelia.util.javaparser.SourceFinder.parseSource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -39,12 +38,12 @@ public class WrapperTest {
 	public void testWrappers() throws IOException, ParseException {
 		Reflections reflections = new Reflections("ophelia");
 		Set<Class<?>> wrapperClasses = reflections.getTypesAnnotatedWith(Wrapper.class);
+
 		for (Class<?> wrapperClass : wrapperClasses) {
+
 			File file = SourceFinder.findSourceFile(wrapperClass);
-			CompilationUnit cu;
-			try (FileInputStream fis = new FileInputStream(file)) {
-				cu = JavaParser.parse(fis);
-			}
+			CompilationUnit cu = parseSource(file);
+
 			List<TypeDeclaration> types = cu.getTypes();
 			assertThat(
 					format("There should be only one type defined in {0}", file),
