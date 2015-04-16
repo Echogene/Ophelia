@@ -10,7 +10,10 @@ import java.util.function.Function;
  */
 public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 
-	static <D, R, E extends Exception> Function<D, Maybe<R, E>> wrapOutput(@NotNull ExceptionalFunction<D, R, E> function) {
+	@NotNull
+	static <D, R, E extends Exception> Function<D, Maybe<R, E>> wrapOutput(
+			@NotNull ExceptionalFunction<D, R, E> function
+	) {
 		return d -> {
 			try {
 				R r = function.apply(d);
