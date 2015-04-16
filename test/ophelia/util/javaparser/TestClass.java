@@ -28,4 +28,5 @@ public class TestClass {
 	public void test(Double lol) {}
 
 	public void test(TestClass lol) {}
+	public void test(JavaParserReflector lol) {}
 }
