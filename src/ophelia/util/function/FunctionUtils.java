@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
@@ -20,6 +21,16 @@ public class FunctionUtils {
 		} else {
 			return getter.apply(s);
 		}
+	}
+
+	@NotNull
+	public static <S, T> Function<S, T> safeWrap(Function<S, T> getter) {
+		return s -> s == null ? null : getter.apply(s);
+	}
+
+	@NotNull
+	public static <T> UnaryOperator<T> safeWrap(UnaryOperator<T> getter) {
+		return s -> s == null ? null : getter.apply(s);
 	}
 
 	/**
