@@ -1,6 +1,7 @@
 package ophelia.exceptions.maybe;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -9,11 +10,11 @@ import java.util.function.Function;
  */
 public interface FailureHandler<S, E extends Exception> {
 
-	S mapOnFailure(Function<E, S> exceptionHandler);
+	S mapOnFailure(@NotNull Function<E, S> exceptionHandler);
 
 	S throwOnFailure() throws E;
 
 	@NotNull S defaultOnFailure(@NotNull S defaultValue);
 
-	S nullOnFailure();
+	@Nullable S nullOnFailure();
 }

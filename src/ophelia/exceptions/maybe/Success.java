@@ -40,7 +40,7 @@ public class Success<R, E extends Exception> implements Maybe<R, E> {
 	public FailureHandler<R, E> returnOnSuccess() {
 		return new FailureHandler<R, E>() {
 			@Override
-			public R mapOnFailure(Function<E, R> exceptionHandler) {
+			public R mapOnFailure(@NotNull Function<E, R> exceptionHandler) {
 				return value;
 			}
 
@@ -66,7 +66,7 @@ public class Success<R, E extends Exception> implements Maybe<R, E> {
 	public <S> FailureHandler<S, E> mapOnSuccess(Function<R, S> function) {
 		return new FailureHandler<S, E>() {
 			@Override
-			public S mapOnFailure(Function<E, S> exceptionHandler) {
+			public S mapOnFailure(@NotNull Function<E, S> exceptionHandler) {
 				return function.apply(value);
 			}
 
