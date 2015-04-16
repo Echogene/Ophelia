@@ -1,5 +1,7 @@
 package ophelia.util.javaparser;
 
+import ophelia.collections.IntegerFiniteCollection;
+
 /**
  * @author Steven Weston
  */
@@ -17,4 +19,13 @@ public class TestClass {
 	public void test(long lol) {}
 	public void test(float lol) {}
 	public void test(double lol) {}
+
+	public void test(Boolean lol) {}
+	public void test(Character lol) {}
+	public void test(Byte lol) {}
+	public void test(Short lol) {}
+	public void test(Integer lol) {}
+	public void test(Long lol) {}
+	public void test(Float lol) {}
+	public void test(Double lol) {}
 }

@@ -79,7 +79,15 @@ public class JavaParserReflectorTest {
 				TestClass.class.getMethod("test", int.class),
 				TestClass.class.getMethod("test", long.class),
 				TestClass.class.getMethod("test", float.class),
-				TestClass.class.getMethod("test", double.class)
+				TestClass.class.getMethod("test", double.class),
+				TestClass.class.getMethod("test", Boolean.class),
+				TestClass.class.getMethod("test", Character.class),
+				TestClass.class.getMethod("test", Byte.class),
+				TestClass.class.getMethod("test", Short.class),
+				TestClass.class.getMethod("test", Integer.class),
+				TestClass.class.getMethod("test", Long.class),
+				TestClass.class.getMethod("test", Float.class),
+				TestClass.class.getMethod("test", Double.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(
