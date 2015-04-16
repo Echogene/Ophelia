@@ -1,10 +1,13 @@
 package ophelia.util;
 
+import ophelia.exceptions.maybe.Maybe;
 import ophelia.util.function.ExceptionalTriConsumer;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static ophelia.exceptions.maybe.Maybe.maybe;
 
 /**
  * @author Steven Weston
@@ -49,6 +52,16 @@ public class CollectionUtils {
 
 	public static <T> T first(List<T> list) {
 		return list.get(0);
+	}
+
+	public static <T> Maybe<T, NoSuchElementException> maybeFirst(List<T> list) {
+		return maybe(() -> {
+			if (list.isEmpty()) {
+				throw new NoSuchElementException();
+			} else {
+				return first(list);
+			}
+		});
 	}
 
 	public static <T> T last(List<T> list) {
