@@ -1,6 +1,7 @@
 package ophelia.exceptions.maybe;
 
 import ophelia.util.function.ExceptionalFunction;
+import ophelia.util.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
@@ -16,12 +17,26 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 	) {
 		return d -> {
 			try {
-				R r = function.apply(d);
-				return new Success<>(r);
+				return new Success<>(function.apply(d));
 			} catch(Exception e) {
 				//noinspection unchecked
 				return new Failure<>((E) e);
 			}
 		};
+	}
+
+	@NotNull
+	static <D, E extends Exception> Maybe<D, E> maybe(ExceptionalSupplier<D, E> supplier) {
+		try {
+			return new Success<>(supplier.get());
+		} catch (Exception e) {
+			//noinspection unchecked
+			return new Failure<>((E) e);
+		}
+	}
+
+	@NotNull
+	static <D, E extends Exception> Maybe<D, E> maybe(D d) {
+		return new Success<>(d);
 	}
 }
