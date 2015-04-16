@@ -39,4 +39,6 @@ class TestClass {
 	// todo: test varargs
 
 	// todo: test with annotated parameters
+
+	// todo: test with multiple parameters
 }
