@@ -37,4 +37,6 @@ public class TestClass {
 	// todo: test qualified class names
 
 	// todo: test varargs
+
+	// todo: test with annotated parameters
 }
