@@ -12,7 +12,7 @@ class Failure<R, E extends Exception> implements Maybe<R, E> {
 
 	private final E exception;
 
-	public Failure(E e) {
+	Failure(E e) {
 		this.exception = e;
 	}
 

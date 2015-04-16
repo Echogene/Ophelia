@@ -12,7 +12,7 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 
 	private final R value;
 
-	public Success(R r) {
+	Success(R r) {
 		this.value = r;
 	}
 
