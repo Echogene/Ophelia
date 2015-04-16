@@ -29,4 +29,12 @@ public class TestClass {
 
 	public void test(TestClass lol) {}
 	public void test(JavaParserReflector lol) {}
+
+	// todo: test imported class names
+
+	// todo: test enums
+
+	// todo: test qualified class names
+
+	// todo: test varargs
 }
