@@ -70,26 +70,26 @@ public class JavaParserReflectorTest {
 		List<MethodDeclaration> methodDeclarations = subListOfClass(first(types).getMembers(), MethodDeclaration.class);
 
 		List<Method> methods = Arrays.asList(
-				TestClass.class.getMethod("test"),
-				TestClass.class.getMethod("test", String.class),
-				TestClass.class.getMethod("test", boolean.class),
-				TestClass.class.getMethod("test", char.class),
-				TestClass.class.getMethod("test", byte.class),
-				TestClass.class.getMethod("test", short.class),
-				TestClass.class.getMethod("test", int.class),
-				TestClass.class.getMethod("test", long.class),
-				TestClass.class.getMethod("test", float.class),
-				TestClass.class.getMethod("test", double.class),
-				TestClass.class.getMethod("test", Boolean.class),
-				TestClass.class.getMethod("test", Character.class),
-				TestClass.class.getMethod("test", Byte.class),
-				TestClass.class.getMethod("test", Short.class),
-				TestClass.class.getMethod("test", Integer.class),
-				TestClass.class.getMethod("test", Long.class),
-				TestClass.class.getMethod("test", Float.class),
-				TestClass.class.getMethod("test", Double.class),
-				TestClass.class.getMethod("test", TestClass.class),
-				TestClass.class.getMethod("test", JavaParserReflector.class)
+				getTestMethod(),
+				getTestMethod(String.class),
+				getTestMethod(boolean.class),
+				getTestMethod(char.class),
+				getTestMethod(byte.class),
+				getTestMethod(short.class),
+				getTestMethod(int.class),
+				getTestMethod(long.class),
+				getTestMethod(float.class),
+				getTestMethod(double.class),
+				getTestMethod(Boolean.class),
+				getTestMethod(Character.class),
+				getTestMethod(Byte.class),
+				getTestMethod(Short.class),
+				getTestMethod(Integer.class),
+				getTestMethod(Long.class),
+				getTestMethod(Float.class),
+				getTestMethod(Double.class),
+				getTestMethod(TestClass.class),
+				getTestMethod(JavaParserReflector.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(
@@ -100,5 +100,9 @@ public class JavaParserReflectorTest {
 
 		assertThat(foundMethods, hasSize(methods.size()));
 		range(0, methods.size()).forEach(i -> assertThat(foundMethods.get(i), is(methods.get(i))));
+	}
+
+	private Method getTestMethod(Class<?>... parameterTypes) throws NoSuchMethodException {
+		return TestClass.class.getMethod("test", parameterTypes);
 	}
 }
