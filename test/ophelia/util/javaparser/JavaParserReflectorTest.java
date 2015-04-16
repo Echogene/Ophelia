@@ -6,13 +6,13 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import ophelia.collections.set.StandardSet;
 import ophelia.util.ClassUtils;
+import ophelia.util.function.FunctionUtils;
 import org.junit.Test;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.IntStream.range;
 import static ophelia.exceptions.maybe.Maybe.wrapOutput;
@@ -82,10 +82,11 @@ public class JavaParserReflectorTest {
 				TestClass.class.getMethod("test", double.class)
 		);
 
-		List<Method> foundMethods = methodDeclarations.stream()
-				.map(wrapOutput(methodDeclaration -> findMethod(methodDeclaration, TestClass.class)))
-				.map(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure())
-				.collect(Collectors.toList());
+		List<Method> foundMethods = FunctionUtils.image(
+				methodDeclarations,
+				wrapOutput((MethodDeclaration d) -> findMethod(d, TestClass.class))
+						.andThen(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure())
+		);
 
 		assertThat(foundMethods, hasSize(methods.size()));
 		range(0, methods.size()).forEach(i -> assertThat(foundMethods.get(i), is(methods.get(i))));
