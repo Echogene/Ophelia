@@ -8,7 +8,7 @@ import java.util.function.Function;
 /**
  * @author Steven Weston
  */
-public class Success<R, E extends Exception> implements Maybe<R, E> {
+class Success<R, E extends Exception> implements Maybe<R, E> {
 
 	private final R value;
 
