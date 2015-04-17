@@ -1,30 +1,30 @@
 package ophelia.util;
 
-import org.jetbrains.annotations.Nullable;
 import javafx.util.Pair;
-import ophelia.util.function.Extractor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author Steven Weston
  */
 public class MapUtils {
 
-	public static <K, V> String mapToString(Map<K, V> map, Extractor<V, String> valuePrinter) {
+	@NotNull
+	public static <K, V> String mapToString(@NotNull Map<K, V> map, @NotNull Function<V, String> valuePrinter) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
-		for (Map.Entry<K, V> entry : map.entrySet()) {
-			try {
-				sb.append("\t")
-						.append(entry.getKey())
-						.append(" → ")
-						.append(valuePrinter.extract(entry.getValue()))
-						.append("\n");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		map.entrySet().stream()
+				.forEach(
+						(entry) ->
+								sb.append("\t")
+										.append(entry.getKey())
+										.append(" → ")
+										.append(valuePrinter.apply(entry.getValue()))
+										.append("\n")
+				);
 		sb.append("}");
 		return sb.toString();
 	}
@@ -37,7 +37,7 @@ public class MapUtils {
 	 * @param <K> the key type
 	 * @param <V> the value type
 	 */
-	public static <K, V> void updateSetBasedMap(Map<K, Set<V>> map, K key, V value) {
+	public static <K, V> void updateSetBasedMap(@NotNull Map<K, Set<V>> map, @Nullable K key, @Nullable V value) {
 		if (map.containsKey(key)) {
 			map.get(key).add(value);
 		} else {
@@ -53,7 +53,7 @@ public class MapUtils {
 	 * @param <K> the key type
 	 * @param <V> the value type
 	 */
-	public static <K, V> void updateListBasedMap(Map<K, List<V>> map, K key, V value) {
+	public static <K, V> void updateListBasedMap(@NotNull Map<K, List<V>> map, @Nullable K key, @Nullable V value) {
 		if (map.containsKey(key)) {
 			map.get(key).add(value);
 		} else {
@@ -71,7 +71,7 @@ public class MapUtils {
 	 * @param <K> the key type
 	 * @param <V> the value type
 	 */
-	public static <K, V> void updateSetBasedMap(Map<K, Set<V>> map, K key, Set<V> values) {
+	public static <K, V> void updateSetBasedMap(@NotNull Map<K, Set<V>> map, @Nullable K key, @NotNull Set<V> values) {
 		if (map.containsKey(key)) {
 			map.get(key).addAll(values);
 		} else {
@@ -79,19 +79,22 @@ public class MapUtils {
 		}
 	}
 
-	public static <K, V> Map<K, V> createMap(K key, V value) {
+	@NotNull
+	public static <K, V> Map<K, V> createMap(@Nullable K key, @Nullable V value) {
 		Map<K, V> output = new HashMap<>();
 		output.put(key, value);
 		return output;
 	}
 
-	public static <K, V> LinkedHashMap<K, V> createLinkedHashMap(K key, V value) {
+	@NotNull
+	public static <K, V> LinkedHashMap<K, V> createLinkedHashMap(@Nullable K key, @Nullable V value) {
 		LinkedHashMap<K, V> output = new LinkedHashMap<>();
 		output.put(key, value);
 		return output;
 	}
 
-	public static <K, V> Map<K, V> createMap(List<K> keys, List<V> values) {
+	@NotNull
+	public static <K, V> Map<K, V> createMap(@NotNull List<K> keys, @NotNull List<V> values) {
 		Map<K, V> output = new HashMap<>();
 		int index = 0;
 		for (K key : keys) {
@@ -101,7 +104,8 @@ public class MapUtils {
 		return output;
 	}
 
-	public static <K, V> Map<K, V> createMap(List<K> keys, V value) {
+	@NotNull
+	public static <K, V> Map<K, V> createMap(@NotNull List<K> keys, @Nullable V value) {
 		Map<K, V> output = new HashMap<>();
 		for (K key : keys) {
 			output.put(key, value);
@@ -123,8 +127,8 @@ public class MapUtils {
 	 * @param <V>
 	 */
 	public static <K, V> void overlay(
-			Map<K, Set<V>> underlay,
-			Map<K, Set<V>> overlay
+			@NotNull Map<K, Set<V>> underlay,
+			@NotNull Map<K, Set<V>> overlay
 	) {
 		for (Map.Entry<K, Set<V>> entry : overlay.entrySet()) {
 			K key = entry.getKey();
@@ -134,8 +138,8 @@ public class MapUtils {
 	}
 
 	public static <K, V> void overlay(
-			Map<K, Set<V>> underlay,
-			K key,
+			@NotNull Map<K, Set<V>> underlay,
+			@Nullable K key,
 			@Nullable Set<V> value
 	) {
 		if (underlay.containsKey(key)) {
@@ -150,7 +154,7 @@ public class MapUtils {
 		}
 	}
 
-	public static <K, V> void overlaySingleValues(Map<K, Set<V>> underlay, Map<K, V> overlay) {
+	public static <K, V> void overlaySingleValues(@NotNull Map<K, Set<V>> underlay, @NotNull Map<K, V> overlay) {
 		for (Map.Entry<K, V> entry : overlay.entrySet()) {
 			K key = entry.getKey();
 			V value = entry.getValue();
@@ -171,7 +175,8 @@ public class MapUtils {
 	 * @param <S>
 	 * @return
 	 */
-	public static <K, S extends Set<?>> Map<K, S> intersect(Collection<Map<K, S>> maps) {
+	@NotNull
+	public static <K, S extends Set<?>> Map<K, S> intersect(@NotNull Collection<Map<K, S>> maps) {
 		Iterator<Map<K, S>> iterator = maps.iterator();
 		Map<K, S> output = new HashMap<>(iterator.next());
 		while (iterator.hasNext()) {
@@ -186,12 +191,14 @@ public class MapUtils {
 		return output;
 	}
 
-	public static <K, V> Pair<K, V> $(K key, V value) {
+	@NotNull
+	public static <K, V> Pair<K, V> $(@Nullable K key, @Nullable V value) {
 		return new Pair<>(key, value);
 	}
 
+	@NotNull
 	@SafeVarargs
-	public static <K, V> Map<K, V> map(Pair<K, V>... pairs) {
+	public static <K, V> Map<K, V> map(@NotNull Pair<K, V>... pairs) {
 
 		Map<K, V> output = new HashMap<>();
 		for (Pair<K, V> pair : pairs) {
@@ -200,7 +207,7 @@ public class MapUtils {
 		return output;
 	}
 
-	public static <K, V> String debugToString(Map<K, V> map) {
+	public static <K, V> String debugToString(@NotNull Map<K, V> map) {
 
 		if (map.size() > 10) {
 			return "size = " + map.size();
