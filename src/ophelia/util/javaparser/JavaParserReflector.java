@@ -34,6 +34,7 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.maybe;
+import static ophelia.exceptions.maybe.Maybe.notNull;
 import static ophelia.exceptions.maybe.Maybe.wrapOutput;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
@@ -115,12 +116,11 @@ public class JavaParserReflector {
 
 		String className = declaration.getName();
 
-		PackageDeclaration packageDeclaration = declaration.getParentNode().accept(
-				GET_PACKAGE_FROM_COMPILATION_UNIT, null
-		);
-		if (packageDeclaration == null) {
-			throw new PackageNotFoundException(className);
-		}
+		PackageDeclaration packageDeclaration
+				= notNull(declaration.getParentNode().accept(GET_PACKAGE_FROM_COMPILATION_UNIT, null))
+						.returnOnSuccess()
+						.throwMappedFailure(e -> new PackageNotFoundException(className));
+
 		String packageName = packageDeclaration.getName().toStringWithoutComments();
 
 		return Class.forName(packageName + "." + className);
