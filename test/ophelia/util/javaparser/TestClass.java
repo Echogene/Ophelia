@@ -1,5 +1,7 @@
 package ophelia.util.javaparser;
 
+import ophelia.util.CollectionUtils;
+
 /**
  * @author Steven Weston
  */
@@ -30,7 +32,7 @@ class TestClass {
 	public void test(TestClass lol) {}
 	public void test(JavaParserReflector lol) {}
 
-	// todo: test imported class names
+	public void test(CollectionUtils lol) {}
 
 	// todo: test enums
 

@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import ophelia.collections.set.StandardSet;
 import ophelia.util.ClassUtils;
+import ophelia.util.CollectionUtils;
 import ophelia.util.function.FunctionUtils;
 import org.junit.Test;
 
@@ -89,7 +90,8 @@ public class JavaParserReflectorTest {
 				getTestMethod(Float.class),
 				getTestMethod(Double.class),
 				getTestMethod(TestClass.class),
-				getTestMethod(JavaParserReflector.class)
+				getTestMethod(JavaParserReflector.class),
+				getTestMethod(CollectionUtils.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(

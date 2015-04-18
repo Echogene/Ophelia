@@ -1,6 +1,8 @@
 package ophelia.util.javaparser;
 
+import com.codepoetics.protonpack.collectors.CollectorUtils;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 
+import static com.codepoetics.protonpack.StreamUtils.reject;
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Boolean;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Byte;
@@ -31,6 +34,7 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.maybe;
+import static ophelia.exceptions.maybe.Maybe.wrapOutput;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
 
@@ -84,9 +88,25 @@ public class JavaParserReflector {
 	private static Class<?> tryToFindClass(ClassOrInterfaceType n, CompilationUnit cu) throws ClassNotFoundException {
 		try {
 			return Class.forName("java.lang." + n.getName());
+
 		} catch (ClassNotFoundException e) {
-			return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + n.getName());
+			try {
+				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + n.getName());
+
+			} catch (ClassNotFoundException f) {
+				return reject(cu.getImports().stream(), ImportDeclaration::isStatic)
+						.filter(decl -> hasSameName(n, decl))
+						.map(wrapOutput(decl -> Class.forName(decl.getName().toStringWithoutComments())))
+						.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
+						.filter(clazz -> clazz != null)
+						.collect(CollectorUtils.unique())
+						.get();
+			}
 		}
+	}
+
+	private static boolean hasSameName(ClassOrInterfaceType type, ImportDeclaration declaration) {
+		return declaration.getName().getName().equals(type.getName());
 	}
 
 	@NotNull
