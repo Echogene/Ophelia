@@ -12,7 +12,9 @@ public interface FailureHandler<S, E extends Exception> {
 
 	S handleFailure(@NotNull Function<E, S> exceptionHandler);
 
-	S throwOnFailure() throws E;
+	S throwFailure() throws E;
+
+	<F extends Exception> S throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F;
 
 	@NotNull S defaultOnFailure(@NotNull S defaultValue);
 

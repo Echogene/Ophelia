@@ -45,7 +45,12 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 			}
 
 			@Override
-			public R throwOnFailure() throws E {
+			public R throwFailure() throws E {
+				return value;
+			}
+
+			@Override
+			public <F extends Exception> R throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F {
 				return value;
 			}
 
@@ -71,7 +76,12 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 			}
 
 			@Override
-			public S throwOnFailure() throws E {
+			public S throwFailure() throws E {
+				return function.apply(value);
+			}
+
+			@Override
+			public <F extends Exception> S throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F {
 				return function.apply(value);
 			}
 

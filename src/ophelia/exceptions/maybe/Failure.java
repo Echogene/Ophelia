@@ -51,8 +51,13 @@ class Failure<R, E extends Exception> implements Maybe<R, E> {
 		}
 
 		@Override
-		public S throwOnFailure() throws E {
+		public S throwFailure() throws E {
 			throw exception;
+		}
+
+		@Override
+		public <F extends Exception> S throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F {
+			throw exceptionTransformer.apply(exception);
 		}
 
 		@NotNull
