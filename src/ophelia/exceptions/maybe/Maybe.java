@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -24,6 +25,12 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 				return new Failure<>((E) e);
 			}
 		};
+	}
+
+	static <S, T, E extends Exception> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, E> map) {
+		return source.map(wrapOutput(map))
+				.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
+				.filter(t -> t != null);
 	}
 
 	@NotNull
