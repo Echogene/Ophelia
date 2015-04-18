@@ -3,6 +3,7 @@ package ophelia.exceptions.maybe;
 import ophelia.util.function.ExceptionalFunction;
 import ophelia.util.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -36,7 +37,16 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 	}
 
 	@NotNull
-	static <D, E extends Exception> Maybe<D, E> maybe(D d) {
+	static <D, E extends Exception> Maybe<D, E> maybe(@Nullable D d) {
 		return new Success<>(d);
+	}
+
+	@NotNull
+	static <D> Maybe<D, NullPointerException> notNull(@Nullable D d) {
+		if (d != null) {
+			return new Success<>(d);
+		} else {
+			return new Failure<>(new NullPointerException());
+		}
 	}
 }
