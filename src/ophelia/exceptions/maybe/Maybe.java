@@ -26,7 +26,7 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 	}
 
 	@NotNull
-	static <D, E extends Exception> Maybe<D, E> maybe(@NotNull ExceptionalSupplier<D, E> supplier) {
+	static <D, E extends Exception> Maybe<D, E> maybe(@NotNull ExceptionalSupplier<? extends D, ? extends E> supplier) {
 		try {
 			return new Success<>(supplier.get());
 		} catch (Exception e) {
