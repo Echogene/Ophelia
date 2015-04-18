@@ -46,7 +46,7 @@ class Failure<R, E extends Exception> implements Maybe<R, E> {
 
 	private class DefaultFailureHandler<S> implements FailureHandler<S, E> {
 		@Override
-		public S mapOnFailure(@NotNull Function<E, S> exceptionHandler) {
+		public S handleFailure(@NotNull Function<E, S> exceptionHandler) {
 			return exceptionHandler.apply(exception);
 		}
 

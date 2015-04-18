@@ -10,7 +10,7 @@ import java.util.function.Function;
  */
 public interface FailureHandler<S, E extends Exception> {
 
-	S mapOnFailure(@NotNull Function<E, S> exceptionHandler);
+	S handleFailure(@NotNull Function<E, S> exceptionHandler);
 
 	S throwOnFailure() throws E;
 
