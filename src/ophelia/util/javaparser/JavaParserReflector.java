@@ -1,6 +1,5 @@
 package ophelia.util.javaparser;
 
-import com.codepoetics.protonpack.collectors.CollectorUtils;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.Node;
@@ -26,13 +25,7 @@ import java.util.function.IntFunction;
 import static com.codepoetics.protonpack.StreamUtils.reject;
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
 import static com.codepoetics.protonpack.collectors.CollectorUtils.unique;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Boolean;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Byte;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.*;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Double;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Float;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
-import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.*;
@@ -82,25 +75,25 @@ public class JavaParserReflector {
 			= new GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit>() {
 				@Override
 				public Maybe<Class<?>, ClassNotFoundException> visit(ClassOrInterfaceType n, CompilationUnit cu) {
-					return maybe(() -> tryToFindClass(n, cu));
+					return maybe(() -> tryToFindClass(n.getName(), cu));
 				}
 			};
 
 	@NotNull
-	private static Class<?> tryToFindClass(ClassOrInterfaceType n, CompilationUnit cu) throws ClassNotFoundException {
+	public static Class<?> tryToFindClass(String className, CompilationUnit cu) throws ClassNotFoundException {
 		try {
-			return Class.forName("java.lang." + n.getName());
+			return Class.forName("java.lang." + className);
 
 		} catch (ClassNotFoundException e) {
 			try {
-				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + n.getName());
+				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className);
 
 			} catch (ClassNotFoundException f) {
 				List<ImportDeclaration> nonStaticImports
 						= reject(cu.getImports().stream(), ImportDeclaration::isStatic).collect(toList());
 
 				List<? extends Class<?>> classesFromImports = filterPassingValues(
-						nonStaticImports.stream().filter(decl -> hasSameName(n, decl)),
+						nonStaticImports.stream().filter(decl -> importRefersToClassName(decl, className)),
 						decl -> Class.forName(decl.getName().toStringWithoutComments())
 				).collect(toList());
 
@@ -109,16 +102,16 @@ public class JavaParserReflector {
 				} else {
 					return filterPassingValues(
 							nonStaticImports.stream().filter(ImportDeclaration::isAsterisk),
-							decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + n.getName())
+							decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + className)
 					).collect(unique())
-							.orElseThrow(() -> new ClassNotFoundException(n.getName()));
+							.orElseThrow(() -> new ClassNotFoundException(className));
 				}
 			}
 		}
 	}
 
-	private static boolean hasSameName(ClassOrInterfaceType type, ImportDeclaration declaration) {
-		return declaration.getName().getName().equals(type.getName());
+	private static boolean importRefersToClassName(ImportDeclaration declaration, String className) {
+		return declaration.getName().getName().equals(className);
 	}
 
 	@NotNull
