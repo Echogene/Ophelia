@@ -25,6 +25,7 @@ import java.util.function.IntFunction;
 
 import static com.codepoetics.protonpack.StreamUtils.reject;
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
+import static com.codepoetics.protonpack.collectors.CollectorUtils.unique;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Boolean;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Byte;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.*;
@@ -32,10 +33,10 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Double;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Float;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
-import static ophelia.exceptions.maybe.Maybe.maybe;
-import static ophelia.exceptions.maybe.Maybe.notNull;
-import static ophelia.exceptions.maybe.Maybe.wrapOutput;
+import static ophelia.exceptions.maybe.Maybe.*;
+import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
 
@@ -95,13 +96,23 @@ public class JavaParserReflector {
 				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + n.getName());
 
 			} catch (ClassNotFoundException f) {
-				return reject(cu.getImports().stream(), ImportDeclaration::isStatic)
-						.filter(decl -> hasSameName(n, decl))
-						.map(wrapOutput(decl -> Class.forName(decl.getName().toStringWithoutComments())))
-						.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
-						.filter(clazz -> clazz != null)
-						.collect(CollectorUtils.unique())
-						.get();
+				List<ImportDeclaration> nonStaticImports
+						= reject(cu.getImports().stream(), ImportDeclaration::isStatic).collect(toList());
+
+				List<? extends Class<?>> classesFromImports = filterPassingValues(
+						nonStaticImports.stream().filter(decl -> hasSameName(n, decl)),
+						decl -> Class.forName(decl.getName().toStringWithoutComments())
+				).collect(toList());
+
+				if (!classesFromImports.isEmpty()) {
+					return first(classesFromImports);
+				} else {
+					return filterPassingValues(
+							nonStaticImports.stream().filter(ImportDeclaration::isAsterisk),
+							decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + n.getName())
+					).collect(unique())
+							.orElseThrow(() -> new ClassNotFoundException(n.getName()));
+				}
 			}
 		}
 	}
