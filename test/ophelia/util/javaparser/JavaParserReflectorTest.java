@@ -9,6 +9,8 @@ import ophelia.util.ClassUtils;
 import ophelia.util.CollectionUtils;
 import ophelia.util.function.ExceptionalFunction;
 import ophelia.util.function.FunctionUtils;
+import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
+import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -93,7 +95,9 @@ public class JavaParserReflectorTest {
 				getTestMethod(TestClass.class),
 				getTestMethod(JavaParserReflector.class),
 				getTestMethod(CollectionUtils.class),
-				getTestMethod(ExceptionalFunction.class)
+				getTestMethod(ExceptionalFunction.class),
+				getTestMethod(StaticNestedClass.class),
+				getTestMethod(StaticDoubleNestedClass.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(

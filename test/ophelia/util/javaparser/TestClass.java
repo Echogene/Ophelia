@@ -1,12 +1,16 @@
 package ophelia.util.javaparser;
 
 import ophelia.util.CollectionUtils;
-import ophelia.util.function.*;
+import ophelia.util.function.ExceptionalFunction;
+import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
+import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 
 /**
  * @author Steven Weston
  */
 class TestClass {
+
+	private TestClass() {}
 
 	public void test() {}
 
@@ -36,6 +40,9 @@ class TestClass {
 	public void test(CollectionUtils lol) {}
 
 	public void test(ExceptionalFunction lol) {}
+
+	public void test(StaticNestedClass lol) {}
+	public void test(StaticDoubleNestedClass lol) {}
 
 	// todo: test enums
 

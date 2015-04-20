@@ -7,13 +7,13 @@ import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.PrimitiveType.Primitive;
 import com.github.javaparser.ast.type.ReferenceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
-import ophelia.collections.set.UnmodifiableSet;
 import ophelia.exceptions.maybe.Maybe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
+import java.util.stream.Stream;
 
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
 import static com.codepoetics.protonpack.collectors.CollectorUtils.unique;
@@ -38,6 +39,7 @@ import static ophelia.exceptions.maybe.Maybe.*;
 import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
+import static ophelia.util.StringUtils.replaceLast;
 
 /**
  * @author Steven Weston
@@ -95,20 +97,18 @@ public class JavaParserReflector {
 				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className);
 
 			} catch (ClassNotFoundException f) {
-				Imports imports = new Imports(cu);
-
-				UnmodifiableSet<ImportDeclaration> nonStaticImports = imports.getNonStaticImports();
+				List<ImportDeclaration> imports = cu.getImports();
 
 				List<? extends Class<?>> classesFromImports = filterPassingValues(
-						nonStaticImports.stream().filter(decl -> importRefersToClassName(decl, className)),
-						decl -> Class.forName(decl.getName().toStringWithoutComments())
+						imports.stream().filter(decl -> importRefersToClassName(decl, className)),
+						JavaParserReflector::getClassForImport
 				).collect(toList());
 
 				if (!classesFromImports.isEmpty()) {
 					return first(classesFromImports);
 				} else {
 					return filterPassingValues(
-							nonStaticImports.stream().filter(ImportDeclaration::isAsterisk),
+							imports.stream().filter(ImportDeclaration::isAsterisk),
 							decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + className)
 					).collect(unique())
 							.orElseThrow(() -> new ClassNotFoundException(className));
@@ -119,6 +119,26 @@ public class JavaParserReflector {
 
 	private static boolean importRefersToClassName(ImportDeclaration declaration, String className) {
 		return declaration.getName().getName().equals(className);
+	}
+
+	private static Class<?> getClassForImport(ImportDeclaration declaration) throws ClassNotFoundException {
+
+		NameExpr declarationName = declaration.getName();
+		String qualifiedClassName = declarationName.toStringWithoutComments();
+
+		return getClassForImportName(qualifiedClassName);
+	}
+
+	private static Class<?> getClassForImportName(String qualifiedClassName) throws ClassNotFoundException {
+
+		// Try getting the class until the arbitrarily nested inner class is found.
+		Stream<String> stringStream = takeWhile(
+				iterate(qualifiedClassName, name -> replaceLast(name, ".", "$")),
+				name -> name.contains(".")
+		);
+		return Maybe.<String, Class<?>, ClassNotFoundException>filterPassingValues(stringStream, Class::forName)
+				.findFirst()
+				.orElseThrow(() -> new ClassNotFoundException(qualifiedClassName));
 	}
 
 	@NotNull
