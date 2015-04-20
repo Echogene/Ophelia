@@ -157,4 +157,12 @@ public class StringUtils {
 			return o.toString();
 		}
 	}
+
+	@NotNull
+	public static String replaceLast(@NotNull String s, String toReplace, String substitution) {
+		StringBuilder sb = new StringBuilder(s);
+		int index = s.lastIndexOf(toReplace);
+		sb.replace(index, index + toReplace.length(), substitution);
+		return sb.toString();
+	}
 }
