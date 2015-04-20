@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -105,6 +107,21 @@ public class StandardList<E>
 	@Override
 	public boolean containsAll(@NotNull Collection<?> c) {
 		return list.containsAll(c);
+	}
+
+	@Override
+	public Spliterator<E> spliterator() {
+		return list.spliterator();
+	}
+
+	@Override
+	public Stream<E> stream() {
+		return list.stream();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+		return list.parallelStream();
 	}
 
 	@NotNull

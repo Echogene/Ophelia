@@ -1,6 +1,7 @@
 package ophelia.collections;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 
 /**
  * @author Steven Weston
@@ -8,32 +9,37 @@ import java.util.Collection;
 public interface ModifiableCollection<E> extends BaseCollection<E> {
 
 	/**
-	 * See {@link java.util.Collection#add(Object)}
+	 * See {@link Collection#add(Object)}
 	 */
 	boolean add(E e);
 
 	/**
-	 * See {@link java.util.Collection#remove(Object)}
+	 * See {@link Collection#remove(Object)}
 	 */
 	boolean remove(Object o);
 
 	/**
-	 * See {@link java.util.Collection#addAll(java.util.Collection)}
+	 * See {@link Collection#addAll(Collection)}
 	 */
 	boolean addAll(Collection<? extends E> c);
 
 	/**
-	 * See {@link java.util.Collection#removeAll(java.util.Collection)}
+	 * See {@link Collection#removeAll(Collection)}
 	 */
 	boolean removeAll(Collection<?> c);
 
 	/**
-	 * See {@link java.util.Collection#retainAll(java.util.Collection)}
+	 * See {@link Collection#retainAll(Collection)}
 	 */
 	boolean retainAll(Collection<?> c);
 
 	/**
-	 * See {@link java.util.Collection#clear()}
+	 * See {@link Collection#clear()}
 	 */
 	void clear();
+
+	/**
+	 * See {@link Collection#removeIf(Predicate)}
+	 */
+	boolean removeIf(Predicate<? super E> filter);
 }

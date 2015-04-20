@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -35,6 +38,21 @@ public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIter
 	}
 
 	@Override
+	public Spliterator<E> spliterator() {
+		return getAsList().spliterator();
+	}
+
+	@Override
+	public Stream<E> stream() {
+		return getAsList().stream();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+		return getAsList().stream();
+	}
+
+	@Override
 	public boolean contains(Object o) {
 		return first.equals(o) || second.equals(o);
 	}
@@ -42,7 +60,12 @@ public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIter
 	@NotNull
 	@Override
 	public StandardIterator<E> iterator() {
-		return new StandardIterator<>(Arrays.asList(first, second).iterator());
+		return new StandardIterator<>(getAsList().iterator());
+	}
+
+	@NotNull
+	private List<E> getAsList() {
+		return Arrays.asList(first, second);
 	}
 
 	@NotNull

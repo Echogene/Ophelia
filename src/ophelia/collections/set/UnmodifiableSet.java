@@ -4,54 +4,70 @@ import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
  */
 public final class UnmodifiableSet<E> implements BaseSet<E, UnmodifiableIterator<E>> {
 
-	private final Set<E> set;
+	private final Collection<E> collection;
 
-	public UnmodifiableSet(@NotNull Set<E> set) {
-		this.set = set;
+	public UnmodifiableSet(@NotNull Collection<E> collection) {
+		this.collection = collection;
 	}
 
 	@Override
 	public int size() {
-		return set.size();
+		return collection.size();
 	}
 
 	@NotNull
 	@Override
 	public Object[] toArray() {
-		return set.toArray();
+		return collection.toArray();
 	}
 
 	@NotNull
 	@Override
 	public <T> T[] toArray(T[] a) {
-		return set.toArray(a);
+		return collection.toArray(a);
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		return set.contains(o);
+		return collection.contains(o);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return set.isEmpty();
+		return collection.isEmpty();
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		return set.containsAll(c);
+		return collection.containsAll(c);
+	}
+
+	@Override
+	public Spliterator<E> spliterator() {
+		return collection.spliterator();
+	}
+
+	@Override
+	public Stream<E> stream() {
+		return collection.stream();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+		return collection.parallelStream();
 	}
 
 	@NotNull
 	@Override
 	public UnmodifiableIterator<E> iterator() {
-		return new UnmodifiableIterator<>(set.iterator());
+		return new UnmodifiableIterator<>(collection.iterator());
 	}
 }

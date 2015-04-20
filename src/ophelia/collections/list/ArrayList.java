@@ -5,6 +5,7 @@ import ophelia.collections.iterator.StandardListIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -27,6 +28,18 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements ModifiableLi
 	@Override
 	public StandardIterator<E> iterator() {
 		return new StandardIterator<>(super.iterator());
+	}
+
+	@Override
+	public Stream<E> stream() {
+		// Not sure why this is necessary.
+		return super.stream();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+		// Not sure why this is necessary.
+		return super.parallelStream();
 	}
 
 	@NotNull

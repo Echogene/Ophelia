@@ -1,10 +1,14 @@
 package ophelia.collections.list;
 
-import ophelia.collections.iterator.*;
+import ophelia.collections.iterator.UnmodifiableIterator;
+import ophelia.collections.iterator.UnmodifiableListIterator;
 import org.jetbrains.annotations.NotNull;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -80,6 +84,23 @@ public final class UnmodifiableList<E> implements BaseList<E, UnmodifiableIterat
 	@Override
 	public boolean containsAll(@NotNull Collection<?> c) {
 		return list.containsAll(c);
+	}
+
+	@Override
+	public Spliterator<E> spliterator() {
+		return list.spliterator();
+	}
+
+	@Override
+	public Stream<E> stream() {
+
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+
+		throw new NotImplementedException();
 	}
 
 	@NotNull

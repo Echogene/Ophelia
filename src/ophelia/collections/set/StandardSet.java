@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
@@ -49,6 +51,21 @@ public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Se
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return set.containsAll(c);
+	}
+
+	@Override
+	public Spliterator<E> spliterator() {
+		return set.spliterator();
+	}
+
+	@Override
+	public Stream<E> stream() {
+		return set.stream();
+	}
+
+	@Override
+	public Stream<E> parallelStream() {
+		return set.parallelStream();
 	}
 
 	@NotNull
