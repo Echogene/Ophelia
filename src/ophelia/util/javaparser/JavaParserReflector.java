@@ -13,6 +13,7 @@ import com.github.javaparser.ast.type.PrimitiveType.Primitive;
 import com.github.javaparser.ast.type.ReferenceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
+import ophelia.collections.set.UnmodifiableSet;
 import ophelia.exceptions.maybe.Maybe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,10 +23,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntFunction;
 
-import static com.codepoetics.protonpack.StreamUtils.reject;
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
 import static com.codepoetics.protonpack.collectors.CollectorUtils.unique;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Boolean;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Byte;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.*;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Double;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Float;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
+import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.*;
@@ -89,8 +95,9 @@ public class JavaParserReflector {
 				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className);
 
 			} catch (ClassNotFoundException f) {
-				List<ImportDeclaration> nonStaticImports
-						= reject(cu.getImports().stream(), ImportDeclaration::isStatic).collect(toList());
+				Imports imports = new Imports(cu);
+
+				UnmodifiableSet<ImportDeclaration> nonStaticImports = imports.getNonStaticImports();
 
 				List<? extends Class<?>> classesFromImports = filterPassingValues(
 						nonStaticImports.stream().filter(decl -> importRefersToClassName(decl, className)),

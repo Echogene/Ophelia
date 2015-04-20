@@ -2,6 +2,7 @@ package ophelia.util.javaparser;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
+import ophelia.collections.set.UnmodifiableSet;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,9 @@ public class Imports {
 
 		List<ImportDeclaration> imports = cu.getImports();
 		staticGrouping = imports.stream().collect(groupingBy(decl -> decl.isStatic() ? STATIC : NON_STATIC));
+	}
+
+	public UnmodifiableSet<ImportDeclaration> getNonStaticImports() {
+		return new UnmodifiableSet<>(staticGrouping.get(NON_STATIC));
 	}
 }
