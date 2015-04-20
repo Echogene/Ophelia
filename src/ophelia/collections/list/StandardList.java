@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -158,5 +159,10 @@ public class StandardList<E>
 	@Override
 	public void clear() {
 		list.clear();
+	}
+
+	@Override
+	public boolean removeIf(Predicate<? super E> filter) {
+		return list.removeIf(filter);
 	}
 }

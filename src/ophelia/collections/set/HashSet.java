@@ -4,6 +4,7 @@ import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -31,6 +32,12 @@ public class HashSet<E> extends java.util.HashSet<E> implements ModifiableSet<E,
 	@Override
 	public StandardIterator<E> iterator() {
 		return new StandardIterator<>(super.iterator());
+	}
+
+	@Override
+	public boolean removeIf(Predicate<? super E> filter) {
+		// Not sure why this is necessary.
+		return super.removeIf(filter);
 	}
 
 	@Override

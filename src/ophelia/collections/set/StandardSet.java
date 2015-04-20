@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Set;
 import java.util.Spliterator;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -102,6 +103,11 @@ public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Se
 	@Override
 	public void clear() {
 		set.clear();
+	}
+
+	@Override
+	public boolean removeIf(Predicate<? super E> filter) {
+		return set.removeIf(filter);
 	}
 }
 
