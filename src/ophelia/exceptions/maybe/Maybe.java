@@ -5,10 +5,13 @@ import ophelia.util.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
+ * Like {@link Optional}, but stores the exception in case of failure for future processing.
  * @author Steven Weston
  */
 public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
@@ -46,6 +49,25 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 	@NotNull
 	static <D, E extends Exception> Maybe<D, E> maybe(@Nullable D d) {
 		return new Success<>(d);
+	}
+
+	@NotNull
+	static <D, E extends Exception> Maybe<D, E> maybePresent(
+			@NotNull Optional<? extends D> optional,
+			@NotNull Supplier<? extends E> exceptionSupplier
+	) {
+		if (optional.isPresent()) {
+			return new Success<>(optional.get());
+		} else {
+			return new Failure<>(exceptionSupplier.get());
+		}
+	}
+
+	@NotNull
+	static <D> Maybe<D, NullPointerException> maybePresent(
+			@NotNull Optional<? extends D> optional
+	) {
+		return maybePresent(optional, NullPointerException::new);
 	}
 
 	@NotNull
