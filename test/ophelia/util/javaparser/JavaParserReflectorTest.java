@@ -97,7 +97,8 @@ public class JavaParserReflectorTest {
 				getTestMethod(CollectionUtils.class),
 				getTestMethod(ExceptionalFunction.class),
 				getTestMethod(StaticNestedClass.class),
-				getTestMethod(StaticDoubleNestedClass.class)
+				getTestMethod(StaticDoubleNestedClass.class),
+				getTestMethod(TestEnum.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(

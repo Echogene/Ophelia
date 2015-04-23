@@ -44,7 +44,7 @@ class TestClass {
 	public void test(StaticNestedClass lol) {}
 	public void test(StaticDoubleNestedClass lol) {}
 
-	// todo: test enums
+	public void test(TestEnum lol) {}
 
 	// todo: test qualified class names
 
