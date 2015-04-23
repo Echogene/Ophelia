@@ -7,6 +7,7 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import ophelia.collections.set.StandardSet;
 import ophelia.util.ClassUtils;
 import ophelia.util.CollectionUtils;
+import ophelia.util.TreeUtils;
 import ophelia.util.function.ExceptionalFunction;
 import ophelia.util.function.FunctionUtils;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
@@ -98,7 +99,8 @@ public class JavaParserReflectorTest {
 				getTestMethod(ExceptionalFunction.class),
 				getTestMethod(StaticNestedClass.class),
 				getTestMethod(StaticDoubleNestedClass.class),
-				getTestMethod(TestEnum.class)
+				getTestMethod(TestEnum.class),
+				getTestMethod(TreeUtils.class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(

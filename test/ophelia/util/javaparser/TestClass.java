@@ -46,7 +46,7 @@ class TestClass {
 
 	public void test(TestEnum lol) {}
 
-	// todo: test qualified class names
+	public void test(ophelia.util.TreeUtils lol) {}
 
 	// todo: test varargs
 

@@ -40,6 +40,7 @@ import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
 import static ophelia.util.StringUtils.replaceLast;
+import static ophelia.util.function.FunctionUtils.ignoreExceptions;
 
 /**
  * @author Steven Weston
@@ -83,38 +84,43 @@ public class JavaParserReflector {
 			= new GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit>() {
 				@Override
 				public Maybe<Class<?>, ClassNotFoundException> visit(ClassOrInterfaceType n, CompilationUnit cu) {
-					return maybe(() -> tryToFindClass(n.getName(), cu));
+
+					ClassOrInterfaceType scope = n.getScope();
+					String name = n.getName();
+					String className = scope == null ? name : scope + "." + name;
+					return maybe(() -> tryToFindClass(className, cu));
 				}
 			};
 
 	@NotNull
 	public static Class<?> tryToFindClass(String className, CompilationUnit cu) throws ClassNotFoundException {
-		try {
-			return Class.forName("java.lang." + className);
 
-		} catch (ClassNotFoundException e) {
-			try {
-				return Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className);
+		return Maybe.<Class<?>, ClassNotFoundException>maybe(() -> Class.forName(className))
+				.returnOnSuccess()
+				.tryAgain(() -> Class.forName("java.lang." + className))
+				.returnOnSuccess()
+				.tryAgain(() -> Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className))
+				.returnOnSuccess()
+				.tryAgain(() -> {
+					List<ImportDeclaration> imports = cu.getImports();
 
-			} catch (ClassNotFoundException f) {
-				List<ImportDeclaration> imports = cu.getImports();
+					List<? extends Class<?>> classesFromImports = filterPassingValues(
+							imports.stream().filter(decl -> importRefersToClassName(decl, className)),
+							JavaParserReflector::getClassForImport
+					).collect(toList());
 
-				List<? extends Class<?>> classesFromImports = filterPassingValues(
-						imports.stream().filter(decl -> importRefersToClassName(decl, className)),
-						JavaParserReflector::getClassForImport
-				).collect(toList());
-
-				if (!classesFromImports.isEmpty()) {
-					return first(classesFromImports);
-				} else {
-					return filterPassingValues(
-							imports.stream().filter(ImportDeclaration::isAsterisk),
-							decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + className)
-					).collect(unique())
-							.orElseThrow(() -> new ClassNotFoundException(className));
-				}
-			}
-		}
+					if (!classesFromImports.isEmpty()) {
+						return first(classesFromImports);
+					} else {
+						return filterPassingValues(
+								imports.stream().filter(ImportDeclaration::isAsterisk),
+								decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + className)
+						).collect(unique())
+								.orElseThrow(() -> new ClassNotFoundException(className));
+					}
+				})
+				.returnOnSuccess()
+				.throwFailure();
 	}
 
 	private static boolean importRefersToClassName(ImportDeclaration declaration, String className) {
