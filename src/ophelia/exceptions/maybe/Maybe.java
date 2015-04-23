@@ -12,6 +12,12 @@ import java.util.stream.Stream;
 
 /**
  * Like {@link Optional}, but stores the exception in case of failure for future processing.
+ *
+ * <p>
+ * ♪Hey, I just met you,<br>
+ * And this is crazy<br>
+ * But here's my number<br>
+ * So call me {@code Maybe}♪</p>
  * @author Steven Weston
  */
 public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {

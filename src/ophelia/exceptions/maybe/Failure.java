@@ -1,5 +1,6 @@
 package ophelia.exceptions.maybe;
 
+import ophelia.util.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -69,6 +70,17 @@ class Failure<R, E extends Exception> implements Maybe<R, E> {
 		@Override
 		public S nullOnFailure() {
 			return null;
+		}
+
+		@NotNull
+		@Override
+		public Maybe<S, E> tryAgain(@NotNull ExceptionalSupplier<S, E> supplier) {
+			try {
+				return new Success<>(supplier.get());
+			} catch (Exception e) {
+				//noinspection unchecked
+				return new Failure<>((E) e);
+			}
 		}
 	}
 }

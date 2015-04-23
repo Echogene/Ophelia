@@ -1,5 +1,6 @@
 package ophelia.exceptions.maybe;
 
+import ophelia.util.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,4 +20,6 @@ public interface FailureHandler<S, E extends Exception> {
 	@NotNull S defaultOnFailure(@NotNull S defaultValue);
 
 	@Nullable S nullOnFailure();
+
+	@NotNull Maybe<S, E> tryAgain(@NotNull ExceptionalSupplier<S, E> supplier);
 }
