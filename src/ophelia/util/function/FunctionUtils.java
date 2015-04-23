@@ -51,4 +51,13 @@ public class FunctionUtils {
 			return null;
 		}
 	}
+
+	@Nullable
+	public static <T, E extends Exception> T ignoreExceptions(@NotNull ExceptionalSupplier<T, E> supplier) {
+		try {
+			return supplier.get();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
