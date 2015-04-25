@@ -5,11 +5,11 @@ import java.util.function.Consumer;
 /**
  * @author Steven Weston
  */
-public interface VoidFailureHandler<E extends Exception> {
+public interface VoidFailureHandler {
 
-	void consumeOnFailure(Consumer<E> exceptionHandler);
+	void consumeOnFailure(Consumer<StackedException> exceptionHandler);
 
-	void throwOnFailure() throws E;
+	void throwOnFailure() throws StackedException;
 
 	void ignoreOnFailure();
 }

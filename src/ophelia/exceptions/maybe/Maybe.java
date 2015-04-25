@@ -20,47 +20,45 @@ import java.util.stream.Stream;
  * So call me {@code Maybe}♪</p>
  * @author Steven Weston
  */
-public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
+public interface Maybe<D> extends SuccessHandler<D> {
 
 	@NotNull
-	static <D, R, E extends Exception> Function<D, Maybe<R, E>> wrapOutput(
-			@NotNull ExceptionalFunction<D, R, E> function
+	static <D, R> Function<D, Maybe<R>> wrapOutput(
+			@NotNull ExceptionalFunction<D, R, ? extends Exception> function
 	) {
 		return d -> {
 			try {
 				return new Success<>(function.apply(d));
-			} catch(Exception e) {
-				//noinspection unchecked
-				return new Failure<>((E) e);
+			} catch (Exception e) {
+				return new Failure<>(e);
 			}
 		};
 	}
 
-	static <S, T, E extends Exception> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, E> map) {
+	static <S, T> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, ? extends Exception> map) {
 		return source.map(wrapOutput(map))
 				.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
 				.filter(t -> t != null);
 	}
 
 	@NotNull
-	static <D, E extends Exception> Maybe<D, E> maybe(@NotNull ExceptionalSupplier<? extends D, ? extends E> supplier) {
+	static <D> Maybe<D> maybe(@NotNull ExceptionalSupplier<? extends D, ? extends Exception> supplier) {
 		try {
 			return new Success<>(supplier.get());
 		} catch (Exception e) {
-			//noinspection unchecked
-			return new Failure<>((E) e);
+			return new Failure<>(e);
 		}
 	}
 
 	@NotNull
-	static <D, E extends Exception> Maybe<D, E> maybe(@Nullable D d) {
+	static <D> Maybe<D> maybe(@Nullable D d) {
 		return new Success<>(d);
 	}
 
 	@NotNull
-	static <D, E extends Exception> Maybe<D, E> maybePresent(
+	static <D> Maybe<D> maybePresent(
 			@NotNull Optional<? extends D> optional,
-			@NotNull Supplier<? extends E> exceptionSupplier
+			@NotNull Supplier<? extends Exception> exceptionSupplier
 	) {
 		if (optional.isPresent()) {
 			return new Success<>(optional.get());
@@ -70,14 +68,14 @@ public interface Maybe<D, E extends Exception> extends SuccessHandler<D, E> {
 	}
 
 	@NotNull
-	static <D> Maybe<D, NullPointerException> maybePresent(
+	static <D> Maybe<D> maybePresent(
 			@NotNull Optional<? extends D> optional
 	) {
 		return maybePresent(optional, NullPointerException::new);
 	}
 
 	@NotNull
-	static <D> Maybe<D, NullPointerException> notNull(@Nullable D d) {
+	static <D> Maybe<D> notNull(@Nullable D d) {
 		if (d != null) {
 			return new Success<>(d);
 		} else {

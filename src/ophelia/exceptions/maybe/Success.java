@@ -10,7 +10,7 @@ import java.util.function.Function;
 /**
  * @author Steven Weston
  */
-class Success<R, E extends Exception> implements Maybe<R, E> {
+class Success<R> implements Maybe<R> {
 
 	private final R value;
 
@@ -19,15 +19,15 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 	}
 
 	@Override
-	public VoidFailureHandler<E> consumeOnSuccess(Consumer<R> consumer) {
-		return new VoidFailureHandler<E>() {
+	public VoidFailureHandler consumeOnSuccess(Consumer<R> consumer) {
+		return new VoidFailureHandler() {
 			@Override
-			public void consumeOnFailure(Consumer<E> exceptionHandler) {
+			public void consumeOnFailure(Consumer<StackedException> exceptionHandler) {
 				consumer.accept(value);
 			}
 
 			@Override
-			public void throwOnFailure() throws E {
+			public void throwOnFailure() throws StackedException {
 				consumer.accept(value);
 			}
 
@@ -39,29 +39,24 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 	}
 
 	@Override
-	public FailureHandler<R, E> returnOnSuccess() {
+	public FailureHandler<R> returnOnSuccess() {
 		return new DefaultFailureHandler<>(value);
 	}
 
-	@Override
-	public <S> FailureHandler<S, E> mapOnSuccess(Function<R, S> function) {
-		return new DefaultFailureHandler<>(function.apply(value));
-	}
-
-	private class DefaultFailureHandler<T> implements FailureHandler<T, E> {
+	static class DefaultFailureHandler<T> implements FailureHandler<T> {
 		private final T t;
 
-		private DefaultFailureHandler(T t) {
+		DefaultFailureHandler(T t) {
 			this.t = t;
 		}
 
 		@Override
-		public T handleFailure(@NotNull Function exceptionHandler) {
+		public T resolveFailure(@NotNull Function exceptionHandler) {
 			return t;
 		}
 
 		@Override
-		public T throwFailure() throws E {
+		public T throwAllFailures() throws StackedException {
 			return t;
 		}
 
@@ -79,12 +74,15 @@ class Success<R, E extends Exception> implements Maybe<R, E> {
 
 		@NotNull
 		@Override
-		public Maybe<T, E> tryAgain(@NotNull ExceptionalSupplier<T, E> supplier) {
-			return new Success<>(t);
+		public FailureHandler<T> tryAgain(@NotNull ExceptionalSupplier<T, Exception> supplier) {
+			return this;
 		}
 
 		@Override
-		public <F extends Exception> T throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F {
+		public <F extends Exception> T throwMappedFailure(
+				@NotNull Function<StackedException, F> exceptionTransformer
+		) throws F {
+
 			return t;
 		}
 	}

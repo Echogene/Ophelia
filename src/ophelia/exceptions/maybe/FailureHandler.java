@@ -5,21 +5,40 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static ophelia.util.CollectionUtils.first;
+import static ophelia.util.CollectionUtils.last;
 
 /**
  * @author Steven Weston
  */
-public interface FailureHandler<S, E extends Exception> {
+public interface FailureHandler<S> {
 
-	S handleFailure(@NotNull Function<E, S> exceptionHandler);
+	S resolveFailure(@NotNull Function<StackedException, S> exceptionHandler);
 
-	S throwFailure() throws E;
+	S throwAllFailures() throws StackedException;
 
-	<F extends Exception> S throwMappedFailure(@NotNull Function<E, F> exceptionTransformer) throws F;
+	<F extends Exception> S throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F;
+
+	default S throwFirstFailure() throws Exception {
+		//noinspection ThrowableResultOfMethodCallIgnored
+		return throwMappedFailure(e -> first(e.getExceptions()));
+	}
+
+	default S throwLastFailure() throws Exception {
+		//noinspection ThrowableResultOfMethodCallIgnored
+		return throwMappedFailure(e -> last(e.getExceptions()));
+	}
+
+	default <E extends Exception> S throwInstead(Supplier<E> supplier) throws E {
+		//noinspection ThrowableResultOfMethodCallIgnored
+		return throwMappedFailure(e -> supplier.get());
+	}
 
 	@NotNull S defaultOnFailure(@NotNull S defaultValue);
 
 	@Nullable S nullOnFailure();
 
-	@NotNull Maybe<S, E> tryAgain(@NotNull ExceptionalSupplier<S, E> supplier);
+	@NotNull FailureHandler<S> tryAgain(@NotNull ExceptionalSupplier<S, Exception> supplier);
 }

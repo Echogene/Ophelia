@@ -54,7 +54,7 @@ public class CollectionUtils {
 		return list.get(0);
 	}
 
-	public static <T> Maybe<T, NoSuchElementException> maybeFirst(List<T> list) {
+	public static <T> Maybe<T> maybeFirst(List<T> list) {
 		return maybe(() -> {
 			if (list.isEmpty()) {
 				throw new NoSuchElementException();
