@@ -100,8 +100,17 @@ public class JavaParserReflectorTest {
 				getTestMethod(StaticNestedClass.class),
 				getTestMethod(StaticDoubleNestedClass.class),
 				getTestMethod(TestEnum.class),
-				getTestMethod(TreeUtils.class)
-		);
+				getTestMethod(TreeUtils.class),
+				getTestMethod(String[].class),
+				getTestMethod(boolean[].class),
+				getTestMethod(char[].class),
+				getTestMethod(byte[].class),
+				getTestMethod(short[].class),
+				getTestMethod(int[].class),
+				getTestMethod(long[].class),
+				getTestMethod(float[].class),
+				getTestMethod(double[].class)
+				);
 
 		List<Method> foundMethods = FunctionUtils.image(
 				methodDeclarations,

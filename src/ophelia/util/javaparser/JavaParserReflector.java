@@ -18,6 +18,7 @@ import ophelia.exceptions.maybe.Maybe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,6 @@ import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
 import static ophelia.util.StringUtils.replaceLast;
-import static ophelia.util.function.FunctionUtils.ignoreExceptions;
 
 /**
  * @author Steven Weston
@@ -66,6 +66,17 @@ public class JavaParserReflector {
 			$(Double, double.class)
 	);
 
+	private static final Map<Primitive, Class<?>> primitiveArrayClasses = map(
+			$(Boolean, boolean[].class),
+			$(Char, char[].class),
+			$(Byte, byte[].class),
+			$(Short, short[].class),
+			$(Int, int[].class),
+			$(Long, long[].class),
+			$(Float, float[].class),
+			$(Double, double[].class)
+	);
+
 	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> TYPE_GETTER
 			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
 				@Override
@@ -82,15 +93,31 @@ public class JavaParserReflector {
 
 	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> CLASS_GETTER
 			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
-				@Override
-				public Maybe<Class<?>> visit(ClassOrInterfaceType n, CompilationUnit cu) {
+		@Override
+		public Maybe<Class<?>> visit(ClassOrInterfaceType n, CompilationUnit cu) {
 
-					ClassOrInterfaceType scope = n.getScope();
-					String name = n.getName();
-					String className = scope == null ? name : scope + "." + name;
-					return maybe(() -> tryToFindClass(className, cu));
+			ClassOrInterfaceType scope = n.getScope();
+			String name = n.getName();
+			String className = scope == null ? name : scope + "." + name;
+			return maybe(() -> tryToFindClass(className, cu));
+		}
+	};
+
+	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> ARRAY_TYPE_GETTER
+			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
+				@Override
+				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
+
+					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
+					return Maybe.transform(baseClass, c -> Array.newInstance(c, 0).getClass());
 				}
-			};
+
+				@Override
+				public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
+					final Class<?> clazz = primitiveArrayClasses.get(n.getType());
+					return maybe(clazz);
+				}
+	};
 
 	@NotNull
 	public static Class<?> tryToFindClass(String className, CompilationUnit cu) throws ClassNotFoundException {
@@ -178,8 +205,7 @@ public class JavaParserReflector {
 					.findFirst().get();
 
 			Class<?>[] parameterClasses = parameters.stream()
-					.map(Parameter::getType)
-					.map(type -> getClassForType(type, cu))
+					.map(parameter -> getClassForParameter(parameter, cu))
 					.toArray((IntFunction<Class<?>[]>) Class[]::new);
 
 			return clazz.getMethod(declaration.getName(), parameterClasses);
@@ -187,7 +213,13 @@ public class JavaParserReflector {
 	}
 
 	@Nullable
-	public static Class<?> getClassForType(Type type, CompilationUnit cu) {
-		return type.accept(TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
+	public static Class<?> getClassForParameter(Parameter parameter, CompilationUnit cu) {
+
+		Type type = parameter.getType();
+		if (parameter.isVarArgs()) {
+			return type.accept(ARRAY_TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
+		} else {
+			return type.accept(TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
+		}
 	}
 }
