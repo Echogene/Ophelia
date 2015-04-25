@@ -4,6 +4,7 @@ import ophelia.util.CollectionUtils;
 import ophelia.util.function.ExceptionalFunction;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The worst class.
@@ -68,7 +69,7 @@ class TestClass {
 	public void test(double[][] lols) {}
 	public void test(Boolean[][][][] lols) {}
 
-	// todo: test with annotated parameters
+	public void test(@NotNull Exception lol) {}
 
 	// todo: test with multiple parameters
 }
