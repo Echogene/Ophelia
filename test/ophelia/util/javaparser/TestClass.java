@@ -6,6 +6,7 @@ import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 
 /**
+ * The worst class.
  * @author Steven Weston
  */
 class TestClass {
