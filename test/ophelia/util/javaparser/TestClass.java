@@ -60,7 +60,12 @@ class TestClass {
 	public void test(float[] lols) {}
 	public void test(double[] lols) {}
 
-	// todo: test with multidimensional array parameters
+	public void test(Boolean[][] lols) {}
+	public void test(int[][] lols) {}
+	public void test(long[][] lols) {}
+	public void test(float[][] lols) {}
+	public void test(double[][] lols) {}
+	public void test(Boolean[][][][] lols) {}
 
 	// todo: test with annotated parameters
 

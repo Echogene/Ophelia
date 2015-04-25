@@ -71,11 +71,10 @@ public class JavaParserReflector {
 				@Override
 				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
 					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
-					if (n.getArrayCount() == 1) {
-						return Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
-					} else {
-						return baseClass;
+					for (int i = 0; i < n.getArrayCount(); i++) {
+						baseClass = Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
 					}
+					return baseClass;
 				}
 
 				@Override

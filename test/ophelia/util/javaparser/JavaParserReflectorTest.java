@@ -106,11 +106,17 @@ public class JavaParserReflectorTest {
 				getTestMethod(char[].class),
 				getTestMethod(byte[].class),
 				getTestMethod(short[].class),
+				getTestMethod(Boolean[].class),
 				getTestMethod(int[].class),
 				getTestMethod(long[].class),
 				getTestMethod(float[].class),
 				getTestMethod(double[].class),
-				getTestMethod(Boolean[].class)
+				getTestMethod(Boolean[][].class),
+				getTestMethod(int[][].class),
+				getTestMethod(long[][].class),
+				getTestMethod(float[][].class),
+				getTestMethod(double[][].class),
+				getTestMethod(Boolean[][][][].class)
 		);
 
 		List<Method> foundMethods = FunctionUtils.image(
