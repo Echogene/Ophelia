@@ -53,14 +53,14 @@ class TestClass {
 	public void test(char... lols) {}
 	public void test(byte... lols) {}
 	public void test(short... lols) {}
-	public void test(int... lols) {}
-	public void test(long... lols) {}
-	public void test(float... lols) {}
-	public void test(double... lols) {}
 
-	// todo: test with array parameters
+	public void test(Boolean[] lols) {}
+	public void test(int[] lols) {}
+	public void test(long[] lols) {}
+	public void test(float[] lols) {}
+	public void test(double[] lols) {}
 
-	// todo: test with primitive array parameters
+	// todo: test with multidimensional array parameters
 
 	// todo: test with annotated parameters
 

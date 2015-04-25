@@ -66,22 +66,16 @@ public class JavaParserReflector {
 			$(Double, double.class)
 	);
 
-	private static final Map<Primitive, Class<?>> primitiveArrayClasses = map(
-			$(Boolean, boolean[].class),
-			$(Char, char[].class),
-			$(Byte, byte[].class),
-			$(Short, short[].class),
-			$(Int, int[].class),
-			$(Long, long[].class),
-			$(Float, float[].class),
-			$(Double, double[].class)
-	);
-
 	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> TYPE_GETTER
 			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
 				@Override
 				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
-					return n.getType().accept(CLASS_GETTER, cu);
+					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
+					if (n.getArrayCount() == 1) {
+						return Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
+					} else {
+						return baseClass;
+					}
 				}
 
 				@Override
@@ -101,23 +95,34 @@ public class JavaParserReflector {
 			String className = scope == null ? name : scope + "." + name;
 			return maybe(() -> tryToFindClass(className, cu));
 		}
+
+		@Override
+		public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
+			final Class<?> clazz = primitiveClasses.get(n.getType());
+			return maybe(clazz);
+		}
 	};
 
-	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> ARRAY_TYPE_GETTER
+	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> VARARGS_TYPE_GETTER
 			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
 				@Override
 				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
 
 					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
-					return Maybe.transform(baseClass, c -> Array.newInstance(c, 0).getClass());
+					return Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
 				}
 
 				@Override
 				public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
-					final Class<?> clazz = primitiveArrayClasses.get(n.getType());
-					return maybe(clazz);
+					final Class<?> clazz = primitiveClasses.get(n.getType());
+					return maybe(getArrayClass(clazz));
 				}
 	};
+
+	private static Class<?> getArrayClass(Class<?> c) {
+
+		return Array.newInstance(c, 0).getClass();
+	}
 
 	@NotNull
 	public static Class<?> tryToFindClass(String className, CompilationUnit cu) throws ClassNotFoundException {
@@ -217,7 +222,7 @@ public class JavaParserReflector {
 
 		Type type = parameter.getType();
 		if (parameter.isVarArgs()) {
-			return type.accept(ARRAY_TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
+			return type.accept(VARARGS_TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
 		} else {
 			return type.accept(TYPE_GETTER, cu).returnOnSuccess().nullOnFailure();
 		}
