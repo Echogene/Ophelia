@@ -66,24 +66,24 @@ public class JavaParserReflector {
 			$(Double, double.class)
 	);
 
-	private static final GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit> TYPE_GETTER
-			= new GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit>() {
+	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> TYPE_GETTER
+			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
 				@Override
-				public Maybe<Class<?>, ClassNotFoundException> visit(ReferenceType n, CompilationUnit cu) {
+				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
 					return n.getType().accept(CLASS_GETTER, cu);
 				}
 
 				@Override
-				public Maybe<Class<?>, ClassNotFoundException> visit(PrimitiveType n, CompilationUnit cu) {
+				public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
 					final Class<?> clazz = primitiveClasses.get(n.getType());
 					return maybe(clazz);
 				}
 	};
 
-	private static final GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit> CLASS_GETTER
-			= new GenericVisitorAdapter<Maybe<Class<?>, ClassNotFoundException>, CompilationUnit>() {
+	private static final GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit> CLASS_GETTER
+			= new GenericVisitorAdapter<Maybe<Class<?>>, CompilationUnit>() {
 				@Override
-				public Maybe<Class<?>, ClassNotFoundException> visit(ClassOrInterfaceType n, CompilationUnit cu) {
+				public Maybe<Class<?>> visit(ClassOrInterfaceType n, CompilationUnit cu) {
 
 					ClassOrInterfaceType scope = n.getScope();
 					String name = n.getName();
@@ -95,32 +95,34 @@ public class JavaParserReflector {
 	@NotNull
 	public static Class<?> tryToFindClass(String className, CompilationUnit cu) throws ClassNotFoundException {
 
-		return Maybe.<Class<?>, ClassNotFoundException>maybe(() -> Class.forName(className))
+		return Maybe.<Class<?>>maybe(() -> Class.forName(className))
 				.returnOnSuccess()
 				.tryAgain(() -> Class.forName("java.lang." + className))
-				.returnOnSuccess()
 				.tryAgain(() -> Class.forName(cu.getPackage().getName().toStringWithoutComments() + "." + className))
-				.returnOnSuccess()
-				.tryAgain(() -> {
-					List<ImportDeclaration> imports = cu.getImports();
+				.tryAgain(
+						() -> {
+							List<ImportDeclaration> imports = cu.getImports();
 
-					List<? extends Class<?>> classesFromImports = filterPassingValues(
-							imports.stream().filter(decl -> importRefersToClassName(decl, className)),
-							JavaParserReflector::getClassForImport
-					).collect(toList());
+							List<? extends Class<?>> classesFromImports = filterPassingValues(
+									imports.stream().filter(decl -> importRefersToClassName(decl, className)),
+									JavaParserReflector::getClassForImport
+							).collect(toList());
 
-					if (!classesFromImports.isEmpty()) {
-						return first(classesFromImports);
-					} else {
-						return filterPassingValues(
-								imports.stream().filter(ImportDeclaration::isAsterisk),
-								decl -> Class.forName(decl.getName().toStringWithoutComments() + "." + className)
-						).collect(unique())
-								.orElseThrow(() -> new ClassNotFoundException(className));
-					}
-				})
-				.returnOnSuccess()
-				.throwFailure();
+							if (!classesFromImports.isEmpty()) {
+								return first(classesFromImports);
+							} else {
+								return filterPassingValues(
+										imports.stream().filter(ImportDeclaration::isAsterisk),
+										decl -> Class.forName(
+												decl.getName()
+														.toStringWithoutComments() + "." + className
+										)
+								).collect(unique())
+										.orElseThrow(() -> new ClassNotFoundException(className));
+							}
+						}
+				)
+				.throwInstead(() -> new ClassNotFoundException(className));
 	}
 
 	private static boolean importRefersToClassName(ImportDeclaration declaration, String className) {
@@ -142,7 +144,7 @@ public class JavaParserReflector {
 				iterate(qualifiedClassName, name -> replaceLast(name, ".", "$")),
 				name -> name.contains(".")
 		);
-		return Maybe.<String, Class<?>, ClassNotFoundException>filterPassingValues(stringStream, Class::forName)
+		return Maybe.<String, Class<?>>filterPassingValues(stringStream, Class::forName)
 				.findFirst()
 				.orElseThrow(() -> new ClassNotFoundException(qualifiedClassName));
 	}
