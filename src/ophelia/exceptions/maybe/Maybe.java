@@ -35,6 +35,23 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		};
 	}
 
+	@NotNull
+	static <S, T> Function<Maybe<S>, Maybe<T>> wrap(@NotNull Function<S, T> function) {
+		return maybe -> transform(maybe, function);
+	}
+
+	@NotNull
+	static <S, T> Maybe<T> transform(@NotNull Maybe<S> maybe, @NotNull Function<S, T> function) {
+		try {
+			S s = maybe.returnOnSuccess().throwAllFailures();
+			return new Success<>(function.apply(s));
+
+		} catch (StackedException e) {
+			return new Failure<>(e);
+		}
+	}
+
+	@NotNull
 	static <S, T> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, ? extends Exception> map) {
 		return source.map(wrapOutput(map))
 				.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
