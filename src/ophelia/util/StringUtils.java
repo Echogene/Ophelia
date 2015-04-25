@@ -158,6 +158,13 @@ public class StringUtils {
 		}
 	}
 
+	/**
+	 * Replaces the last occurrence of the second given string in the first given string with the third.
+	 * @param s the string in which we want to replace
+	 * @param toReplace the string to replace
+	 * @param substitution the string with which to replace
+	 * @return the first string after substitution
+	 */
 	@NotNull
 	public static String replaceLast(@NotNull String s, String toReplace, String substitution) {
 		StringBuilder sb = new StringBuilder(s);
