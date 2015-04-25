@@ -4,12 +4,12 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import javafx.util.Pair;
 import ophelia.collections.set.StandardSet;
 import ophelia.util.ClassUtils;
 import ophelia.util.CollectionUtils;
 import ophelia.util.TreeUtils;
 import ophelia.util.function.ExceptionalFunction;
-import ophelia.util.function.FunctionUtils;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.junit.Test;
@@ -18,8 +18,9 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static java.util.stream.IntStream.range;
+import static com.codepoetics.protonpack.StreamUtils.zip;
 import static ophelia.exceptions.maybe.Maybe.wrapOutput;
 import static ophelia.util.CollectionUtils.first;
 import static ophelia.util.CollectionUtils.subListOfClass;
@@ -122,14 +123,15 @@ public class JavaParserReflectorTest {
 				getTestMethod(Boolean.class, boolean.class)
 		);
 
-		List<Method> foundMethods = FunctionUtils.image(
-				methodDeclarations,
-				wrapOutput((MethodDeclaration d) -> findMethod(d, TestClass.class))
-						.andThen(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure())
-		);
+		assertThat(methods, hasSize(methodDeclarations.size()));
 
-		assertThat(foundMethods, hasSize(methods.size()));
-		range(0, methods.size()).forEach(i -> assertThat(foundMethods.get(i), is(methods.get(i))));
+		Stream<Method> foundMethods =
+				methodDeclarations.stream()
+				.map(wrapOutput((MethodDeclaration d) -> findMethod(d, TestClass.class)))
+				.map(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure());
+
+		Stream<Pair<Method, Method>> zip = zip(foundMethods, methods.stream(), Pair::new);
+		zip.forEach(pair -> assertThat(pair.getKey(), is(pair.getValue())));
 	}
 
 	private Method getTestMethod(Class<?>... parameterTypes) throws NoSuchMethodException {
