@@ -71,5 +71,6 @@ class TestClass {
 
 	public void test(@NotNull Exception lol) {}
 
-	// todo: test with multiple parameters
+	public void test(String lol, String wut) {}
+	public void test(Boolean lol, boolean wut) {}
 }
