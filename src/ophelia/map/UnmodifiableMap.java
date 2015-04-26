@@ -7,8 +7,8 @@ import ophelia.collections.set.UnmodifiableSet;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static ophelia.util.function.FunctionUtils.image;
 
 /**
  * @author Steven Weston
@@ -69,11 +69,7 @@ public final class UnmodifiableMap<K, V> implements IntegerFiniteMap<
 
 	@Override
 	public UnmodifiableSet<UnmodifiableEntry<K, V>> entrySet() {
-
-		Stream<UnmodifiableEntry<K, V>> stream = map.entrySet().stream()
-				.map(UnmodifiableEntry::new);
-
-		return new UnmodifiableSet<>(stream.collect(Collectors.toSet()));
+		return new UnmodifiableSet<>(image(map.entrySet(), UnmodifiableEntry::new));
 	}
 
 	@Override
