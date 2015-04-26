@@ -6,6 +6,7 @@ import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -77,4 +78,5 @@ class TestClass {
 	public void test(Boolean lol, boolean wut) {}
 
 	public void test(List<String> lols) {}
+	public <T> void test(Collection<T> lols) {}
 }

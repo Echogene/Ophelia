@@ -17,6 +17,7 @@ import org.junit.Test;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -121,7 +122,8 @@ public class JavaParserReflectorTest {
 				getTestMethod(Exception.class),
 				getTestMethod(String.class, String.class),
 				getTestMethod(Boolean.class, boolean.class),
-				getTestMethod(List.class)
+				getTestMethod(List.class),
+				getTestMethod(Collection.class)
 		);
 
 		assertThat(methods, hasSize(methodDeclarations.size()));
