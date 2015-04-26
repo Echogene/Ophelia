@@ -120,7 +120,8 @@ public class JavaParserReflectorTest {
 				getTestMethod(Boolean[][][][].class),
 				getTestMethod(Exception.class),
 				getTestMethod(String.class, String.class),
-				getTestMethod(Boolean.class, boolean.class)
+				getTestMethod(Boolean.class, boolean.class),
+				getTestMethod(List.class)
 		);
 
 		assertThat(methods, hasSize(methodDeclarations.size()));

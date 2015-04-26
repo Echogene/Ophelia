@@ -6,6 +6,8 @@ import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
  * The worst class.
  * @author Steven Weston
@@ -73,4 +75,6 @@ class TestClass {
 
 	public void test(String lol, String wut) {}
 	public void test(Boolean lol, boolean wut) {}
+
+	public void test(List<String> lols) {}
 }
