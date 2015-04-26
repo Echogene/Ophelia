@@ -4,7 +4,6 @@ import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import ophelia.collections.iterator.UnmodifiableListIterator;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Collection;
 import java.util.List;
@@ -95,14 +94,12 @@ public final class UnmodifiableList<E> implements BaseList<E, UnmodifiableIterat
 
 	@Override
 	public Stream<E> stream() {
-
-		throw new NotImplementedException();
+		return list.stream();
 	}
 
 	@Override
 	public Stream<E> parallelStream() {
-
-		throw new NotImplementedException();
+		return list.parallelStream();
 	}
 
 	@NotNull
