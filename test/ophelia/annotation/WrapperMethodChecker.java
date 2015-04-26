@@ -63,8 +63,14 @@ public class WrapperMethodChecker {
 		);
 		Statement statement = first(statements);
 
-		assertThat(statement, is(anyOf(instanceOf(ExpressionStmt.class), instanceOf(ReturnStmt.class))));
+		assertThat(
+				format("Method\n{0}\nin {1} should return or call a void method", method, wrapper),
+				statement,
+				is(anyOf(instanceOf(ExpressionStmt.class), instanceOf(ReturnStmt.class)))
+		);
 		statement.accept(new MethodVisitor(), method);
+
+		//todo: check moar
 	}
 
 	private class MethodVisitor extends VoidVisitorAdapter<MethodDeclaration> {
