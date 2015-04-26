@@ -69,8 +69,6 @@ public class WrapperMethodChecker {
 				is(anyOf(instanceOf(ExpressionStmt.class), instanceOf(ReturnStmt.class)))
 		);
 		statement.accept(new MethodVisitor(), method);
-
-		//todo: check moar
 	}
 
 	private class MethodVisitor extends VoidVisitorAdapter<MethodDeclaration> {
@@ -82,12 +80,13 @@ public class WrapperMethodChecker {
 					is(instanceOf(MethodCallExpr.class))
 			);
 			n.getExpression().accept(methodCallChecker, method);
+
+			//todo: check moar
 		}
 
 		@Override
 		public void visit(ReturnStmt n, final MethodDeclaration method) {
-
-
+			//todo: check moar
 		}
 	}
 
