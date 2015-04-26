@@ -1,6 +1,7 @@
 package ophelia.util;
 
-import javafx.util.Pair;
+import ophelia.map.UnmodifiableEntry;
+import ophelia.map.UnmodifiableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -192,19 +193,19 @@ public class MapUtils {
 	}
 
 	@NotNull
-	public static <K, V> Pair<K, V> $(@Nullable K key, @Nullable V value) {
-		return new Pair<>(key, value);
+	public static <K, V> UnmodifiableEntry<K, V> $(@Nullable K key, @Nullable V value) {
+		return new UnmodifiableEntry<>(key, value);
 	}
 
 	@NotNull
 	@SafeVarargs
-	public static <K, V> Map<K, V> map(@NotNull Pair<K, V>... pairs) {
+	public static <K, V> UnmodifiableMap<K, V> map(@NotNull UnmodifiableEntry<? extends K, ? extends V>... pairs) {
 
 		Map<K, V> output = new HashMap<>();
-		for (Pair<K, V> pair : pairs) {
+		for (UnmodifiableEntry<? extends K, ? extends V> pair : pairs) {
 			output.put(pair.getKey(), pair.getValue());
 		}
-		return output;
+		return new UnmodifiableMap<>(output);
 	}
 
 	public static <K, V> String debugToString(@NotNull Map<K, V> map) {

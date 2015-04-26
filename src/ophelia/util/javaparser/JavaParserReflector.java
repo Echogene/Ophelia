@@ -15,13 +15,13 @@ import com.github.javaparser.ast.type.ReferenceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 import ophelia.exceptions.maybe.Maybe;
+import ophelia.map.UnmodifiableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -55,7 +55,7 @@ public class JavaParserReflector {
 				}
 			};
 
-	private static final Map<Primitive, Class<?>> primitiveClasses = map(
+	private static final UnmodifiableMap<Primitive, Class<?>> primitiveClasses = map(
 			$(Boolean, boolean.class),
 			$(Char, char.class),
 			$(Byte, byte.class),

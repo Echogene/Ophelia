@@ -26,6 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
 
 /**
  * A test that tests that wrappers only wrap classes.
@@ -80,11 +81,24 @@ public class WrapperTest {
 		assertThat(modifiers & PRIVATE, is(PRIVATE));
 
 		List<Constructor> constructors = Arrays.asList(wrapper.getConstructors());
-		assertThat("Wrapper {0} must have a single constructor", constructors, hasSize(1));
+		assertThat(
+				format("Wrapper {0} must have at least one constructor", wrapper),
+				constructors,
+				hasSize(greaterThanOrEqualTo(1))
+		);
+
 		Constructor constructor = first(constructors);
 		List<Class> parameterTypes = Arrays.asList(constructor.getParameterTypes());
-		assertThat(parameterTypes, hasSize(1));
-		assertThat(parameterTypes, contains(wrappee));
+		assertThat(
+				format("The first constructor in {0} should have one parameter", wrapper),
+				parameterTypes,
+				hasSize(1)
+		);
+		assertThat(
+				format("The first constructor in {0} should have a parameter of type {1}", wrapper, wrappee),
+				parameterTypes,
+				contains(wrappee)
+		);
 
 		List<MethodDeclaration> methodDeclarations = subListOfClass(
 				typeDeclaration.getMembers(),
