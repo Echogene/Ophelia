@@ -8,7 +8,7 @@ import ophelia.collections.set.UnmodifiableSet;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-import static ophelia.util.function.FunctionUtils.image;
+import static ophelia.annotation.WrapperUtils.wrap;
 
 /**
  * @author Steven Weston
@@ -69,7 +69,7 @@ public final class UnmodifiableMap<K, V> implements IntegerFiniteMap<
 
 	@Override
 	public UnmodifiableSet<UnmodifiableEntry<K, V>> entrySet() {
-		return new UnmodifiableSet<>(image(map.entrySet(), UnmodifiableEntry::new));
+		return new UnmodifiableSet<>(wrap(UnmodifiableEntry::new, map.entrySet()));
 	}
 
 	@Override
