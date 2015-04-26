@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -41,6 +42,16 @@ public class FunctionUtils {
 		return list.stream()
 				.map(function)
 				.collect(Collectors.toList());
+	}
+
+	/**
+	 * @return the image of the function on the given set.
+	 */
+	@NotNull
+	public static <S, T> Set<T> image(@NotNull Set<S> set, @NotNull Function<? super S, T> function) {
+		return set.stream()
+				.map(function)
+				.collect(Collectors.toSet());
 	}
 
 	@Nullable
