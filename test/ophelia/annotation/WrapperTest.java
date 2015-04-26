@@ -5,7 +5,6 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import ophelia.util.javaparser.SourceFinder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.reflections.Reflections;
 
@@ -27,7 +26,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
 
 /**
  * A test that tests that wrappers only wrap classes.
@@ -35,7 +33,6 @@ import static org.hamcrest.object.IsCompatibleType.typeCompatibleWith;
  */
 public class WrapperTest {
 
-	@Ignore
 	@Test
 	public void testWrappers() throws IOException, ParseException {
 		Reflections reflections = new Reflections("ophelia");
@@ -66,11 +63,6 @@ public class WrapperTest {
 
 		Wrapper annotation = wrapper.getAnnotation(Wrapper.class);
 		Class<?> wrappee = annotation.value();
-		assertThat(
-				format("Wrapper {0} must extend {1}", wrapper, wrappee),
-				wrapper,
-				is(typeCompatibleWith(wrappee))
-		);
 
 		List<Field> fields = Arrays.asList(wrapper.getDeclaredFields());
 		List<Field> wrappeeFields = fields.stream()
