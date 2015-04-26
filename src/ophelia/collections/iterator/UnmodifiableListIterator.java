@@ -1,10 +1,13 @@
 package ophelia.collections.iterator;
 
+import ophelia.annotation.Wrapper;
+
 import java.util.ListIterator;
 
 /**
  * @author Steven Weston
  */
+@Wrapper(ListIterator.class)
 public final class UnmodifiableListIterator<E> implements BaseListIterator<E> {
 
 	private final ListIterator<E> listIterator;

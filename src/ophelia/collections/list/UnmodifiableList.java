@@ -1,5 +1,6 @@
 package ophelia.collections.list;
 
+import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import ophelia.collections.iterator.UnmodifiableListIterator;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 /**
  * @author Steven Weston
  */
+@Wrapper(List.class)
 public final class UnmodifiableList<E> implements BaseList<E, UnmodifiableIterator<E>, UnmodifiableListIterator<E>> {
 
 	private final List<E> list;

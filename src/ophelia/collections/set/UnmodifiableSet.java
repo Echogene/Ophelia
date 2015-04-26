@@ -1,5 +1,6 @@
 package ophelia.collections.set;
 
+import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 /**
  * @author Steven Weston
  */
+@Wrapper(Collection.class)
 public final class UnmodifiableSet<E> implements BaseSet<E, UnmodifiableIterator<E>> {
 
 	private final Collection<E> collection;
