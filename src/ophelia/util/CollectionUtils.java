@@ -2,6 +2,9 @@ package ophelia.util;
 
 import ophelia.exceptions.maybe.Maybe;
 import ophelia.util.function.ExceptionalTriConsumer;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Function;
@@ -20,6 +23,8 @@ public class CollectionUtils {
 	 * @param <T> The type of the elements in the list.
 	 * @return The indexth element of the list or null if the index is out-of-bounds.
 	 */
+	@Contract("null, _ -> null")
+	@Nullable
 	public static <T> T safeGet(List<T> list, int index) {
 		if (list == null || index >= list.size() || index < 0) {
 			return null;
@@ -27,6 +32,8 @@ public class CollectionUtils {
 		return list.get(index);
 	}
 
+	@Contract("null -> null")
+	@Nullable
 	public static <T> T safeNext(Iterator<T> iterator) {
 		if (iterator == null || !iterator.hasNext()) {
 			return null;
@@ -41,33 +48,41 @@ public class CollectionUtils {
 	 * @param <T>
 	 * @return
 	 */
+	@NotNull
 	public static <T> List<T> stripFirstAndLast(final List<T> list) {
 		return list.subList(1, list.size() - 1);
 	}
 
+	@NotNull
 	public static String simpleNames(Collection<Class> classes) {
 		List<String> output = classes.stream().map(Class::getSimpleName).collect(Collectors.toList());
 		return "[" + StringUtils.join(output, ", ") + "]";
 	}
 
+	@Nullable
 	public static <T> T first(List<T> list) {
 		return list.get(0);
 	}
 
+	@NotNull
 	public static <T> Maybe<T> maybeFirst(List<T> list) {
-		return maybe(() -> {
-			if (list.isEmpty()) {
-				throw new NoSuchElementException();
-			} else {
-				return first(list);
-			}
-		});
+		return maybe(
+				() -> {
+					if (list.isEmpty()) {
+						throw new NoSuchElementException();
+					} else {
+						return first(list);
+					}
+				}
+		);
 	}
 
+	@Nullable
 	public static <T> T last(List<T> list) {
 		return list.get(list.size() - 1);
 	}
 
+	@NotNull
 	public static String arrayToString(Object[] objects, String afterEach) {
 		StringBuilder sb = new StringBuilder();
 		for (Object object : objects) {
@@ -80,6 +95,7 @@ public class CollectionUtils {
 	/**
 	 * Return a sublist of the given list that instances of the given class.
 	 */
+	@NotNull
 	public static <T, U> List<U> subListOfClass(List<T> list, Class<U> clazz) {
 
 		return list.stream()
@@ -91,6 +107,7 @@ public class CollectionUtils {
 	/**
 	 * Given a collection and a comparator, return a list that is the collection sorted using the comparator.
 	 */
+	@NotNull
 	public static <T> List<T> asSortedList(Collection<T> collection, Comparator<T> comparator) {
 		List<T> output = new ArrayList<>(collection);
 		Collections.sort(output, comparator);
@@ -98,12 +115,14 @@ public class CollectionUtils {
 	}
 
 	@SafeVarargs
+	@NotNull
 	public static <T> Set<T> createSet(T... elements) {
 		HashSet<T> output = new HashSet<>();
 		Collections.addAll(output, elements);
 		return output;
 	}
 
+	@NotNull
 	public static <T> String toString(Collection<T> collection) {
 
 		StringBuilder sb = new StringBuilder();
@@ -120,6 +139,7 @@ public class CollectionUtils {
 		return sb.toString();
 	}
 
+	@NotNull
 	public static <T> String debugToString(Collection<T> collection) {
 
 		if (collection.size() > 10) {
@@ -148,6 +168,7 @@ public class CollectionUtils {
 	 * @return the result of the extraction {@code function}
 	 * @throws E if the extraction is ambiguous
 	 */
+	@Nullable
 	public static <T, U, E extends Exception> T extractUnique(
 			Collection<U> collection,
 			Function<U, T> function,
@@ -163,5 +184,15 @@ public class CollectionUtils {
 			output = t;
 		}
 		return output;
+	}
+
+	@Contract(pure = true)
+	@NotNull
+	public static <T> Collection<T> emptyIfNull(@Nullable Collection<T> collection) {
+		if (collection == null) {
+			return Collections.emptySet();
+		} else {
+			return collection;
+		}
 	}
 }
