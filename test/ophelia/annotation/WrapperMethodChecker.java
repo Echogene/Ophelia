@@ -88,8 +88,6 @@ public class WrapperMethodChecker {
 					is(instanceOf(MethodCallExpr.class))
 			);
 			n.getExpression().accept(methodCallChecker, method);
-
-			//todo: check moar
 		}
 
 		@Override
