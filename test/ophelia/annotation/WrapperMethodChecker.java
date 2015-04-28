@@ -140,17 +140,24 @@ public class WrapperMethodChecker {
 			Collection<Expression> usedArguments = emptyIfNull(n.getArgs());
 			Collection<Parameter> methodArguments = emptyIfNull(method.getParameters());
 
-			assertThat(usedArguments, hasSize(methodArguments.size()));
+			assertThat(
+					format(
+							"Method\n{0}\nin {1} must use the same parameters when it calls the wrappee",
+							method,
+							wrapper
+					),
+					usedArguments,
+					hasSize(methodArguments.size())
+			);
 
 			StreamUtils.zip(
-					usedArguments.stream().map(Node::toStringWithoutComments),
+					usedArguments.stream()
+							.map(Node::toStringWithoutComments),
 					methodArguments.stream()
 							.map(BaseParameter::getId)
 							.map(VariableDeclaratorId::getName),
 					Pair::new
 			).forEach(p -> assertThat(p, isEqual()));
-
-			// todo: check the call to the wrappee method uses the correct methodArguments
 		}
 	};
 }
