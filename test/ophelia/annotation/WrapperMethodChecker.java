@@ -1,7 +1,13 @@
 package ophelia.annotation;
 
+import com.codepoetics.protonpack.StreamUtils;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.body.BaseParameter;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
@@ -9,13 +15,15 @@ import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import ophelia.tuple.Pair;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
-import static ophelia.util.CollectionUtils.first;
-import static ophelia.util.CollectionUtils.subListOfClass;
+import static ophelia.tuple.PairTestUtil.isEqual;
+import static ophelia.util.CollectionUtils.*;
 import static ophelia.util.function.FunctionUtils.image;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -129,7 +137,20 @@ public class WrapperMethodChecker {
 					is(method.getName())
 			);
 
-			// todo: check the call to the wrappee method uses the correct parameters
+			Collection<Expression> usedArguments = emptyIfNull(n.getArgs());
+			Collection<Parameter> methodArguments = emptyIfNull(method.getParameters());
+
+			assertThat(usedArguments, hasSize(methodArguments.size()));
+
+			StreamUtils.zip(
+					usedArguments.stream().map(Node::toStringWithoutComments),
+					methodArguments.stream()
+							.map(BaseParameter::getId)
+							.map(VariableDeclaratorId::getName),
+					Pair::new
+			).forEach(p -> assertThat(p, isEqual()));
+
+			// todo: check the call to the wrappee method uses the correct methodArguments
 		}
 	};
 }
