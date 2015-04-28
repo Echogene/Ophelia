@@ -23,6 +23,18 @@ public class PairTestUtil {
 			}
 
 			@Override
+			public void describeMismatch(Object item, Description description) {
+				if (!(item instanceof Pair)) {
+					description.appendText("is not a Pair");
+					return;
+				}
+				Pair pair = (Pair) item;
+				description.appendValue(pair.getLeft());
+				description.appendText(" is not ");
+				description.appendValue(pair.getRight());
+			}
+
+			@Override
 			public void describeTo(Description description) {
 				description.appendText("is equal");
 			}
