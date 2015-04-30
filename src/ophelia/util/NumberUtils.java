@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Contract;
 public class NumberUtils {
 
 	@Contract(pure = true)
-	public static String ordinal(int integer) {
+	public static String ordinal(final int integer) {
 		int modOneHundred = integer % 100;
 		int tens = modOneHundred / 10;
 		if (tens == 1) {
@@ -29,12 +29,12 @@ public class NumberUtils {
 	}
 
 	@Contract(pure = true)
-	public static boolean isEven(int integer) {
+	public static boolean isEven(final int integer) {
 		return 0 == (integer % 2);
 	}
 
 	@Contract(pure = true)
-	public static boolean isOdd(int integer) {
+	public static boolean isOdd(final int integer) {
 		return 1 == (integer % 2);
 	}
 }
