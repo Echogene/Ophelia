@@ -1,6 +1,6 @@
 package ophelia.annotation;
 
-import ophelia.util.function.FunctionUtils;
+import ophelia.util.FunctionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

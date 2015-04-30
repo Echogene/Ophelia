@@ -3,7 +3,7 @@ package ophelia.util;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
-import static ophelia.util.function.FunctionUtils.safeGet;
+import static ophelia.util.FunctionUtils.safeGet;
 
 /**
  * @author Steven Weston

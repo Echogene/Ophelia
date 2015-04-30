@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static ophelia.util.function.FunctionUtils.ignoreExceptions;
+import static ophelia.util.FunctionUtils.ignoreExceptions;
 
 /**
  * @author Steven Weston

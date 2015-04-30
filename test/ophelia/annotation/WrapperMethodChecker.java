@@ -22,7 +22,7 @@ import java.util.List;
 
 import static java.text.MessageFormat.format;
 import static ophelia.util.CollectionUtils.*;
-import static ophelia.util.function.FunctionUtils.image;
+import static ophelia.util.FunctionUtils.image;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.AnyOf.anyOf;

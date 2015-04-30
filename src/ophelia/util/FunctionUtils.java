@@ -1,4 +1,4 @@
-package ophelia.util.function;
+package ophelia.util;
 
 import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.Contract;
