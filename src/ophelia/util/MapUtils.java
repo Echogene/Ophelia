@@ -208,6 +208,7 @@ public class MapUtils {
 		return new UnmodifiableMap<>(output);
 	}
 
+	@NotNull
 	public static <K, V> String debugToString(@NotNull Map<K, V> map) {
 
 		if (map.size() > 10) {
