@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -106,5 +107,10 @@ public final class UnmodifiableList<E> implements BaseList<E, UnmodifiableIterat
 	@Override
 	public UnmodifiableIterator<E> iterator() {
 		return new UnmodifiableIterator<>(list.iterator());
+	}
+
+	@Override
+	public void forEach(Consumer<? super E> consumer) {
+		list.forEach(consumer);
 	}
 }

@@ -3,6 +3,7 @@ package ophelia.collections.iterator;
 import java.util.ListIterator;
 
 /**
+ * A trimmed-down version of {@link ListIterator} that contains the read-only methods.
  * @author Steven Weston
  */
 public interface BaseListIterator<E> extends BaseIterator<E> {

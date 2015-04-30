@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -129,6 +130,11 @@ public class StandardList<E>
 	@Override
 	public StandardIterator<E> iterator() {
 		return new StandardIterator<>(list.iterator());
+	}
+
+	@Override
+	public void forEach(Consumer<? super E> consumer) {
+		list.forEach(consumer);
 	}
 
 	@Override

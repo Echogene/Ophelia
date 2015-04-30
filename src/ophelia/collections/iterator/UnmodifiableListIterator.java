@@ -3,6 +3,7 @@ package ophelia.collections.iterator;
 import ophelia.annotation.Wrapper;
 
 import java.util.ListIterator;
+import java.util.function.Consumer;
 
 /**
  * @author Steven Weston
@@ -44,5 +45,10 @@ public final class UnmodifiableListIterator<E> implements BaseListIterator<E> {
 	@Override
 	public E next() {
 		return listIterator.next();
+	}
+
+	@Override
+	public void forEachRemaining(Consumer<? super E> consumer) {
+		listIterator.forEachRemaining(consumer);
 	}
 }

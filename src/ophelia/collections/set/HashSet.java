@@ -4,6 +4,7 @@ import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -32,6 +33,12 @@ public class HashSet<E> extends java.util.HashSet<E> implements ModifiableSet<E,
 	@Override
 	public StandardIterator<E> iterator() {
 		return new StandardIterator<>(super.iterator());
+	}
+
+	@Override
+	public void forEach(Consumer<? super E> action) {
+		// Not sure why this is necessary.
+		super.forEach(action);
 	}
 
 	@Override

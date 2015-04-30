@@ -1,7 +1,7 @@
 package ophelia.collections;
 
 import ophelia.collections.iterator.BaseIterator;
-import ophelia.collections.iterator.Iterable;
+import ophelia.collections.iterator.BaseIterable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.Collection;
  * {@link Collection}.
  * @author Steven Weston
  */
-public interface IntegerFiniteCollection<E, I extends BaseIterator<E>> extends BaseCollection<E>, Iterable<E, I> {
+public interface IntegerFiniteCollection<E, I extends BaseIterator<E>> extends BaseCollection<E>, BaseIterable<E, I> {
 
 	/**
 	 * See {@link Collection#size()}

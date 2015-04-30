@@ -3,6 +3,7 @@ package ophelia.collections.iterator;
 import ophelia.annotation.Wrapper;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * A wrapper for {@link java.util.Iterator} that extends the split-up interfaces.
@@ -30,5 +31,10 @@ public class StandardIterator<E> implements ModifiableIterator<E>, Iterator<E> {
 	@Override
 	public E next() {
 		return iterator.next();
+	}
+
+	@Override
+	public void forEachRemaining(Consumer<? super E> consumer) {
+		iterator.forEachRemaining(consumer);
 	}
 }

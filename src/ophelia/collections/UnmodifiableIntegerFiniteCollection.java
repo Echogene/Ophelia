@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
@@ -72,5 +73,10 @@ public final class UnmodifiableIntegerFiniteCollection<E>
 	@Override
 	public UnmodifiableIterator<E> iterator() {
 		return new UnmodifiableIterator<>(collection.iterator());
+	}
+
+	@Override
+	public void forEach(Consumer<? super E> consumer) {
+		collection.forEach(consumer);
 	}
 }
