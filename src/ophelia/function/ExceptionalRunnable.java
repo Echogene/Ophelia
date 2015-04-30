@@ -1,4 +1,4 @@
-package ophelia.util.function;
+package ophelia.function;
 
 /**
  * Like a {@link Runnable} but can throw an Exception

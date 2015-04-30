@@ -1,7 +1,7 @@
 package ophelia.tuple;
 
-import ophelia.util.function.ExceptionalBiConsumer;
-import ophelia.util.function.ExceptionalBiFunction;
+import ophelia.function.ExceptionalBiConsumer;
+import ophelia.function.ExceptionalBiFunction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;

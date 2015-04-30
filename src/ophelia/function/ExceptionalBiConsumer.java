@@ -1,4 +1,4 @@
-package ophelia.util.function;
+package ophelia.function;
 
 /**
  * Like {@link java.util.function.BiConsumer} but can throw an exception.

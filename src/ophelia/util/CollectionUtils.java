@@ -1,7 +1,7 @@
 package ophelia.util;
 
 import ophelia.exceptions.maybe.Maybe;
-import ophelia.util.function.ExceptionalTriConsumer;
+import ophelia.function.ExceptionalTriConsumer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

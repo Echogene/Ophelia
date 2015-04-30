@@ -1,7 +1,7 @@
 package ophelia.util.javaparser;
 
 import ophelia.util.CollectionUtils;
-import ophelia.util.function.ExceptionalFunction;
+import ophelia.function.ExceptionalFunction;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.jetbrains.annotations.NotNull;

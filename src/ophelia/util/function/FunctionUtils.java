@@ -1,5 +1,6 @@
 package ophelia.util.function;
 
+import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

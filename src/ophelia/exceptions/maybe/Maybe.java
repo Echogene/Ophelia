@@ -1,7 +1,7 @@
 package ophelia.exceptions.maybe;
 
-import ophelia.util.function.ExceptionalFunction;
-import ophelia.util.function.ExceptionalSupplier;
+import ophelia.function.ExceptionalFunction;
+import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

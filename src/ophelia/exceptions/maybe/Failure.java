@@ -1,6 +1,6 @@
 package ophelia.exceptions.maybe;
 
-import ophelia.util.function.ExceptionalSupplier;
+import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;

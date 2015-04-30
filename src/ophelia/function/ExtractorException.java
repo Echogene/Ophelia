@@ -1,4 +1,4 @@
-package ophelia.util.function;
+package ophelia.function;
 
 /**
  * @author Steven Weston

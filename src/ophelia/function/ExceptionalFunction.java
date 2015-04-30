@@ -1,4 +1,4 @@
-package ophelia.util.function;
+package ophelia.function;
 
 /**
  * Like a {@link java.util.function.Function}, but can throw an exception.

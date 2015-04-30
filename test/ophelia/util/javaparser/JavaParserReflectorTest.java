@@ -9,7 +9,7 @@ import ophelia.collections.set.StandardSet;
 import ophelia.util.ClassUtils;
 import ophelia.util.CollectionUtils;
 import ophelia.util.TreeUtils;
-import ophelia.util.function.ExceptionalFunction;
+import ophelia.function.ExceptionalFunction;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass;
 import ophelia.util.javaparser.OtherTestClass.StaticNestedClass.StaticDoubleNestedClass;
 import org.junit.Test;

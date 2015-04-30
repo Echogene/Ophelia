@@ -2,7 +2,7 @@ package ophelia.superposition;
 
 import ophelia.exceptions.AmbiguityException;
 import org.jetbrains.annotations.NotNull;
-import ophelia.util.function.ExceptionalConsumer;
+import ophelia.function.ExceptionalConsumer;
 
 import java.util.*;
 
