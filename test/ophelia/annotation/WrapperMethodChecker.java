@@ -1,6 +1,5 @@
 package ophelia.annotation;
 
-import com.codepoetics.protonpack.StreamUtils;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.BaseParameter;
 import com.github.javaparser.ast.body.MethodDeclaration;
@@ -15,14 +14,13 @@ import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import ophelia.tuple.Pair;
+import ophelia.util.StreamUtils;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
-import static ophelia.tuple.PairTestUtil.isEqual;
 import static ophelia.util.CollectionUtils.*;
 import static ophelia.util.function.FunctionUtils.image;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -148,14 +146,14 @@ public class WrapperMethodChecker {
 					hasSize(methodArguments.size())
 			);
 
-			StreamUtils.zip(
+			StreamUtils.consume(
 					usedArguments.stream()
 							.map(Node::toStringWithoutComments),
 					methodArguments.stream()
 							.map(BaseParameter::getId)
 							.map(VariableDeclaratorId::getName),
-					Pair::new
-			).forEach(p -> assertThat(p, isEqual()));
+					(s, t) -> assertThat(s, is(t))
+			);
 		}
 	};
 }
