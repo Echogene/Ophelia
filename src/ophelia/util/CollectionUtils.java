@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -194,5 +195,16 @@ public class CollectionUtils {
 		} else {
 			return collection;
 		}
+	}
+
+	/**
+	 * Consume two collections in parallel until the smaller collection ends.
+	 */
+	public static <S, T> void consumeInParallel(
+			@NotNull Collection<S> left,
+			@NotNull Collection<T> right,
+			@NotNull BiConsumer<? super S, ? super T> consumer
+	) {
+		StreamUtils.consume(left.stream(), right.stream(), consumer);
 	}
 }
