@@ -61,6 +61,7 @@ public class WrapperMethodChecker {
 		);
 
 		BlockStmt block = first(methodStatements);
+		assert block != null;
 		List<Statement> statements = block.getStmts();
 		assertThat(
 				format("Method\n{0}\nin {1} should have one line", method, wrapper),
@@ -69,6 +70,7 @@ public class WrapperMethodChecker {
 		);
 		Statement statement = first(statements);
 
+		assert statement != null;
 		assertThat(
 				format("Method\n{0}\nin {1} should return or call a void method", method, wrapper),
 				statement,
