@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 /**
- * A wrapper for {@link java.util.Iterator} that extends the split-up interfaces.
+ * A wrapper for {@link Iterator} that extends the split-up interfaces.
  * @author Steven Weston
  */
 @Wrapper(Iterator.class)

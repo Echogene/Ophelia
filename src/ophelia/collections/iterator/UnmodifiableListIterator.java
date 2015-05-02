@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import java.util.function.Consumer;
 
 /**
+ * A version of {@link ListIterator} that has no modification methods available.
  * @author Steven Weston
  */
 @Wrapper(ListIterator.class)
