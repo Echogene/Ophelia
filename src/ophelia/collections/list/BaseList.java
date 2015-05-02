@@ -8,9 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
+ * A stripped-down version of {@link List} that has only readonly methods.
  * @author Steven Weston
  */
-public interface BaseList<E, I extends BaseIterator<E>, L extends BaseListIterator<E>> extends IntegerFiniteCollection<E, I> {
+public interface BaseList<E, I extends BaseIterator<E>, L extends BaseListIterator<E>>
+		extends IntegerFiniteCollection<E, I> {
 
 	/**
 	 * See {@link List#get(int)}

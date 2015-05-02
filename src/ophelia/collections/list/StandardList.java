@@ -5,14 +5,14 @@ import ophelia.collections.iterator.StandardIterator;
 import ophelia.collections.iterator.StandardListIterator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
+ * A wrapper for {@link List} that extends the split-up interfaces.
  * @author Steven Weston
  */
 @Wrapper(List.class)
@@ -77,6 +77,16 @@ public class StandardList<E>
 	@Override
 	public List<E> subList(int fromIndex, int toIndex) {
 		return list.subList(fromIndex, toIndex);
+	}
+
+	@Override
+	public void sort(Comparator<? super E> c) {
+		list.sort(c);
+	}
+
+	@Override
+	public void replaceAll(UnaryOperator<E> operator) {
+		list.replaceAll(operator);
 	}
 
 	@Override

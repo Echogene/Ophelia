@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
+ * A version of {@link List} that has no modification methods available.
  * @author Steven Weston
  */
 @Wrapper(List.class)

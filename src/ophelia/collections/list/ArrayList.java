@@ -8,9 +8,11 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
+ * A subclass of {@link ArrayList} that also implements the split-up interfaces.
  * @author Steven Weston
  */
-public class ArrayList<E> extends java.util.ArrayList<E> implements ModifiableList<E, StandardIterator<E>, StandardListIterator<E>> {
+public class ArrayList<E> extends java.util.ArrayList<E>
+		implements ModifiableList<E, StandardIterator<E>, StandardListIterator<E>> {
 
 	public ArrayList() {
 		super();
