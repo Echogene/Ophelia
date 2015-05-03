@@ -1,7 +1,9 @@
 package ophelia.function;
 
+import java.util.function.Supplier;
+
 /**
- * Like a {@link java.util.function.Supplier} but can throw an Exception.
+ * Like a {@link Supplier} but can throw an Exception.
  * @author Steven Weston
  */
 @FunctionalInterface
