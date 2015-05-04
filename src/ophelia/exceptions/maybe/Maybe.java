@@ -51,6 +51,9 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		}
 	}
 
+	/**
+	 * @return a stream containing each of the outputs of the given function for which it did not throw an exception
+	 */
 	@NotNull
 	static <S, T> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, ? extends Exception> map) {
 		return source.map(wrapOutput(map))
