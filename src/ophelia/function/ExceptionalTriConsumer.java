@@ -1,6 +1,7 @@
 package ophelia.function;
 
 /**
+ * A functional interface that accepts three objects and can throw an exception.
  * @author Steven Weston
  */
 @FunctionalInterface
