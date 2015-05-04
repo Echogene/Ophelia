@@ -3,7 +3,7 @@ package ophelia.util.javaparser;
 /**
  * @author Steven Weston
  */
-public class OtherTestClass {
+class OtherTestClass {
 
 	static class StaticNestedClass {
 
