@@ -3,6 +3,6 @@ package ophelia.util.javaparser;
 /**
  * @author Steven Weston
  */
-public enum TestEnum {
+enum TestEnum {
 	LOL, WUT
 }
