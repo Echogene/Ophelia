@@ -1,4 +1,6 @@
-package ophelia.event;
+package ophelia.event.observable;
+
+import ophelia.event.Event;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,9 +9,9 @@ import java.util.function.Consumer;
 /**
  * @author Steven Weston
  */
-public abstract class AbstractObservable<E extends Event> implements Observable<E> {
+abstract class AbstractObservable<E extends Event> implements Observable<E> {
 
-	private final Set<Consumer<E>> observers = new HashSet<>();
+	protected final Set<Consumer<E>> observers = new HashSet<>();
 
 	@Override
 	public void observe(Consumer<E> observer) {
@@ -24,14 +26,5 @@ public abstract class AbstractObservable<E extends Event> implements Observable<
 	@Override
 	public void unobserveAll() {
 		observers.clear();
-	}
-
-	protected void fireEvent(E event) {
-		observers.forEach(c -> c.accept(event));
-	}
-
-	protected void fireAsyncEvent(E event) {
-		observers.parallelStream()
-				.forEach(c -> c.accept(event));
 	}
 }

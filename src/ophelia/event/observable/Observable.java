@@ -1,4 +1,6 @@
-package ophelia.event;
+package ophelia.event.observable;
+
+import ophelia.event.Event;
 
 import java.util.function.Consumer;
 
