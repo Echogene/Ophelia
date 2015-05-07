@@ -5,10 +5,7 @@ import com.github.javaparser.ast.body.BaseParameter;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclaratorId;
-import com.github.javaparser.ast.expr.AnnotationExpr;
-import com.github.javaparser.ast.expr.Expression;
-import com.github.javaparser.ast.expr.MethodCallExpr;
-import com.github.javaparser.ast.expr.NameExpr;
+import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
@@ -92,7 +89,18 @@ public class WrapperMethodChecker {
 
 		@Override
 		public void visit(ReturnStmt n, final MethodDeclaration method) {
-			//todo: check moar
+
+			Expression expr = n.getExpr();
+			if (expr instanceof MethodCallExpr) {
+				expr.accept(methodCallChecker, method);
+			} else {
+				assertThat(
+						format("Method\n{0}\nin {1} should call the wrappee", method, wrapper),
+						expr,
+						is(instanceOf(ObjectCreationExpr.class))
+				);
+				// todo: check the constructed class is a wrapper and that its arguments are wrapped too
+			}
 		}
 	}
 
