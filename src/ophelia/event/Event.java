@@ -1,4 +1,4 @@
-package ophelia.util.event;
+package ophelia.event;
 
 /**
  * A tagging interface for a type of event.

@@ -1,4 +1,4 @@
-package ophelia.util.event;
+package ophelia.event;
 
 import ophelia.util.MapUtils;
 
