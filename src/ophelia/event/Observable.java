@@ -3,6 +3,7 @@ package ophelia.event;
 import java.util.function.Consumer;
 
 /**
+ * An observable can be observed.  It can have observations made about events it fires.
  * @author Steven Weston
  */
 public interface Observable<E extends Event> {

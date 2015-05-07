@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * An observable can be observed.  It can have observations made about events it fires.
  * @author Steven Weston
  */
 public abstract class AbstractObservable<E extends Event> implements Observable<E> {
