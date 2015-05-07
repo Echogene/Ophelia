@@ -27,8 +27,11 @@ public abstract class AbstractObservable<E extends Event> implements Observable<
 	}
 
 	protected void fireEvent(E event) {
-		for (Consumer<E> observer : observers) {
-			observer.accept(event);
-		}
+		observers.forEach(c -> c.accept(event));
+	}
+
+	protected void fireAsyncEvent(E event) {
+		observers.parallelStream()
+				.forEach(c -> c.accept(event));
 	}
 }
