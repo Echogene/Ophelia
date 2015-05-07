@@ -11,6 +11,8 @@ public interface Broadcaster<E extends Event> {
 
 	void broadcast(E event);
 
+	void asyncBroadcast(E event);
+
 	void unsubscribe(Consumer<E> eventConsumer);
 
 	void unsubscribeAll();
