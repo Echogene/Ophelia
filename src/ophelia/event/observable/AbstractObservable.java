@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  */
 abstract class AbstractObservable<E extends Event> implements Observable<E> {
 
-	protected final Set<Consumer<E>> observers = new HashSet<>();
+	final Set<Consumer<E>> observers = new HashSet<>();
 
 	@Override
 	public void observe(Consumer<E> observer) {
