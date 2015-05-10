@@ -15,6 +15,8 @@ public class ClassBuilderTest {
 		new ClassBuilder(new File("test/ophelia/generator/TestImpl.java.test"))
 				.withPackage("ophelia.generator")
 				.withClassName("TestImpl")
+				.withImplements(TestInterface.class)
+				.withExtends(TestSuperClass.class)
 				.generate();
 	}
 }

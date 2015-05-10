@@ -7,5 +7,9 @@ public interface MainClassBuilder {
 
 	MainClassBuilder withImport(String classToImport);
 
+	MainClassBuilder withExtends(Class<?> clazz);
+
+	MainClassBuilder withImplements(Class<?> clazz);
+
 	void generate();
 }
