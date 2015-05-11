@@ -21,7 +21,6 @@ import static java.util.Collections.singletonList;
  */
 class BaseClassBuilder implements MainClassBuilder {
 
-	private final File outputFile;
 	private final PackageDeclaration packageDeclaration;
 
 	private final List<ImportDeclaration> imports = new ArrayList<>();
@@ -29,8 +28,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
 	private final String className;
 
-	public BaseClassBuilder(File outputFile, String packageName, String className) {
-		this.outputFile = outputFile;
+	public BaseClassBuilder(String packageName, String className) {
 		this.className = className;
 
 		packageDeclaration = new PackageDeclaration(new NameExpr(packageName));
@@ -57,8 +55,8 @@ class BaseClassBuilder implements MainClassBuilder {
 	}
 
 	@Override
-	public void generate() {
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), UTF_8))) {
+	public void writeToFile(File file) {
+		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8))) {
 
 			ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
 					PUBLIC,

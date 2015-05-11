@@ -1,34 +1,18 @@
 package ophelia.generator;
 
-import java.io.File;
-
 /**
  * @author Steven Weston
  */
 public class ClassBuilder implements ClassBuilderNeedingPackageName {
 
-	private final File outputFile;
+	private final String className;
 
-	public ClassBuilder(File outputFile) {
-		this.outputFile = outputFile;
+	public ClassBuilder(String className) {
+		this.className = className;
 	}
 
 	@Override
-	public ClassBuilderNeedingClassName withPackage(String packageName) {
-		return new ClassBuilderWithPackage(packageName);
-	}
-
-	private class ClassBuilderWithPackage implements ClassBuilderNeedingClassName {
-
-		private final String packageName;
-
-		private ClassBuilderWithPackage(String packageName) {
-			this.packageName = packageName;
-		}
-
-		@Override
-		public MainClassBuilder withClassName(String className) {
-			return new BaseClassBuilder(outputFile, packageName, className);
-		}
+	public MainClassBuilder withPackage(String packageName) {
+		return new BaseClassBuilder(packageName, className);
 	}
 }

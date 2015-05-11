@@ -1,5 +1,7 @@
 package ophelia.generator;
 
+import java.io.File;
+
 /**
  * @author Steven Weston
  */
@@ -11,5 +13,5 @@ public interface MainClassBuilder {
 
 	MainClassBuilder withImplements(Class<?> clazz);
 
-	void generate();
+	void writeToFile(File file);
 }

@@ -5,5 +5,5 @@ package ophelia.generator;
  */
 public interface ClassBuilderNeedingPackageName {
 
-	ClassBuilderNeedingClassName withPackage(String packageName);
+	MainClassBuilder withPackage(String packageName);
 }

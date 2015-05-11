@@ -12,11 +12,10 @@ public class ClassBuilderTest {
 	@Test
 	public void testGeneration() throws Exception {
 
-		new ClassBuilder(new File("test/ophelia/generator/TestImpl.java.test"))
+		new ClassBuilder("TestImpl")
 				.withPackage("ophelia.generator")
-				.withClassName("TestImpl")
 				.withImplements(TestInterface.class)
 				.withExtends(TestSuperClass.class)
-				.generate();
+				.writeToFile(new File("test/ophelia/generator/TestImpl.java.test"));
 	}
 }
