@@ -1,5 +1,7 @@
 package ophelia.generator;
 
+import java.util.stream.Stream;
+
 /**
  * @author Steven Weston
  */
@@ -9,5 +11,11 @@ public interface WithImportBuilder<B extends WithImportBuilder> {
 
 	default B withImport(Class<?> classToImport) {
 		return withImport(classToImport.getCanonicalName());
+	}
+
+	default B withImports(Stream<String> canonicalClassNames) {
+		return canonicalClassNames.map(this::withImport)
+				.findAny()
+				.orElseThrow(() -> new RuntimeException("Could not find builder to return"));
 	}
 }
