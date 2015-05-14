@@ -1,4 +1,4 @@
-package ophelia.generator;
+package ophelia.generator.method;
 
 import ophelia.map.UnmodifiableMap;
 

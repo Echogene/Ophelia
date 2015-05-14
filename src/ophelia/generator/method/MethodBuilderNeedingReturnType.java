@@ -1,4 +1,4 @@
-package ophelia.generator;
+package ophelia.generator.method;
 
 import org.jetbrains.annotations.NotNull;
 

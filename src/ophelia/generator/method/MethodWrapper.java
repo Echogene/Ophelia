@@ -1,4 +1,4 @@
-package ophelia.generator;
+package ophelia.generator.method;
 
 public interface MethodWrapper {
 }
