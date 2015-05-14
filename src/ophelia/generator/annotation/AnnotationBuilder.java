@@ -22,8 +22,8 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 	}
 
 	@Override
-	public AnnotationBuilder withImport(String classToImport) {
-		imports.add(classToImport);
+	public AnnotationBuilder withImport(String canonicalClassName) {
+		imports.add(canonicalClassName);
 		return this;
 	}
 

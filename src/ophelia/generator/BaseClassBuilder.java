@@ -35,8 +35,8 @@ class BaseClassBuilder implements MainClassBuilder {
 	}
 
 	@Override
-	public MainClassBuilder withImport(String classToImport) {
-		imports.add(new ImportDeclaration(new NameExpr(classToImport), false, false));
+	public MainClassBuilder withImport(String canonicalClassName) {
+		imports.add(new ImportDeclaration(new NameExpr(canonicalClassName), false, false));
 		return this;
 	}
 

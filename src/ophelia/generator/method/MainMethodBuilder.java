@@ -1,10 +1,13 @@
 package ophelia.generator.method;
 
-import ophelia.map.UnmodifiableMap;
+import ophelia.generator.WithImportBuilder;
+import ophelia.generator.annotation.AnnotationWrapper;
 
-public interface MainMethodBuilder {
+public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder> {
 
-	MainMethodBuilder withParameters(UnmodifiableMap<Class<?>, String> parameterNames);
+	MainMethodBuilder withParameter(Class<?> type, String name);
+
+	MainMethodBuilder withAnnotatedParameter(AnnotationWrapper annotation, Class<?> type, String name);
 
 	MethodWrapper build();
 }
