@@ -3,7 +3,7 @@ package ophelia.generator;
 /**
  * @author Steven Weston
  */
-public interface WithImportBuilder<B> {
+public interface WithImportBuilder<B extends WithImportBuilder> {
 
 	B withImport(String canonicalClassName);
 
