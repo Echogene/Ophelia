@@ -5,9 +5,7 @@ import java.io.File;
 /**
  * @author Steven Weston
  */
-public interface MainClassBuilder {
-
-	MainClassBuilder withImport(String classToImport);
+public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder> {
 
 	MainClassBuilder withExtends(Class<?> clazz);
 
