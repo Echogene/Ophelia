@@ -1,4 +1,6 @@
 package ophelia.generator.method;
 
-public interface MethodWrapper {
+import ophelia.generator.CodeWrapper;
+
+public interface MethodWrapper extends CodeWrapper {
 }
