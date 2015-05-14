@@ -1,6 +1,9 @@
 package ophelia.generator.method;
 
-import ophelia.generator.CodeWrapper;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import ophelia.generator.CodeWrapperWithImports;
+import ophelia.generator.NodeWrapper;
 
-public interface MethodWrapper extends CodeWrapper {
+public interface MethodWrapper
+		extends CodeWrapperWithImports, NodeWrapper<MethodDeclaration> {
 }

@@ -1,5 +1,8 @@
 package ophelia.generator.annotation;
 
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.NameExpr;
+import com.github.javaparser.ast.expr.NormalAnnotationExpr;
 import ophelia.collections.list.UnmodifiableList;
 import ophelia.generator.WithImportBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -30,8 +33,8 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 	public AnnotationWrapper build() {
 		return new AnnotationWrapper() {
 			@Override
-			public String getAnnotationName() {
-				return annotationName;
+			public AnnotationExpr getNode() {
+				return new NormalAnnotationExpr(new NameExpr(annotationName), null);
 			}
 
 			@NotNull
