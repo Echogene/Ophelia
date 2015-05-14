@@ -5,7 +5,7 @@ package ophelia.generator;
  */
 public interface WithImportBuilder<B> {
 
-	B withImport(String classToImport);
+	B withImport(String canonicalClassName);
 
 	default B withImport(Class<?> classToImport) {
 		return withImport(classToImport.getCanonicalName());
