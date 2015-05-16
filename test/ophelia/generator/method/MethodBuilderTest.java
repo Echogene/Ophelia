@@ -23,4 +23,20 @@ public class MethodBuilderTest {
 				MethodBuilder.class.getCanonicalName()
 		));
 	}
+
+	@Test
+	public void test_void_build() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withParameter(new ParameterBuilder(MethodBuilderTest.class, "test2").build())
+				.build();
+
+		assertThat(test.getNode().toString(), is("public void test(MethodBuilder test, MethodBuilderTest test2);"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+				MethodBuilderTest.class.getCanonicalName(),
+				MethodBuilder.class.getCanonicalName()
+		));
+	}
 }

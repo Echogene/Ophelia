@@ -28,8 +28,12 @@ class BaseMethodBuilder implements MainMethodBuilder {
 
 	BaseMethodBuilder(@NotNull String methodName, @Nullable String canonicalTypeName) {
 		this.methodName = methodName;
-		this.returnType = ClassUtils.getSimpleName(canonicalTypeName);
-		withImport(canonicalTypeName);
+		if (canonicalTypeName == null) {
+			returnType = null;
+		} else {
+			this.returnType = ClassUtils.getSimpleName(canonicalTypeName);
+			withImport(canonicalTypeName);
+		}
 	}
 
 	@Override
