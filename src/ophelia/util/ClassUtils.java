@@ -18,6 +18,6 @@ public class ClassUtils {
 
 	@NotNull
 	public static String getSimpleName(@NotNull String canonicalClassName) {
-		return canonicalClassName.substring(canonicalClassName.lastIndexOf("."));
+		return canonicalClassName.substring(canonicalClassName.lastIndexOf(".") + 1);
 	}
 }
