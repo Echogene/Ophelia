@@ -1,15 +1,15 @@
 package ophelia.generator.annotation;
 
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
 import com.github.javaparser.ast.expr.NameExpr;
-import com.github.javaparser.ast.expr.NormalAnnotationExpr;
-import ophelia.collections.list.UnmodifiableList;
+import ophelia.collections.set.HashSet;
+import ophelia.collections.set.UnmodifiableSet;
 import ophelia.generator.WithImportBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Steven Weston
@@ -17,7 +17,7 @@ import java.util.List;
 public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 
 	private final String annotationName;
-	private final List<String> imports = new ArrayList<>();
+	private final Set<String> imports = new HashSet<>();
 
 	public AnnotationBuilder(Class<? extends Annotation> annotationClass) {
 		this.annotationName = annotationClass.getSimpleName();
@@ -34,13 +34,13 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 		return new AnnotationWrapper() {
 			@Override
 			public AnnotationExpr getNode() {
-				return new NormalAnnotationExpr(new NameExpr(annotationName), null);
+				return new MarkerAnnotationExpr(new NameExpr(annotationName));
 			}
 
 			@NotNull
 			@Override
-			public UnmodifiableList<String> getImports() {
-				return new UnmodifiableList<>(imports);
+			public UnmodifiableSet<String> getImports() {
+				return new UnmodifiableSet<>(imports);
 			}
 		};
 	}

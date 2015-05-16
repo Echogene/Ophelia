@@ -1,7 +1,7 @@
 package ophelia.generator;
 
 import com.github.javaparser.ast.Node;
-import ophelia.collections.list.UnmodifiableList;
+import ophelia.collections.set.UnmodifiableSet;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -9,5 +9,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface CodeWrapperWithImports<N extends Node> extends NodeWrapper<N> {
 
-	@NotNull UnmodifiableList<String> getImports();
+	@NotNull UnmodifiableSet<String> getImports();
 }
