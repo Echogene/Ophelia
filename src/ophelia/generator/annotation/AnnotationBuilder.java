@@ -6,6 +6,7 @@ import com.github.javaparser.ast.expr.NameExpr;
 import ophelia.collections.set.HashSet;
 import ophelia.collections.set.UnmodifiableSet;
 import ophelia.generator.WithImportBuilder;
+import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Annotation;
@@ -20,8 +21,12 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 	private final Set<String> imports = new HashSet<>();
 
 	public AnnotationBuilder(Class<? extends Annotation> annotationClass) {
-		this.annotationName = annotationClass.getSimpleName();
-		this.withImport(annotationClass.getCanonicalName());
+		this(annotationClass.getCanonicalName());
+	}
+
+	public AnnotationBuilder(String canonicalClassName) {
+		this.annotationName = ClassUtils.getSimpleName(canonicalClassName);
+		this.withImport(canonicalClassName);
 	}
 
 	@Override
