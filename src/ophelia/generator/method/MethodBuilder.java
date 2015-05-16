@@ -12,7 +12,7 @@ public class MethodBuilder implements MethodBuilderNeedingReturnType {
 
 	@Override
 	public MainMethodBuilder withReturnType(@NotNull Class<?> type) {
-		return new BaseMethodBuilder(methodName, type);
+		return new BaseMethodBuilder(methodName, type.getCanonicalName());
 	}
 
 	@Override
