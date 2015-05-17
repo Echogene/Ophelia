@@ -39,4 +39,20 @@ public class MethodBuilderTest {
 				MethodBuilder.class.getCanonicalName()
 		));
 	}
+
+	@Test
+	public void test_body_build() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withReturnType(MethodBuilderTest.class)
+				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withImplementation("return null;")
+				.build();
+
+		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(MethodBuilder test) {\n    return null;\n}"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+				MethodBuilderTest.class.getCanonicalName(),
+				MethodBuilder.class.getCanonicalName()
+		));
+	}
 }
