@@ -1,5 +1,8 @@
 package ophelia.generator;
 
+import ophelia.generator.method.MethodWrapper;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 /**
@@ -7,9 +10,11 @@ import java.io.File;
  */
 public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder> {
 
-	MainClassBuilder withExtends(Class<?> clazz);
+	@NotNull MainClassBuilder withExtends(@NotNull Class<?> clazz);
 
-	MainClassBuilder withImplements(Class<?> clazz);
+	@NotNull MainClassBuilder withImplements(@NotNull Class<?> clazz);
+
+	@NotNull MainClassBuilder withMethod(@NotNull MethodWrapper method);
 
 	void writeToFile(File file);
 }

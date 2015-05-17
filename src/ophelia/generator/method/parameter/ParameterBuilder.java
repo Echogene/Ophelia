@@ -35,7 +35,8 @@ public class ParameterBuilder implements WithImportBuilder<ParameterBuilder> {
 
 	public ParameterBuilder withAnnotation(AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
-		return withImports(annotation.getImports().stream());
+		withImports(annotation.getImports().stream());
+		return this;
 	}
 
 	@Override

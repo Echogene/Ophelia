@@ -16,6 +16,6 @@ public interface WithImportBuilder<B extends WithImportBuilder> {
 	default B withImports(Stream<String> canonicalClassNames) {
 		return canonicalClassNames.map(this::withImport)
 				.findAny()
-				.orElseThrow(() -> new RuntimeException("Could not find builder to return"));
+				.orElse(null);
 	}
 }

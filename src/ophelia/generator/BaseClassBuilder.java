@@ -1,11 +1,15 @@
 package ophelia.generator;
 
+import com.github.javaparser.ASTHelper;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import ophelia.generator.method.MethodWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +17,6 @@ import java.util.List;
 
 import static java.lang.reflect.Modifier.PUBLIC;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
 /**
@@ -27,6 +30,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<ClassOrInterfaceType> extensions = new ArrayList<>();
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
 	private final String className;
+	private final List<MethodDeclaration> methods = new ArrayList<>();
 
 	public BaseClassBuilder(String packageName, String className) {
 		this.className = className;
@@ -40,17 +44,27 @@ class BaseClassBuilder implements MainClassBuilder {
 		return this;
 	}
 
+	@NotNull
 	@Override
-	public MainClassBuilder withExtends(Class<?> clazz) {
+	public MainClassBuilder withExtends(@NotNull Class<?> clazz) {
 		withImport(clazz.getCanonicalName());
 		extensions.add(new ClassOrInterfaceType(clazz.getSimpleName()));
 		return this;
 	}
 
+	@NotNull
 	@Override
-	public MainClassBuilder withImplements(Class<?> clazz) {
+	public MainClassBuilder withImplements(@NotNull Class<?> clazz) {
 		withImport(clazz.getCanonicalName());
 		implementations.add(new ClassOrInterfaceType(clazz.getSimpleName()));
+		return this;
+	}
+
+	@NotNull
+	@Override
+	public MainClassBuilder withMethod(@NotNull MethodWrapper method) {
+		methods.add(method.getNode());
+		withImports(method.getImports().stream());
 		return this;
 	}
 
@@ -66,8 +80,10 @@ class BaseClassBuilder implements MainClassBuilder {
 					null,
 					extensions.isEmpty() ? null : extensions,
 					implementations.isEmpty() ? null : implementations,
-					emptyList()
+					new ArrayList<>()
 			);
+
+			methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 
 			CompilationUnit cu = new CompilationUnit(
 					packageDeclaration,

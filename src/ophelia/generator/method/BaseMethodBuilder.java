@@ -48,7 +48,8 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	@Override
 	public MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
-		return withImports(annotation.getImports().stream());
+		withImports(annotation.getImports().stream());
+		return this;
 	}
 
 	@NotNull
