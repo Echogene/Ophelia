@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.is;
 
 public class MethodBuilderTest {
@@ -49,6 +50,29 @@ public class MethodBuilderTest {
 				.build();
 
 		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(MethodBuilder test) {\n    return null;\n}"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+				MethodBuilderTest.class.getCanonicalName(),
+				MethodBuilder.class.getCanonicalName()
+		));
+	}
+
+	@Test
+	public void test_body_build_with_two_lines() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withReturnType(MethodBuilderTest.class)
+				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withImplementation(
+						"MethodBuilderTest lol = new MethodBuilderTest();" +
+						"return lol;")
+				.build();
+
+		assertThat(test.getNode().toString(), is(equalToIgnoringWhiteSpace(
+				"public MethodBuilderTest test(MethodBuilder test) {\n" +
+				"    MethodBuilderTest lol = new MethodBuilderTest();\n" +
+				"    return lol;\n" +
+				"}"
+		)));
 
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
