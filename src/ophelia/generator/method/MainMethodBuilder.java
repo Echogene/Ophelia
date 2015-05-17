@@ -20,5 +20,7 @@ public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder> 
 
 	MainMethodBuilder withNoPrivacyModifier();
 
+	MainMethodBuilder withStasis();
+
 	MethodWrapper build();
 }

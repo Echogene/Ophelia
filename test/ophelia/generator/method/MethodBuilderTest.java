@@ -42,6 +42,18 @@ public class MethodBuilderTest {
 	}
 
 	@Test
+	public void test_stasis() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withStasis()
+				.build();
+
+		assertThat(test.getNode().toString(), is("public static void test();"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+	}
+
+	@Test
 	public void test_privacy() throws Exception {
 		MethodWrapper test = new MethodBuilder("test")
 				.withVoidType()

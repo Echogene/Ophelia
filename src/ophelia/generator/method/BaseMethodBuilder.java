@@ -82,6 +82,12 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	}
 
 	@Override
+	public MainMethodBuilder withStasis() {
+		modifiers = modifiers | STATIC;
+		return this;
+	}
+
+	@Override
 	public MainMethodBuilder withImport(String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
