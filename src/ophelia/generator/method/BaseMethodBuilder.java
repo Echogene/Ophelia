@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.reflect.Modifier.PRIVATE;
+import static java.lang.reflect.Modifier.PROTECTED;
 import static java.lang.reflect.Modifier.PUBLIC;
 
 class BaseMethodBuilder implements MainMethodBuilder {
@@ -29,6 +31,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	private final Set<String> imports = new HashSet<>();
 	private final List<Parameter> parameters = new ArrayList<>();
 	private BlockStmt block;
+	private int modifiers = PUBLIC;
 
 	BaseMethodBuilder(@NotNull String methodName, @Nullable String canonicalTypeName) {
 		this.methodName = methodName;
@@ -54,6 +57,24 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	}
 
 	@Override
+	public MainMethodBuilder withPrivacy() {
+		modifiers = (modifiers & ~PUBLIC & ~PROTECTED) | PRIVATE;
+		return this;
+	}
+
+	@Override
+	public MainMethodBuilder withProtection() {
+		modifiers = (modifiers & ~PUBLIC & ~PRIVATE) | PROTECTED;
+		return this;
+	}
+
+	@Override
+	public MainMethodBuilder withNoPrivacyModifier() {
+		modifiers = modifiers & ~PUBLIC & ~PRIVATE & ~PROTECTED;
+		return this;
+	}
+
+	@Override
 	public MainMethodBuilder withImport(String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
@@ -70,7 +91,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 				} else {
 					type = new ClassOrInterfaceType(returnType);
 				}
-				MethodDeclaration declaration = new MethodDeclaration(PUBLIC, type, methodName);
+				MethodDeclaration declaration = new MethodDeclaration(modifiers, type, methodName);
 				declaration.setParameters(parameters);
 				if (block != null) {
 					declaration.setBody(block);

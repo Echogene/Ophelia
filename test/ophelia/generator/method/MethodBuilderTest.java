@@ -4,9 +4,7 @@ import ophelia.generator.method.parameter.ParameterBuilder;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class MethodBuilderTest {
 
@@ -23,6 +21,42 @@ public class MethodBuilderTest {
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
 		));
+	}
+
+	@Test
+	public void test_privacy() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withPrivacy()
+				.build();
+
+		assertThat(test.getNode().toString(), is("private void test();"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+	}
+
+	@Test
+	public void test_protection() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withProtection()
+				.build();
+
+		assertThat(test.getNode().toString(), is("protected void test();"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+	}
+
+	@Test
+	public void test_no_privacy() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withNoPrivacyModifier()
+				.build();
+
+		assertThat(test.getNode().toString(), is("void test();"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
 	}
 
 	@Test
@@ -69,9 +103,9 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is(equalToIgnoringWhiteSpace(
 				"public MethodBuilderTest test(MethodBuilder test) {\n" +
-				"    MethodBuilderTest lol = new MethodBuilderTest();\n" +
-				"    return lol;\n" +
-				"}"
+						"    MethodBuilderTest lol = new MethodBuilderTest();\n" +
+						"    return lol;\n" +
+						"}"
 		)));
 
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(

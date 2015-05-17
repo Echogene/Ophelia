@@ -11,5 +11,11 @@ public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder> 
 
 	MainMethodBuilder withImplementation(String implementation) throws ParseException;
 
+	MainMethodBuilder withPrivacy();
+
+	MainMethodBuilder withProtection();
+
+	MainMethodBuilder withNoPrivacyModifier();
+
 	MethodWrapper build();
 }
