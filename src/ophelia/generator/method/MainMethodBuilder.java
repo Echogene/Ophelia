@@ -12,7 +12,7 @@ public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder> 
 
 	MainMethodBuilder withParameter(@NotNull ParameterWrapper parameter);
 
-	MainMethodBuilder withImplementation(String implementation) throws ParseException;
+	MainMethodBuilder withImplementation(@NotNull String implementation) throws ParseException;
 
 	MainMethodBuilder withPrivacy();
 

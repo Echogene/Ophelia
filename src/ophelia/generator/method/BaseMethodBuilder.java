@@ -58,7 +58,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	}
 
 	@Override
-	public MainMethodBuilder withImplementation(String implementation) throws ParseException {
+	public MainMethodBuilder withImplementation(@NotNull String implementation) throws ParseException {
 		block = JavaParser.parseBlock("{" + implementation + "}");
 		return this;
 	}
