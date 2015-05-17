@@ -1,6 +1,8 @@
 package ophelia.generator.method;
 
+import ophelia.generator.annotation.AnnotationBuilder;
 import ophelia.generator.method.parameter.ParameterBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,6 +22,22 @@ public class MethodBuilderTest {
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
+		));
+	}
+
+	@Test
+	public void test_annotation() throws Exception {
+		MethodWrapper test = new MethodBuilder("test")
+				.withVoidType()
+				.withAnnotation(new AnnotationBuilder(Override.class).build())
+				.withAnnotation(new AnnotationBuilder(NotNull.class).build())
+				.build();
+
+		assertThat(test.getNode().toString(), is("@Override\n@NotNull\npublic void test();"));
+
+		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+				Override.class.getCanonicalName(),
+				NotNull.class.getCanonicalName()
 		));
 	}
 
