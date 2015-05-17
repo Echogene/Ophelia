@@ -44,12 +44,14 @@ class BaseMethodBuilder implements MainMethodBuilder {
 		}
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
 		return withImports(annotation.getImports().stream());
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withParameter(@NotNull ParameterWrapper parameter) {
 		withImports(parameter.getImports().stream());
@@ -57,30 +59,35 @@ class BaseMethodBuilder implements MainMethodBuilder {
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withImplementation(@NotNull String implementation) throws ParseException {
 		block = JavaParser.parseBlock("{" + implementation + "}");
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withPrivacy() {
 		modifiers = (modifiers & ~PUBLIC & ~PROTECTED) | PRIVATE;
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withProtection() {
 		modifiers = (modifiers & ~PUBLIC & ~PRIVATE) | PROTECTED;
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withNoPrivacyModifier() {
 		modifiers = modifiers & ~PUBLIC & ~PRIVATE & ~PROTECTED;
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withStasis() {
 		modifiers = modifiers | STATIC;
@@ -93,6 +100,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MethodWrapper build() {
 		return new MethodWrapper() {

@@ -8,19 +8,19 @@ import org.jetbrains.annotations.NotNull;
 
 public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder> {
 
-	MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation);
+	@NotNull MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation);
 
-	MainMethodBuilder withParameter(@NotNull ParameterWrapper parameter);
+	@NotNull MainMethodBuilder withParameter(@NotNull ParameterWrapper parameter);
 
-	MainMethodBuilder withImplementation(@NotNull String implementation) throws ParseException;
+	@NotNull MainMethodBuilder withImplementation(@NotNull String implementation) throws ParseException;
 
-	MainMethodBuilder withPrivacy();
+	@NotNull MainMethodBuilder withPrivacy();
 
-	MainMethodBuilder withProtection();
+	@NotNull MainMethodBuilder withProtection();
 
-	MainMethodBuilder withNoPrivacyModifier();
+	@NotNull MainMethodBuilder withNoPrivacyModifier();
 
-	MainMethodBuilder withStasis();
+	@NotNull MainMethodBuilder withStasis();
 
-	MethodWrapper build();
+	@NotNull MethodWrapper build();
 }
