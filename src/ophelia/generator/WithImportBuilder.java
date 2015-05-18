@@ -15,7 +15,7 @@ public interface WithImportBuilder<B extends WithImportBuilder> {
 
 	default B withImports(Stream<String> canonicalClassNames) {
 		return canonicalClassNames.map(this::withImport)
-				.findAny()
+				.reduce((a, b) -> b)
 				.orElse(null);
 	}
 }
