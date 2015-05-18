@@ -1,6 +1,7 @@
 package ophelia.generator.method.parameter;
 
 import ophelia.generator.annotation.AnnotationBuilder;
+import ophelia.generator.type.TypeBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -12,8 +13,12 @@ public class ParameterBuilderTest {
 
 	@Test
 	public void test_build() throws Exception {
-		ParameterWrapper parameter = new ParameterBuilder(ParameterBuilderTest.class, "test")
-				.withAnnotation(new AnnotationBuilder(NotNull.class).build())
+		ParameterWrapper parameter = new ParameterBuilder("test")
+				.withType(
+						new TypeBuilder(ParameterBuilderTest.class)
+								.withAnnotation(new AnnotationBuilder(NotNull.class).build())
+								.build()
+				)
 				.build();
 
 		assertThat(parameter.getNode().toString(), is("@NotNull ParameterBuilderTest test"));

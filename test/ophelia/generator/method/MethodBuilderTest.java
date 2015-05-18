@@ -14,7 +14,9 @@ public class MethodBuilderTest {
 	public void test_build() throws Exception {
 		MethodWrapper test = new MethodBuilder("test")
 				.withReturnType(MethodBuilderTest.class)
-				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withParameter(new ParameterBuilder("test")
+								.withType(MethodBuilder.class)
+								.build())
 				.build();
 
 		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(MethodBuilder test);"));
@@ -93,8 +95,8 @@ public class MethodBuilderTest {
 	public void test_void_build() throws Exception {
 		MethodWrapper test = new MethodBuilder("test")
 				.withVoidType()
-				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
-				.withParameter(new ParameterBuilder(MethodBuilderTest.class, "test2").build())
+				.withParameter(new ParameterBuilder("test").withType(MethodBuilder.class).build())
+				.withParameter(new ParameterBuilder("test2").withType(MethodBuilderTest.class).build())
 				.build();
 
 		assertThat(test.getNode().toString(), is("public void test(MethodBuilder test, MethodBuilderTest test2);"));
@@ -109,7 +111,7 @@ public class MethodBuilderTest {
 	public void test_body_build() throws Exception {
 		MethodWrapper test = new MethodBuilder("test")
 				.withReturnType(MethodBuilderTest.class)
-				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withParameter(new ParameterBuilder("test").withType(MethodBuilder.class).build())
 				.withImplementation("return null;")
 				.build();
 
@@ -125,10 +127,11 @@ public class MethodBuilderTest {
 	public void test_body_build_with_two_lines() throws Exception {
 		MethodWrapper test = new MethodBuilder("test")
 				.withReturnType(MethodBuilderTest.class)
-				.withParameter(new ParameterBuilder(MethodBuilder.class, "test").build())
+				.withParameter(new ParameterBuilder("test").withType(MethodBuilder.class).build())
 				.withImplementation(
 						"MethodBuilderTest lol = new MethodBuilderTest();" +
-						"return lol;")
+								"return lol;"
+				)
 				.build();
 
 		assertThat(test.getNode().toString(), is(equalToIgnoringWhiteSpace(
