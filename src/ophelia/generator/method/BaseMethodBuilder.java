@@ -95,6 +95,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public MainMethodBuilder withImport(String canonicalClassName) {
 		imports.add(canonicalClassName);

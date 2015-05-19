@@ -37,6 +37,7 @@ class BaseClassBuilder implements MainClassBuilder {
 		packageDeclaration = new PackageDeclaration(new NameExpr(packageName));
 	}
 
+	@NotNull
 	@Override
 	public MainClassBuilder withImport(String canonicalClassName) {
 		imports.add(new ImportDeclaration(new NameExpr(canonicalClassName), false, false));

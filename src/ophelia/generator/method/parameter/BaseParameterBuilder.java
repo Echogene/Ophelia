@@ -34,6 +34,7 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 		withImports(type.getImports().stream());
 	}
 
+	@NotNull
 	@Override
 	public MainParameterBuilder withImport(String canonicalClassName) {
 		imports.add(canonicalClassName);
