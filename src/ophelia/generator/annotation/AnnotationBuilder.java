@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
+public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder, AnnotationWrapper> {
 
 	private final String annotationName;
 	private final Set<String> imports = new HashSet<>();
@@ -35,6 +35,8 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationBuilder> {
 		return this;
 	}
 
+	@NotNull
+	@Override
 	public AnnotationWrapper build() {
 		return new AnnotationWrapper() {
 			@Override

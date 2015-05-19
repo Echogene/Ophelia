@@ -11,12 +11,10 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import ophelia.generator.method.MethodWrapper;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.reflect.Modifier.PUBLIC;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonList;
 
 /**
@@ -68,31 +66,25 @@ class BaseClassBuilder implements MainClassBuilder {
 		return this;
 	}
 
-	@Override
-	public void writeToFile(File file) {
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8))) {
+	@NotNull
+	public CompilationUnit build() {
+		ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
+				PUBLIC,
+				null,
+				false,
+				className,
+				null,
+				extensions.isEmpty() ? null : extensions,
+				implementations.isEmpty() ? null : implementations,
+				new ArrayList<>()
+		);
 
-			ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
-					PUBLIC,
-					null,
-					false,
-					className,
-					null,
-					extensions.isEmpty() ? null : extensions,
-					implementations.isEmpty() ? null : implementations,
-					new ArrayList<>()
-			);
+		methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 
-			methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
-
-			CompilationUnit cu = new CompilationUnit(
-					packageDeclaration,
-					imports,
-					singletonList(typeDeclaration)
-			);
-			writer.write(cu.toString());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return new CompilationUnit(
+				packageDeclaration,
+				imports,
+				singletonList(typeDeclaration)
+		);
 	}
 }

@@ -1,11 +1,13 @@
 package ophelia.generator;
 
+import ophelia.builder.Builder;
+
 import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
  */
-public interface WithImportBuilder<B extends WithImportBuilder> {
+public interface WithImportBuilder<B extends WithImportBuilder, T> extends Builder<T> {
 
 	B withImport(String canonicalClassName);
 

@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class TypeBuilder implements WithImportBuilder<TypeBuilder> {
+public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> {
 
 	private final String typeName;
 	private final Set<String> imports = new HashSet<>();
@@ -44,6 +44,8 @@ public class TypeBuilder implements WithImportBuilder<TypeBuilder> {
 		return this;
 	}
 
+	@NotNull
+	@Override
 	public TypeWrapper build() {
 		return new TypeWrapper() {
 			@NotNull
