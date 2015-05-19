@@ -13,9 +13,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder, CompilationUnit> {
 
-	@NotNull MainClassBuilder withExtends(@NotNull Class<?> clazz);
+	@NotNull MainClassBuilder withExtends(@NotNull String canonicalClassName);
 
-	@NotNull MainClassBuilder withImplements(@NotNull Class<?> clazz);
+	@NotNull default MainClassBuilder withExtends(@NotNull Class<?> clazz) {
+		return withExtends(clazz.getCanonicalName());
+	}
+
+	@NotNull MainClassBuilder withImplements(@NotNull String canonicalClassName);
+
+	@NotNull default MainClassBuilder withImplements(@NotNull Class<?> clazz) {
+		return withImplements(clazz.getCanonicalName());
+	}
 
 	@NotNull MainClassBuilder withMethod(@NotNull MethodWrapper method);
 

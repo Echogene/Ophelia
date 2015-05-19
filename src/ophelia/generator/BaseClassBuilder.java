@@ -9,6 +9,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import ophelia.generator.method.MethodWrapper;
+import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -44,17 +45,17 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	@NotNull
 	@Override
-	public MainClassBuilder withExtends(@NotNull Class<?> clazz) {
-		withImport(clazz.getCanonicalName());
-		extensions.add(new ClassOrInterfaceType(clazz.getSimpleName()));
+	public MainClassBuilder withExtends(@NotNull String canonicalClassName) {
+		withImport(canonicalClassName);
+		extensions.add(new ClassOrInterfaceType(ClassUtils.getSimpleName(canonicalClassName)));
 		return this;
 	}
 
 	@NotNull
 	@Override
-	public MainClassBuilder withImplements(@NotNull Class<?> clazz) {
-		withImport(clazz.getCanonicalName());
-		implementations.add(new ClassOrInterfaceType(clazz.getSimpleName()));
+	public MainClassBuilder withImplements(@NotNull String canonicalClassName) {
+		withImport(canonicalClassName);
+		implementations.add(new ClassOrInterfaceType(ClassUtils.getSimpleName(canonicalClassName)));
 		return this;
 	}
 
