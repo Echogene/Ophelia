@@ -6,14 +6,13 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.type.VoidType;
 import ophelia.collections.set.HashSet;
 import ophelia.collections.set.UnmodifiableSet;
 import ophelia.generator.annotation.AnnotationWrapper;
 import ophelia.generator.method.parameter.ParameterWrapper;
-import ophelia.util.ClassUtils;
+import ophelia.generator.type.TypeWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +25,7 @@ import static java.lang.reflect.Modifier.*;
 class BaseMethodBuilder implements MainMethodBuilder {
 
 	private final String methodName;
-	@Nullable private final String returnType;
+	@Nullable private final Type returnType;
 
 	private final Set<String> imports = new HashSet<>();
 	private final List<Parameter> parameters = new ArrayList<>();
@@ -34,13 +33,13 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	private int modifiers = PUBLIC;
 	private final List<AnnotationExpr> annotations = new ArrayList<>();
 
-	BaseMethodBuilder(@NotNull String methodName, @Nullable String canonicalTypeName) {
+	BaseMethodBuilder(@NotNull String methodName, @Nullable TypeWrapper type) {
 		this.methodName = methodName;
-		if (canonicalTypeName == null) {
+		if (type == null) {
 			returnType = null;
 		} else {
-			this.returnType = ClassUtils.getSimpleName(canonicalTypeName);
-			withImport(canonicalTypeName);
+			this.returnType = type.getNode();
+			withImports(type.getImports().stream());
 		}
 	}
 
@@ -112,7 +111,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 				if (returnType == null) {
 					type = new VoidType();
 				} else {
-					type = new ClassOrInterfaceType(returnType);
+					type = returnType;
 				}
 				MethodDeclaration declaration = new MethodDeclaration(modifiers, type, methodName);
 				declaration.setParameters(parameters);
