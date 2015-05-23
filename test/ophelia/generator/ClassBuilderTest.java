@@ -1,5 +1,6 @@
 package ophelia.generator;
 
+import ophelia.generator.field.FieldBuilder;
 import ophelia.generator.method.MethodBuilder;
 import org.junit.Test;
 
@@ -17,6 +18,15 @@ public class ClassBuilderTest {
 				.withPackage("ophelia.generator")
 				.withImplements(TestInterface.class)
 				.withExtends(TestSuperClass.class)
+				.withAbstraction()
+				.withField(
+						new FieldBuilder("INSTANCE")
+								.withType("ophelia.generator.TestImpl")
+								.withInitialisation("new TestImpl()")
+								.withPublicity()
+								.withStasis()
+								.build()
+				)
 				.withMethod(new MethodBuilder("test").withVoidType().build())
 				.writeToFile(new File("test/ophelia/generator/TestImpl.java.test"));
 	}

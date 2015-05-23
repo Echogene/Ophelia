@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.reflect.Modifier.ABSTRACT;
 import static java.lang.reflect.Modifier.PUBLIC;
 import static java.util.Collections.singletonList;
 
@@ -33,6 +34,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final String className;
 	private final List<MethodDeclaration> methods = new ArrayList<>();
 	private final List<FieldDeclaration> fields = new ArrayList<>();
+	private int modifiers = PUBLIC;
 
 	public BaseClassBuilder(String packageName, String className) {
 		this.className = className;
@@ -80,9 +82,16 @@ class BaseClassBuilder implements MainClassBuilder {
 	}
 
 	@NotNull
+	@Override
+	public MainClassBuilder withAbstraction() {
+		modifiers = modifiers | ABSTRACT;
+		return this;
+	}
+
+	@NotNull
 	public CompilationUnit build() {
 		ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
-				PUBLIC,
+				modifiers,
 				null,
 				false,
 				className,

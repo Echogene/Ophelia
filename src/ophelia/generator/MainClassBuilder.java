@@ -39,4 +39,6 @@ public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder, Co
 			throw new RuntimeException(e);
 		}
 	}
+
+	@NotNull MainClassBuilder withAbstraction();
 }
