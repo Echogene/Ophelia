@@ -1,7 +1,6 @@
 package ophelia.generator;
 
 import ophelia.generator.field.FieldBuilder;
-import ophelia.generator.method.MethodBuilder;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,12 +21,12 @@ public class ClassBuilderTest {
 				.withField(
 						new FieldBuilder("INSTANCE")
 								.withType("ophelia.generator.TestImpl")
-								.withInitialisation("new TestImpl()")
+								.withInitialisation("new TestImpl() {}")
 								.withPublicity()
 								.withStasis()
 								.build()
 				)
-				.withMethod(new MethodBuilder("test").withVoidType().build())
+				.withSetMember("setMember", TestInterface.class)
 				.writeToFile(new File("test/ophelia/generator/TestImpl.java.test"));
 	}
 }
