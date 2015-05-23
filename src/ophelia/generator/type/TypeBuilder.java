@@ -8,6 +8,7 @@ import ophelia.generator.WithImportBuilder;
 import ophelia.generator.annotation.AnnotationWrapper;
 import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +24,9 @@ public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> 
 	private final Set<String> imports = new HashSet<>();
 	private final List<AnnotationExpr> annotations = new ArrayList<>();
 
+	@Nullable
+	private List<Type> genericTypes = null;
+
 	public TypeBuilder(String canonicalClassName) {
 		this.typeName = ClassUtils.getSimpleName(canonicalClassName);
 		withImport(canonicalClassName);
@@ -32,9 +36,36 @@ public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> 
 		this(clazz.getCanonicalName());
 	}
 
+	@NotNull
 	public TypeBuilder withAnnotation(final AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
 		withImports(annotation.getImports().stream());
+		return this;
+	}
+
+	@NotNull
+	public TypeBuilder withGenericParameter(String type) {
+		return withGenericParameter(new TypeBuilder(type).build());
+	}
+
+	@NotNull
+	public TypeBuilder withGenericParameter(Class<?> type) {
+		return withGenericParameter(type.getCanonicalName());
+	}
+
+	@NotNull
+	public TypeBuilder withGenericParameter(TypeWrapper type) {
+		if (genericTypes == null) {
+			withDiamond();
+		}
+		genericTypes.add(type.getNode());
+		withImports(type.getImports().stream());
+		return this;
+	}
+
+	@NotNull
+	public TypeBuilder withDiamond() {
+		genericTypes = new ArrayList<>();
 		return this;
 	}
 
@@ -59,6 +90,7 @@ public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> 
 			public Type getNode() {
 				ClassOrInterfaceType type = new ClassOrInterfaceType(typeName);
 				type.setAnnotations(annotations);
+				type.setTypeArgs(genericTypes);
 				return type;
 			}
 		};
