@@ -172,4 +172,9 @@ public class StringUtils {
 		sb.replace(index, index + toReplace.length(), substitution);
 		return sb.toString();
 	}
+
+	@NotNull
+	public static String uppercaseFirst(@NotNull String string) {
+		return string.substring(0, 1).toUpperCase() + string.substring(1);
+	}
 }
