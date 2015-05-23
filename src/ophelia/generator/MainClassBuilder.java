@@ -1,6 +1,7 @@
 package ophelia.generator;
 
 import com.github.javaparser.ast.CompilationUnit;
+import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodWrapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +27,8 @@ public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder, Co
 	}
 
 	@NotNull MainClassBuilder withMethod(@NotNull MethodWrapper method);
+
+	@NotNull MainClassBuilder withField(@NotNull FieldWrapper field);
 
 	default void writeToFile(File file) {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8))) {

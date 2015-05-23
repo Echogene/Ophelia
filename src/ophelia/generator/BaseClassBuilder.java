@@ -5,9 +5,11 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodWrapper;
 import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
 	private final String className;
 	private final List<MethodDeclaration> methods = new ArrayList<>();
+	private final List<FieldDeclaration> fields = new ArrayList<>();
 
 	public BaseClassBuilder(String packageName, String className) {
 		this.className = className;
@@ -69,6 +72,14 @@ class BaseClassBuilder implements MainClassBuilder {
 	}
 
 	@NotNull
+	@Override
+	public MainClassBuilder withField(@NotNull FieldWrapper field) {
+		fields.add(field.getNode());
+		withImports(field.getImports().stream());
+		return this;
+	}
+
+	@NotNull
 	public CompilationUnit build() {
 		ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
 				PUBLIC,
@@ -81,6 +92,7 @@ class BaseClassBuilder implements MainClassBuilder {
 				new ArrayList<>()
 		);
 
+		fields.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 		methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 
 		return new CompilationUnit(
