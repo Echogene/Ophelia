@@ -69,7 +69,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	@Override
 	public MainClassBuilder withMethod(@NotNull MethodWrapper method) {
 		methods.add(method.getNode());
-		withImports(method.getImports().stream());
+		withImports(method.getImports());
 		return this;
 	}
 
@@ -77,7 +77,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	@Override
 	public MainClassBuilder withField(@NotNull FieldWrapper field) {
 		fields.add(field.getNode());
-		withImports(field.getImports().stream());
+		withImports(field.getImports());
 		return this;
 	}
 

@@ -29,7 +29,7 @@ class BaseFieldBuilder implements MainFieldBuilder {
 		this.type = type.getNode();
 		this.fieldName = fieldName;
 
-		withImports(type.getImports().stream());
+		withImports(type.getImports());
 
 		modifiers = FINAL | PRIVATE;
 	}

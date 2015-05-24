@@ -39,7 +39,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 			returnType = null;
 		} else {
 			this.returnType = type.getNode();
-			withImports(type.getImports().stream());
+			withImports(type.getImports());
 		}
 	}
 
@@ -47,14 +47,14 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	@Override
 	public MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
-		withImports(annotation.getImports().stream());
+		withImports(annotation.getImports());
 		return this;
 	}
 
 	@NotNull
 	@Override
 	public MainMethodBuilder withParameter(@NotNull ParameterWrapper parameter) {
-		withImports(parameter.getImports().stream());
+		withImports(parameter.getImports());
 		parameters.add(parameter.getNode());
 		return this;
 	}

@@ -31,7 +31,7 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 
 		this.name = name;
 		this.type = type.getNode();
-		withImports(type.getImports().stream());
+		withImports(type.getImports());
 	}
 
 	@NotNull

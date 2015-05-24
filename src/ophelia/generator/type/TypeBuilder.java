@@ -39,7 +39,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 	@NotNull
 	public TypeBuilder withAnnotation(final AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
-		withImports(annotation.getImports().stream());
+		withImports(annotation.getImports());
 		return this;
 	}
 
@@ -59,7 +59,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 			withDiamond();
 		}
 		genericTypes.add(type.getNode());
-		withImports(type.getImports().stream());
+		withImports(type.getImports());
 		return this;
 	}
 

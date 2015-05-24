@@ -1,8 +1,10 @@
 package ophelia.generator;
 
 import ophelia.builder.Builder;
+import ophelia.collections.BaseCollection;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
@@ -22,5 +24,15 @@ public interface WithImportBuilder<T, B extends WithImportBuilder<T, B>> extends
 		return canonicalClassNames.map(this::withImport)
 				.reduce((a, b) -> b)
 				.orElse(noöp());
+	}
+
+	@NotNull
+	default B withImports(Collection<String> canonicalClassNames) {
+		return withImports(canonicalClassNames.stream());
+	}
+
+	@NotNull
+	default B withImports(BaseCollection<String> canonicalClassNames) {
+		return withImports(canonicalClassNames.stream());
 	}
 }
