@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> {
+public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> {
 
 	private final String typeName;
 	private final Set<String> imports = new HashSet<>();
@@ -73,6 +73,12 @@ public class TypeBuilder implements WithImportBuilder<TypeBuilder, TypeWrapper> 
 	@Override
 	public TypeBuilder withImport(String canonicalClassName) {
 		imports.add(canonicalClassName);
+		return this;
+	}
+
+	@NotNull
+	@Override
+	public TypeBuilder noöp() {
 		return this;
 	}
 

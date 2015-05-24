@@ -103,6 +103,12 @@ class BaseMethodBuilder implements MainMethodBuilder {
 
 	@NotNull
 	@Override
+	public MainMethodBuilder noöp() {
+		return this;
+	}
+
+	@NotNull
+	@Override
 	public MethodWrapper build() {
 		return new MethodWrapper() {
 			@Override

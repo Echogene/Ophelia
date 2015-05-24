@@ -5,6 +5,6 @@ import ophelia.generator.WithImportBuilder;
 /**
  * @author Steven Weston
  */
-public interface MainParameterBuilder extends WithImportBuilder<MainParameterBuilder, ParameterWrapper> {
+public interface MainParameterBuilder extends WithImportBuilder<ParameterWrapper, MainParameterBuilder> {
 
 }

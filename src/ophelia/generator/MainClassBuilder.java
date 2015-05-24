@@ -20,7 +20,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * @author Steven Weston
  */
-public interface MainClassBuilder extends WithImportBuilder<MainClassBuilder, CompilationUnit> {
+public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, MainClassBuilder> {
 
 	@NotNull MainClassBuilder withExtends(@NotNull String canonicalClassName);
 

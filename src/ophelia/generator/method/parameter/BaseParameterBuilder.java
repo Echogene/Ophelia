@@ -43,6 +43,12 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 
 	@NotNull
 	@Override
+	public MainParameterBuilder noöp() {
+		return this;
+	}
+
+	@NotNull
+	@Override
 	public ParameterWrapper build() {
 		return new ParameterWrapper() {
 			@NotNull

@@ -7,7 +7,7 @@ import ophelia.generator.annotation.AnnotationWrapper;
 import ophelia.generator.method.parameter.ParameterWrapper;
 import org.jetbrains.annotations.NotNull;
 
-public interface MainMethodBuilder extends WithImportBuilder<MainMethodBuilder, MethodWrapper> {
+public interface MainMethodBuilder extends WithImportBuilder<MethodWrapper, MainMethodBuilder> {
 
 	@NotNull MainMethodBuilder withAnnotation(@NotNull AnnotationWrapper annotation);
 

@@ -2,14 +2,13 @@ package ophelia.generator;
 
 import ophelia.builder.Builder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
 /**
  * @author Steven Weston
  */
-public interface WithImportBuilder<B extends WithImportBuilder, T> extends Builder<T> {
+public interface WithImportBuilder<T, B extends WithImportBuilder<T, B>> extends Builder<T, B> {
 
 	@NotNull B withImport(String canonicalClassName);
 
@@ -18,10 +17,10 @@ public interface WithImportBuilder<B extends WithImportBuilder, T> extends Build
 		return withImport(classToImport.getCanonicalName());
 	}
 
-	@Nullable
+	@NotNull
 	default B withImports(Stream<String> canonicalClassNames) {
 		return canonicalClassNames.map(this::withImport)
 				.reduce((a, b) -> b)
-				.orElse(null);
+				.orElse(noöp());
 	}
 }

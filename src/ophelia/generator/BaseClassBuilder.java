@@ -89,6 +89,12 @@ class BaseClassBuilder implements MainClassBuilder {
 	}
 
 	@NotNull
+	@Override
+	public MainClassBuilder noöp() {
+		return this;
+	}
+
+	@NotNull
 	public CompilationUnit build() {
 		ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
 				modifiers,

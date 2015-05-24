@@ -4,7 +4,7 @@ import com.github.javaparser.ParseException;
 import ophelia.generator.WithImportBuilder;
 import org.jetbrains.annotations.NotNull;
 
-public interface MainFieldBuilder extends WithImportBuilder<MainFieldBuilder, FieldWrapper> {
+public interface MainFieldBuilder extends WithImportBuilder<FieldWrapper, MainFieldBuilder> {
 
 	@NotNull MainFieldBuilder withPublicity();
 
