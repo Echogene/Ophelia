@@ -41,6 +41,7 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 		return this;
 	}
 
+	@NotNull
 	@Override
 	public ParameterWrapper build() {
 		return new ParameterWrapper() {
