@@ -31,7 +31,7 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationWrapper, A
 
 	@NotNull
 	@Override
-	public AnnotationBuilder withImport(String canonicalClassName) {
+	public AnnotationBuilder withImport(@NotNull String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
 	}

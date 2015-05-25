@@ -12,27 +12,27 @@ import java.util.stream.Stream;
  */
 public interface WithImportBuilder<T, B extends WithImportBuilder<T, B>> extends Builder<T, B> {
 
-	@NotNull B withImport(String canonicalClassName);
+	@NotNull B withImport(@NotNull String canonicalClassName);
 
 	@NotNull
-	default B withImport(Class<?> classToImport) {
+	default B withImport(@NotNull Class<?> classToImport) {
 		return withImport(classToImport.getCanonicalName());
 	}
 
 	@NotNull
-	default B withImports(Stream<String> canonicalClassNames) {
+	default B withImports(@NotNull Stream<String> canonicalClassNames) {
 		return canonicalClassNames.map(this::withImport)
 				.reduce((a, b) -> b)
 				.orElse(noöp());
 	}
 
 	@NotNull
-	default B withImports(Collection<String> canonicalClassNames) {
+	default B withImports(@NotNull Collection<String> canonicalClassNames) {
 		return withImports(canonicalClassNames.stream());
 	}
 
 	@NotNull
-	default B withImports(BaseCollection<String> canonicalClassNames) {
+	default B withImports(@NotNull BaseCollection<String> canonicalClassNames) {
 		return withImports(canonicalClassNames.stream());
 	}
 }

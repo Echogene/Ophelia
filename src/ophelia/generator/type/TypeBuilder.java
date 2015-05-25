@@ -71,7 +71,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 
 	@NotNull
 	@Override
-	public TypeBuilder withImport(String canonicalClassName) {
+	public TypeBuilder withImport(@NotNull String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
 	}

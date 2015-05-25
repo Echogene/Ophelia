@@ -36,7 +36,7 @@ class BaseFieldBuilder implements MainFieldBuilder {
 
 	@NotNull
 	@Override
-	public MainFieldBuilder withImport(String canonicalClassName) {
+	public MainFieldBuilder withImport(@NotNull String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
 	}

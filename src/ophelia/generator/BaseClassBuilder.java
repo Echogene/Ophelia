@@ -46,7 +46,7 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	@NotNull
 	@Override
-	public MainClassBuilder withImport(String canonicalClassName) {
+	public MainClassBuilder withImport(@NotNull String canonicalClassName) {
 		imports.add(new ImportDeclaration(new NameExpr(canonicalClassName), false, false));
 		return this;
 	}

@@ -36,7 +36,7 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 
 	@NotNull
 	@Override
-	public MainParameterBuilder withImport(String canonicalClassName) {
+	public MainParameterBuilder withImport(@NotNull String canonicalClassName) {
 		imports.add(canonicalClassName);
 		return this;
 	}
