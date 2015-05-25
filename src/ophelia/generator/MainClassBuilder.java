@@ -2,6 +2,7 @@ package ophelia.generator;
 
 import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
+import ophelia.collections.list.UnmodifiableList;
 import ophelia.collections.set.UnmodifiableSet;
 import ophelia.generator.field.FieldBuilder;
 import ophelia.generator.field.FieldWrapper;
@@ -12,7 +13,9 @@ import ophelia.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -70,8 +73,44 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 		}
 	}
 
+	@NotNull
 	default MainClassBuilder withSetMember(@NotNull String fieldName, @NotNull Class<?> memberType) {
 		return withSetMember(fieldName, memberType.getCanonicalName());
+	}
+
+	@NotNull
+	default MainClassBuilder withListMember(@NotNull String fieldName, @NotNull String canonicalMemberName) {
+		try {
+			return withField(
+					new FieldBuilder(fieldName)
+						.withType(
+							new TypeBuilder(List.class)
+								.withGenericParameter(canonicalMemberName)
+								.build()
+						)
+						.withInitialisation("new ArrayList<>()")
+						.withImport(ArrayList.class)
+						.build()
+				)
+				.withMethod(
+					new MethodBuilder("get" + StringUtils.uppercaseFirst(fieldName))
+						.withReturnType(
+							new TypeBuilder(UnmodifiableList.class)
+								.withGenericParameter(canonicalMemberName)
+								.build()
+						)
+						.withAnnotation(NotNull.class)
+						.withImplementation("return new UnmodifiableList<>(" + fieldName + ");")
+						.build()
+				);
+		} catch (ParseException e) {
+			throw new RuntimeException("This shouldn't happen because everything should be parseable", e);
+		}
+	}
+
+	@NotNull
+	default MainClassBuilder withListMember(@NotNull String fieldName, @NotNull Class<?> memberType) {
+		return withListMember(fieldName, memberType.getCanonicalName());
 	}
 
 	default void writeToFile(File file) {

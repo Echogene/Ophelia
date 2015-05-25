@@ -27,6 +27,7 @@ public class ClassBuilderTest {
 								.build()
 				)
 				.withSetMember("setMember", TestInterface.class)
+				.withListMember("listMember", TestSuperClass.class)
 				.writeToFile(new File("test/ophelia/generator/TestImpl.java.test"));
 	}
 }
