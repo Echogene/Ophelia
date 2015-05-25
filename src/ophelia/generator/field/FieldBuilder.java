@@ -13,7 +13,7 @@ public class FieldBuilder implements FieldBuilderNeedingType {
 
 	@NotNull
 	@Override
-	public MainFieldBuilder withType(TypeWrapper type) {
+	public MainFieldBuilder withType(@NotNull TypeWrapper type) {
 		return new BaseFieldBuilder(type, fieldName);
 	}
 }

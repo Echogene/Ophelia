@@ -20,11 +20,11 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationWrapper, A
 	private final String annotationName;
 	private final Set<String> imports = new HashSet<>();
 
-	public AnnotationBuilder(Class<? extends Annotation> annotationClass) {
+	public AnnotationBuilder(@NotNull Class<? extends Annotation> annotationClass) {
 		this(annotationClass.getCanonicalName());
 	}
 
-	public AnnotationBuilder(String canonicalClassName) {
+	public AnnotationBuilder(@NotNull String canonicalClassName) {
 		this.annotationName = ClassUtils.getSimpleName(canonicalClassName);
 		this.withImport(canonicalClassName);
 	}
