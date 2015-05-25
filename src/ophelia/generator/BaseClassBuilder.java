@@ -38,7 +38,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<FieldDeclaration> fields = new ArrayList<>();
 	private int modifiers = PUBLIC;
 
-	public BaseClassBuilder(String packageName, String className) {
+	BaseClassBuilder(@NotNull String packageName, @NotNull String className) {
 		this.className = className;
 
 		packageDeclaration = new PackageDeclaration(new NameExpr(packageName));
