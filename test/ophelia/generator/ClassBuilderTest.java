@@ -1,6 +1,7 @@
 package ophelia.generator;
 
 import ophelia.generator.field.FieldBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,6 +23,7 @@ public class ClassBuilderTest {
 						new FieldBuilder("INSTANCE")
 								.withType("ophelia.generator.TestImpl")
 								.withInitialisation("new TestImpl() {}")
+								.withAnnotation(NotNull.class)
 								.withPublicity()
 								.withStasis()
 								.build()
