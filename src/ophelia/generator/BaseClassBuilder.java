@@ -15,7 +15,9 @@ import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.lang.reflect.Modifier.ABSTRACT;
 import static java.lang.reflect.Modifier.PUBLIC;
@@ -28,7 +30,7 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	private final PackageDeclaration packageDeclaration;
 
-	private final List<ImportDeclaration> imports = new ArrayList<>();
+	private final Set<ImportDeclaration> imports = new HashSet<>();
 	private final List<ClassOrInterfaceType> extensions = new ArrayList<>();
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
 	private final String className;
@@ -112,7 +114,7 @@ class BaseClassBuilder implements MainClassBuilder {
 
 		return new CompilationUnit(
 				packageDeclaration,
-				imports,
+				new ArrayList<>(imports),
 				singletonList(typeDeclaration)
 		);
 	}
