@@ -27,34 +27,34 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 	@Nullable
 	private List<Type> genericTypes = null;
 
-	public TypeBuilder(String canonicalClassName) {
+	public TypeBuilder(@NotNull String canonicalClassName) {
 		this.typeName = ClassUtils.getSimpleName(canonicalClassName);
 		withImport(canonicalClassName);
 	}
 
-	public TypeBuilder(Class<?> clazz) {
+	public TypeBuilder(@NotNull Class<?> clazz) {
 		this(clazz.getCanonicalName());
 	}
 
 	@NotNull
-	public TypeBuilder withAnnotation(final AnnotationWrapper annotation) {
+	public TypeBuilder withAnnotation(@NotNull final AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
 		withImports(annotation.getImports());
 		return this;
 	}
 
 	@NotNull
-	public TypeBuilder withGenericParameter(String type) {
+	public TypeBuilder withGenericParameter(@NotNull String type) {
 		return withGenericParameter(new TypeBuilder(type).build());
 	}
 
 	@NotNull
-	public TypeBuilder withGenericParameter(Class<?> type) {
+	public TypeBuilder withGenericParameter(@NotNull Class<?> type) {
 		return withGenericParameter(type.getCanonicalName());
 	}
 
 	@NotNull
-	public TypeBuilder withGenericParameter(TypeWrapper type) {
+	public TypeBuilder withGenericParameter(@NotNull TypeWrapper type) {
 		if (genericTypes == null) {
 			withDiamond();
 		}
