@@ -7,7 +7,7 @@ public class ParameterBuilder implements ParameterBuilderNeedingType {
 
 	private final String name;
 
-	public ParameterBuilder(final String name) {
+	public ParameterBuilder(@NotNull final String name) {
 		this.name = name;
 	}
 

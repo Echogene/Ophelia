@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface FieldBuilderNeedingType {
 
-	@NotNull MainFieldBuilder withType(TypeWrapper type);
+	@NotNull MainFieldBuilder withType(@NotNull TypeWrapper type);
 
 	@NotNull default MainFieldBuilder withType(@NotNull final Class<?> clazz) {
 		return withType(clazz.getCanonicalName());

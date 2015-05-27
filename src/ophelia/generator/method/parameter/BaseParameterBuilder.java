@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class BaseParameterBuilder implements MainParameterBuilder {
+class BaseParameterBuilder implements MainParameterBuilder {
 
 	private final Set<String> imports = new HashSet<>();
 
@@ -25,8 +25,8 @@ public class BaseParameterBuilder implements MainParameterBuilder {
 	private final Type type;
 
 	public BaseParameterBuilder(
-			final String name,
-			final TypeWrapper type
+			@NotNull final String name,
+			@NotNull final TypeWrapper type
 	) {
 
 		this.name = name;
