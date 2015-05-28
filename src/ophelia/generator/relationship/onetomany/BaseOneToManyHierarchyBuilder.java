@@ -19,6 +19,7 @@ class BaseOneToManyHierarchyBuilder implements MainOneToManyHierarchyBuilder {
 
 	private final MainClassBuilder parentBuilder;
 	private final MainClassBuilder childBuilder;
+
 	@NotNull
 	private String parentName;
 
