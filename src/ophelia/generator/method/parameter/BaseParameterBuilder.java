@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.reflect.Modifier.FINAL;
+
 /**
  * @author Steven Weston
  */
@@ -60,7 +62,7 @@ class BaseParameterBuilder implements MainParameterBuilder {
 			@NotNull
 			@Override
 			public Parameter getNode() {
-				return new Parameter(type, new VariableDeclaratorId(name));
+				return new Parameter(FINAL, type, new VariableDeclaratorId(name));
 			}
 		};
 	}

@@ -19,7 +19,7 @@ public class MethodBuilderTest {
 								.build())
 				.build();
 
-		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(MethodBuilder test);"));
+		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(final MethodBuilder test);"));
 
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
@@ -99,7 +99,7 @@ public class MethodBuilderTest {
 				.withParameter(new ParameterBuilder("test2").withType(MethodBuilderTest.class).build())
 				.build();
 
-		assertThat(test.getNode().toString(), is("public void test(MethodBuilder test, MethodBuilderTest test2);"));
+		assertThat(test.getNode().toString(), is("public void test(final MethodBuilder test, final MethodBuilderTest test2);"));
 
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
@@ -115,7 +115,7 @@ public class MethodBuilderTest {
 				.withImplementation("return null;")
 				.build();
 
-		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(MethodBuilder test) {\n    return null;\n}"));
+		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(final MethodBuilder test) {\n    return null;\n}"));
 
 		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
@@ -135,7 +135,7 @@ public class MethodBuilderTest {
 				.build();
 
 		assertThat(test.getNode().toString(), is(equalToIgnoringWhiteSpace(
-				"public MethodBuilderTest test(MethodBuilder test) {\n" +
+				"public MethodBuilderTest test(final MethodBuilder test) {\n" +
 						"    MethodBuilderTest lol = new MethodBuilderTest();\n" +
 						"    return lol;\n" +
 						"}"

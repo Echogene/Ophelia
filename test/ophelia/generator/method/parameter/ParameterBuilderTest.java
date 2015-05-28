@@ -21,7 +21,7 @@ public class ParameterBuilderTest {
 				)
 				.build();
 
-		assertThat(parameter.getNode().toString(), is("@NotNull ParameterBuilderTest test"));
+		assertThat(parameter.getNode().toString(), is("final @NotNull ParameterBuilderTest test"));
 
 		assertThat(parameter.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
 				NotNull.class.getCanonicalName(),
