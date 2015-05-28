@@ -30,6 +30,7 @@ public class ClassBuilderTest {
 				)
 				.withSetMember("setMember", TestInterface.class)
 				.withListMember("listMember", TestSuperClass.class)
+				.withMapMember("mapMember", TestSuperClass.class, TestInterface.class)
 				.writeToFile(new File("test/ophelia/generator/TestImpl.java.test"));
 	}
 }

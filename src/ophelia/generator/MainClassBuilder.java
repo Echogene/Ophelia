@@ -9,14 +9,12 @@ import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodBuilder;
 import ophelia.generator.method.MethodWrapper;
 import ophelia.generator.type.TypeBuilder;
+import ophelia.map.UnmodifiableMap;
 import ophelia.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -111,6 +109,51 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 	@NotNull
 	default MainClassBuilder withListMember(@NotNull String fieldName, @NotNull Class<?> memberType) {
 		return withListMember(fieldName, memberType.getCanonicalName());
+	}
+
+	@NotNull
+	default MainClassBuilder withMapMember(
+			@NotNull String fieldName,
+			@NotNull String canonicalKeyName,
+			@NotNull String canonicalValueName
+	) {
+		try {
+			return withField(
+					new FieldBuilder(fieldName)
+						.withType(
+							new TypeBuilder(Map.class)
+								.withGenericParameter(canonicalKeyName)
+								.withGenericParameter(canonicalValueName)
+									.build()
+						)
+						.withInitialisation("new HashMap<>()")
+						.withImport(HashMap.class)
+						.build()
+				)
+				.withMethod(
+					new MethodBuilder("get" + StringUtils.uppercaseFirst(fieldName))
+						.withReturnType(
+							new TypeBuilder(UnmodifiableMap.class)
+								.withGenericParameter(canonicalKeyName)
+								.withGenericParameter(canonicalValueName)
+								.build()
+						)
+						.withAnnotation(NotNull.class)
+						.withImplementation("return new UnmodifiableMap<>(" + fieldName + ");")
+						.build()
+				);
+		} catch (ParseException e) {
+			throw new RuntimeException("This shouldn't happen because everything should be parseable", e);
+		}
+	}
+
+	@NotNull
+	default MainClassBuilder withMapMember(
+			@NotNull String fieldName,
+			@NotNull Class<?> keyType,
+			@NotNull Class<?> valueType
+	) {
+		return withMapMember(fieldName, keyType.getCanonicalName(), valueType.getCanonicalName());
 	}
 
 	default void writeToFile(File file) {
