@@ -2,13 +2,12 @@ package ophelia.generator.field;
 
 import com.github.javaparser.ParseException;
 import ophelia.generator.WithImportBuilder;
-import ophelia.generator.annotation.AnnotationBuilder;
-import ophelia.generator.annotation.AnnotationWrapper;
+import ophelia.generator.annotation.WithAnnotationBuilder;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.annotation.Annotation;
-
-public interface MainFieldBuilder extends WithImportBuilder<FieldWrapper, MainFieldBuilder> {
+public interface MainFieldBuilder
+		extends WithImportBuilder<FieldWrapper, MainFieldBuilder>,
+				WithAnnotationBuilder<MainFieldBuilder> {
 
 	@NotNull MainFieldBuilder withPublicity();
 
@@ -21,16 +20,4 @@ public interface MainFieldBuilder extends WithImportBuilder<FieldWrapper, MainFi
 	@NotNull MainFieldBuilder withNoFinality();
 
 	@NotNull MainFieldBuilder withInitialisation(@NotNull String initialisation) throws ParseException;
-
-	@NotNull MainFieldBuilder withAnnotation(@NotNull AnnotationWrapper annotation);
-
-	@NotNull
-	default MainFieldBuilder withAnnotation(@NotNull String canonicalAnnotationName) {
-		return withAnnotation(new AnnotationBuilder(canonicalAnnotationName).build());
-	}
-
-	@NotNull
-	default MainFieldBuilder withAnnotation(@NotNull Class<? extends Annotation> canonicalAnnotationClass) {
-		return withAnnotation(canonicalAnnotationClass.getCanonicalName());
-	}
 }

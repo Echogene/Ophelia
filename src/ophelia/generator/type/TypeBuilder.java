@@ -6,6 +6,7 @@ import com.github.javaparser.ast.type.Type;
 import ophelia.collections.set.UnmodifiableSet;
 import ophelia.generator.WithImportBuilder;
 import ophelia.generator.annotation.AnnotationWrapper;
+import ophelia.generator.annotation.WithAnnotationBuilder;
 import ophelia.util.ClassUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +19,7 @@ import java.util.Set;
 /**
  * @author Steven Weston
  */
-public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> {
+public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder>, WithAnnotationBuilder<TypeBuilder> {
 
 	private final String typeName;
 	private final Set<String> imports = new HashSet<>();
@@ -37,6 +38,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 	}
 
 	@NotNull
+	@Override
 	public TypeBuilder withAnnotation(@NotNull final AnnotationWrapper annotation) {
 		annotations.add(annotation.getNode());
 		withImports(annotation.getImports());
