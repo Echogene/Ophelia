@@ -156,6 +156,10 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 		return withMapMember(fieldName, keyType.getCanonicalName(), valueType.getCanonicalName());
 	}
 
+	@NotNull String getSimpleClassName();
+
+	@NotNull String getCanonicalClassName();
+
 	default void writeToFile(File file) {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8))) {
 

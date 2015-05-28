@@ -28,20 +28,20 @@ import static java.util.Collections.singletonList;
  */
 class BaseClassBuilder implements MainClassBuilder {
 
-	private final PackageDeclaration packageDeclaration;
+	private final String packageName;
+	private final String className;
 
 	private final Set<ImportDeclaration> imports = new HashSet<>();
+	private int modifiers = PUBLIC;
 	private final List<ClassOrInterfaceType> extensions = new ArrayList<>();
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
-	private final String className;
-	private final List<MethodDeclaration> methods = new ArrayList<>();
 	private final List<FieldDeclaration> fields = new ArrayList<>();
-	private int modifiers = PUBLIC;
+	private final List<MethodDeclaration> methods = new ArrayList<>();
 
 	BaseClassBuilder(@NotNull String packageName, @NotNull String className) {
 		this.className = className;
 
-		packageDeclaration = new PackageDeclaration(new NameExpr(packageName));
+		this.packageName = packageName;
 	}
 
 	@NotNull
@@ -92,6 +92,18 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	@NotNull
 	@Override
+	public String getSimpleClassName() {
+		return className;
+	}
+
+	@NotNull
+	@Override
+	public String getCanonicalClassName() {
+		return packageName + "." + className;
+	}
+
+	@NotNull
+	@Override
 	public MainClassBuilder noöp() {
 		return this;
 	}
@@ -113,7 +125,7 @@ class BaseClassBuilder implements MainClassBuilder {
 		methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 
 		return new CompilationUnit(
-				packageDeclaration,
+				new PackageDeclaration(new NameExpr(packageName)),
 				new ArrayList<>(imports),
 				singletonList(typeDeclaration)
 		);
