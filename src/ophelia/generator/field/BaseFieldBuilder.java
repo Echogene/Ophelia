@@ -113,6 +113,7 @@ class BaseFieldBuilder implements MainFieldBuilder {
 				return new UnmodifiableSet<>(imports);
 			}
 
+			@NotNull
 			@Override
 			public FieldDeclaration getNode() {
 				VariableDeclaratorId id = new VariableDeclaratorId(fieldName);

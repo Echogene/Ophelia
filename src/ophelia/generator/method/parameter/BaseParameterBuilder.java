@@ -57,6 +57,7 @@ class BaseParameterBuilder implements MainParameterBuilder {
 				return new UnmodifiableSet<>(imports);
 			}
 
+			@NotNull
 			@Override
 			public Parameter getNode() {
 				return new Parameter(type, new VariableDeclaratorId(name));

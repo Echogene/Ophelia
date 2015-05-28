@@ -111,6 +111,7 @@ class BaseMethodBuilder implements MainMethodBuilder {
 	@Override
 	public MethodWrapper build() {
 		return new MethodWrapper() {
+			@NotNull
 			@Override
 			public MethodDeclaration getNode() {
 				Type type;

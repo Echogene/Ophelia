@@ -92,6 +92,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder> 
 				return new UnmodifiableSet<>(imports);
 			}
 
+			@NotNull
 			@Override
 			public Type getNode() {
 				ClassOrInterfaceType type = new ClassOrInterfaceType(typeName);

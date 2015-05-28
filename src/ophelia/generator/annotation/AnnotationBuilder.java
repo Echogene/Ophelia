@@ -46,6 +46,7 @@ public class AnnotationBuilder implements WithImportBuilder<AnnotationWrapper, A
 	@Override
 	public AnnotationWrapper build() {
 		return new AnnotationWrapper() {
+			@NotNull
 			@Override
 			public AnnotationExpr getNode() {
 				return new MarkerAnnotationExpr(new NameExpr(annotationName));
