@@ -1,5 +1,7 @@
 package ophelia.annotation;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -14,5 +16,5 @@ public @interface Wrapper {
 	/**
 	 * @return the class that is wrapped (the wrappee) by this wrapper
 	 */
-	Class<?> value();
+	@NotNull Class<?> value();
 }
