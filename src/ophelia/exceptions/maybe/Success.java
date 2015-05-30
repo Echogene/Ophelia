@@ -18,8 +18,9 @@ class Success<R> implements Maybe<R> {
 		this.value = r;
 	}
 
+	@NotNull
 	@Override
-	public VoidFailureHandler consumeOnSuccess(Consumer<R> consumer) {
+	public VoidFailureHandler consumeOnSuccess(@NotNull Consumer<R> consumer) {
 		return new VoidFailureHandler() {
 			@Override
 			public void consumeOnFailure(Consumer<StackedException> exceptionHandler) {
@@ -38,6 +39,7 @@ class Success<R> implements Maybe<R> {
 		};
 	}
 
+	@NotNull
 	@Override
 	public FailureHandler<R> returnOnSuccess() {
 		return new DefaultFailureHandler<>(value);

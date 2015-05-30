@@ -17,8 +17,9 @@ class Failure<R> implements Maybe<R> {
 		this.exception = new StackedException(e);
 	}
 
+	@NotNull
 	@Override
-	public VoidFailureHandler consumeOnSuccess(Consumer<R> consumer) {
+	public VoidFailureHandler consumeOnSuccess(@NotNull Consumer<R> consumer) {
 		return new VoidFailureHandler() {
 			@Override
 			public void consumeOnFailure(Consumer<StackedException> exceptionHandler) {
@@ -35,6 +36,7 @@ class Failure<R> implements Maybe<R> {
 		};
 	}
 
+	@NotNull
 	@Override
 	public FailureHandler<R> returnOnSuccess() {
 		return new DefaultFailureHandler<>(exception);

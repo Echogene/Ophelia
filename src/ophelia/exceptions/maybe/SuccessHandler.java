@@ -1,5 +1,7 @@
 package ophelia.exceptions.maybe;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Consumer;
 
 /**
@@ -7,7 +9,7 @@ import java.util.function.Consumer;
  */
 public interface SuccessHandler<T> {
 
-	VoidFailureHandler consumeOnSuccess(Consumer<T> consumer);
+	@NotNull VoidFailureHandler consumeOnSuccess(@NotNull Consumer<T> consumer);
 
-	FailureHandler<T> returnOnSuccess();
+	@NotNull FailureHandler<T> returnOnSuccess();
 }

@@ -31,7 +31,7 @@ public interface FailureHandler<S> {
 		return throwMappedFailure(e -> last(e.getExceptions()));
 	}
 
-	default <E extends Exception> S throwInstead(Supplier<E> supplier) throws E {
+	default <E extends Exception> S throwInstead(@NotNull Supplier<E> supplier) throws E {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		return throwMappedFailure(e -> supplier.get());
 	}
