@@ -1,5 +1,7 @@
 package ophelia.exceptions.maybe;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Consumer;
 
 /**
@@ -7,7 +9,7 @@ import java.util.function.Consumer;
  */
 public interface VoidFailureHandler {
 
-	void consumeOnFailure(Consumer<StackedException> exceptionHandler);
+	void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler);
 
 	void throwOnFailure() throws StackedException;
 
