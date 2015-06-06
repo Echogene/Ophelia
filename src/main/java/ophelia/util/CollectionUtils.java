@@ -22,7 +22,7 @@ public class CollectionUtils {
 	 * @param list The list whose item we are getting.
 	 * @param index The index of the element we want.
 	 * @param <T> The type of the elements in the list.
-	 * @return The indexth element of the list or null if the index is out-of-bounds.
+	 * @return The (index)th element of the list or null if the index is out-of-bounds.
 	 */
 	@Contract("null, _ -> null")
 	@Nullable
