@@ -24,8 +24,8 @@ public class OneToManyHierarchyBuilderTest {
 				.withChildBuilder(childBuilder)
 				.build();
 
-		parentBuilder.writeToFile(new File("test/ophelia/generator/relationship/onetomany/GeneratedParent.java.test"));
-		childBuilder.writeToFile(new File("test/ophelia/generator/relationship/onetomany/GeneratedChild.java.test"));
+		parentBuilder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedParent.java.test"));
+		childBuilder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedChild.java.test"));
 	}
 
 	@Test
@@ -38,6 +38,6 @@ public class OneToManyHierarchyBuilderTest {
 				.withChildBuilder(builder)
 				.build();
 
-		builder.writeToFile(new File("test/ophelia/generator/relationship/onetomany/GeneratedHierarchyMember.java"));
+		builder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedHierarchyMember.java"));
 	}
 }

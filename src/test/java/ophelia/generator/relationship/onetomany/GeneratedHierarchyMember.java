@@ -1,11 +1,11 @@
 package ophelia.generator.relationship.onetomany;
 
-import ophelia.collections.set.UnmodifiableSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.jetbrains.annotations.Nullable;
+import ophelia.generator.relationship.onetomany.GeneratedHierarchyMember;
+import ophelia.collections.set.UnmodifiableSet;
+import org.jetbrains.annotations.NotNull;
 
 public class GeneratedHierarchyMember {
 
