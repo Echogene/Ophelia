@@ -1,6 +1,7 @@
 package ophelia.event.publisher;
 
 import ophelia.event.Event;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -10,9 +11,9 @@ import java.util.function.Consumer;
  */
 public interface Publisher<E extends Event> {
 
-	void subscribe(Consumer<E> eventConsumer);
+	void subscribe(@NotNull Consumer<E> eventConsumer);
 
-	void unsubscribe(Consumer<E> eventConsumer);
+	void unsubscribe(@NotNull Consumer<E> eventConsumer);
 
 	void unsubscribeAll();
 }
