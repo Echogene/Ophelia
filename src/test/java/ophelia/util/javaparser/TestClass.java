@@ -13,6 +13,7 @@ import java.util.List;
  * The worst class.
  * @author Steven Weston
  */
+@SuppressWarnings("ALL")
 class TestClass {
 
 	private TestClass() {}
