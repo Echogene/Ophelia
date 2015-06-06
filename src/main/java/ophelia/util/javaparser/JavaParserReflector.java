@@ -47,7 +47,7 @@ import static ophelia.util.StringUtils.replaceLast;
  */
 public class JavaParserReflector {
 
-	public static final GenericVisitorAdapter<PackageDeclaration, Object> GET_PACKAGE_FROM_COMPILATION_UNIT
+	private static final GenericVisitorAdapter<PackageDeclaration, Object> GET_PACKAGE_FROM_COMPILATION_UNIT
 			= new GenericVisitorAdapter<PackageDeclaration, Object>() {
 				@Override
 				public PackageDeclaration visit(CompilationUnit n, Object arg) {
