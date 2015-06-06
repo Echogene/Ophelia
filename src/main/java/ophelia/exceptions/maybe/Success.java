@@ -23,7 +23,7 @@ class Success<R> implements Maybe<R> {
 	public VoidFailureHandler consumeOnSuccess(@NotNull Consumer<R> consumer) {
 		return new VoidFailureHandler() {
 			@Override
-			public void consumeOnFailure(Consumer<StackedException> exceptionHandler) {
+			public void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler) {
 				consumer.accept(value);
 			}
 
