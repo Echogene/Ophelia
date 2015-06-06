@@ -1,6 +1,7 @@
 package ophelia.event.observable;
 
 import ophelia.event.Event;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -10,9 +11,9 @@ import java.util.function.Consumer;
  */
 public interface Observable<E extends Event> {
 
-	void observe(Consumer<E> observation);
+	void observe(@NotNull Consumer<E> observation);
 
-	void unobserve(Consumer<E> observation);
+	void unobserve(@NotNull Consumer<E> observation);
 
 	void unobserveAll();
 }
