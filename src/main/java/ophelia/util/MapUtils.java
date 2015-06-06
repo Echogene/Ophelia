@@ -122,10 +122,10 @@ public class MapUtils {
 	 *     <li>The first map will retain all keys that the overlay does not contain</li>
 	 * </ol>
 	 *
-	 * @param underlay
-	 * @param overlay
-	 * @param <K>
-	 * @param <V>
+	 * @param underlay the map to modify with the overlay
+	 * @param overlay the map to overlay onto the underlay
+	 * @param <K> the type of the maps' keys
+	 * @param <V> the type of the maps' values
 	 */
 	public static <K, V> void overlay(
 			@NotNull Map<K, Set<V>> underlay,
@@ -171,10 +171,10 @@ public class MapUtils {
 	/**
 	 * Given a collection of maps from keys to sets, return the map whose keys are the intersection of all the maps'
 	 * keys and whose values (as sets) are the intersection of all the maps' corresponding (by key) values.
-	 * @param maps
-	 * @param <K>
-	 * @param <S>
-	 * @return
+	 * @param maps the maps we want to intersect
+	 * @param <K> the type of the maps' keys
+	 * @param <S> the type of the maps' values
+	 * @return the intersection of all keys and values of the given maps.
 	 */
 	@NotNull
 	public static <K, S extends Set<?>> Map<K, S> intersect(@NotNull Collection<Map<K, S>> maps) {

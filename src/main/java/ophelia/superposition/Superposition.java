@@ -23,7 +23,7 @@ public class Superposition<T, E extends Exception> {
 	/**
 	 * Observe all elements of the superposition with the given observer.  If the observer throws an exception for any
 	 * value, then they are removed from the superposition
-	 * @param observer
+	 * @param observer the consumer that will observe all members of the current superposition
 	 */
 	@SuppressWarnings({"ThrowableResultOfMethodCallIgnored", "unchecked"})
 	public void observe(@NotNull ExceptionalConsumer<T, E> observer) {

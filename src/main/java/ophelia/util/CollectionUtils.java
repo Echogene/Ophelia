@@ -45,9 +45,6 @@ public class CollectionUtils {
 
 	/**
 	 * Get rid of the first and last members of a list.
-	 * @param list
-	 * @param <T>
-	 * @return
 	 */
 	@NotNull
 	public static <T> List<T> stripFirstAndLast(final List<T> list) {
