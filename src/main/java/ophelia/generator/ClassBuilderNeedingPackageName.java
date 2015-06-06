@@ -1,9 +1,11 @@
 package ophelia.generator;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Steven Weston
  */
 public interface ClassBuilderNeedingPackageName {
 
-	MainClassBuilder withPackage(String packageName);
+	@NotNull MainClassBuilder withPackage(@NotNull String packageName);
 }

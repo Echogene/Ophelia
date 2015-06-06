@@ -13,6 +13,7 @@ public class ClassBuilder implements ClassBuilderNeedingPackageName {
 		this.className = className;
 	}
 
+	@NotNull
 	@Override
 	public MainClassBuilder withPackage(@NotNull String packageName) {
 		return new BaseClassBuilder(packageName, className);
