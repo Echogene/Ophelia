@@ -58,8 +58,6 @@ public class StringUtils {
 	}
 
 	/**
-	 * @param substring
-	 * @param string
 	 * @return the number of times the substring appears in the given string
 	 */
 	public static int count(
@@ -70,9 +68,6 @@ public class StringUtils {
 	}
 
 	/**
-	 * @param string
-	 * @param startIndex
-	 * @param endIndex
 	 * @return the substring of the given string starting and ending at the given indices.  If the end index is -1, then
 	 *         it is treated as the index of the end of the string
 	 */
@@ -88,11 +83,6 @@ public class StringUtils {
 	/**
 	 * Print the concatenation of the strings obtained from applying the given presentation function to the given
 	 * collection.  Then print another line of the same length highlighting which elements match the given predicate.
-	 * @param collection
-	 * @param predicate
-	 * @param presentationFunction
-	 * @param <T>
-	 * @return
 	 */
 	@NotNull
 	public static <T> String identify(
