@@ -1,6 +1,7 @@
 package ophelia.event.publisher;
 
 import ophelia.event.Event;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A broadcaster that broadcasts to its subscribers asynchronously.
@@ -8,5 +9,5 @@ import ophelia.event.Event;
  */
 public interface AsyncBroadcaster<E extends Event> extends Publisher<E> {
 
-	void asyncBroadcast(E event);
+	void asyncBroadcast(@NotNull E event);
 }
