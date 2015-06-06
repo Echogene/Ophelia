@@ -1,32 +1,33 @@
 package ophelia.util;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import static ophelia.util.NumberUtils.ordinal;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * @author Steven Weston
  */
-public class NumberUtilsTest extends TestCase {
+public class NumberUtilsTest {
 
 	@Test
 	public void testOrdinal() {
-		assertEquals("0th",   ordinal(0));
-		assertEquals("1st",   ordinal(1));
-		assertEquals("2nd",   ordinal(2));
-		assertEquals("3rd",   ordinal(3));
-		assertEquals("4th",   ordinal(4));
-		assertEquals("11th",  ordinal(11));
-		assertEquals("12th",  ordinal(12));
-		assertEquals("13th",  ordinal(13));
-		assertEquals("100th", ordinal(100));
-		assertEquals("101st", ordinal(101));
-		assertEquals("102nd", ordinal(102));
-		assertEquals("103rd", ordinal(103));
-		assertEquals("104th", ordinal(104));
-		assertEquals("111th", ordinal(111));
-		assertEquals("112th", ordinal(112));
-		assertEquals("113th", ordinal(113));
+		assertThat(ordinal(0), is("0th"));
+		assertThat(ordinal(1), is("1st"));
+		assertThat(ordinal(2), is("2nd"));
+		assertThat(ordinal(3), is("3rd"));
+		assertThat(ordinal(4), is("4th"));
+		assertThat(ordinal(11), is("11th"));
+		assertThat(ordinal(12), is("12th"));
+		assertThat(ordinal(13), is("13th"));
+		assertThat(ordinal(100), is("100th"));
+		assertThat(ordinal(101), is("101st"));
+		assertThat(ordinal(102), is("102nd"));
+		assertThat(ordinal(103), is("103rd"));
+		assertThat(ordinal(104), is("104th"));
+		assertThat(ordinal(111), is("111th"));
+		assertThat(ordinal(112), is("112th"));
+		assertThat(ordinal(113), is("113th"));
 	}
 }
