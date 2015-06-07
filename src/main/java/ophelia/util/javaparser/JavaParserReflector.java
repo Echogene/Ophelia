@@ -37,7 +37,7 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.*;
-import static ophelia.util.CollectionUtils.first;
+import static ophelia.util.ListUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
 import static ophelia.util.StringUtils.replaceLast;

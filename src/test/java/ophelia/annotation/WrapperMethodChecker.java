@@ -11,6 +11,7 @@ import com.github.javaparser.ast.stmt.ExpressionStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import ophelia.util.ListUtils;
 import ophelia.util.StreamUtils;
 
 import java.lang.reflect.Field;
@@ -50,14 +51,14 @@ public class WrapperMethodChecker {
 				hasItems("Override")
 		);
 
-		List<BlockStmt> methodStatements = subListOfClass(method.getChildrenNodes(), BlockStmt.class);
+		List<BlockStmt> methodStatements = listOfClass(method.getChildrenNodes(), BlockStmt.class);
 		assertThat(
 				format("Method\n{0}\nin {1} should have one block", method, wrapper),
 				methodStatements,
 				hasSize(1)
 		);
 
-		BlockStmt block = first(methodStatements);
+		BlockStmt block = ListUtils.first(methodStatements);
 		assert block != null;
 		List<Statement> statements = block.getStmts();
 		assertThat(
@@ -65,7 +66,7 @@ public class WrapperMethodChecker {
 				statements,
 				hasSize(1)
 		);
-		Statement statement = first(statements);
+		Statement statement = ListUtils.first(statements);
 
 		assert statement != null;
 		assertThat(

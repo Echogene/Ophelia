@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 import static java.lang.reflect.Modifier.*;
 import static java.text.MessageFormat.format;
-import static ophelia.util.CollectionUtils.first;
-import static ophelia.util.CollectionUtils.subListOfClass;
+import static ophelia.util.ListUtils.first;
+import static ophelia.util.CollectionUtils.listOfClass;
 import static ophelia.util.javaparser.SourceFinder.parseSource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -100,7 +100,7 @@ public class WrapperTest {
 				contains(wrappee)
 		);
 
-		List<MethodDeclaration> methodDeclarations = subListOfClass(
+		List<MethodDeclaration> methodDeclarations = listOfClass(
 				typeDeclaration.getMembers(),
 				MethodDeclaration.class
 		);

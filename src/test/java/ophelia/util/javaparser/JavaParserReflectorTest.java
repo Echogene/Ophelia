@@ -23,8 +23,8 @@ import java.util.stream.Stream;
 
 import static com.codepoetics.protonpack.StreamUtils.zip;
 import static ophelia.exceptions.maybe.Maybe.wrapOutput;
-import static ophelia.util.CollectionUtils.first;
-import static ophelia.util.CollectionUtils.subListOfClass;
+import static ophelia.util.ListUtils.first;
+import static ophelia.util.CollectionUtils.listOfClass;
 import static ophelia.util.javaparser.JavaParserReflector.findClass;
 import static ophelia.util.javaparser.JavaParserReflector.findMethod;
 import static ophelia.util.javaparser.SourceFinder.findSourceFile;
@@ -59,7 +59,7 @@ public class JavaParserReflectorTest {
 		CompilationUnit cu = parseSource(sourceFile);
 
 		List<TypeDeclaration> types = cu.getTypes();
-		List<ClassOrInterfaceDeclaration> declarations = subListOfClass(types, ClassOrInterfaceDeclaration.class);
+		List<ClassOrInterfaceDeclaration> declarations = listOfClass(types, ClassOrInterfaceDeclaration.class);
 		assertThat(declarations, hasSize(1));
 
 		Class<?> foundClass = findClass(first(declarations));
@@ -74,7 +74,7 @@ public class JavaParserReflectorTest {
 		List<TypeDeclaration> types = cu.getTypes();
 		assertThat(types, hasSize(1));
 
-		List<MethodDeclaration> methodDeclarations = subListOfClass(first(types).getMembers(), MethodDeclaration.class);
+		List<MethodDeclaration> methodDeclarations = listOfClass(first(types).getMembers(), MethodDeclaration.class);
 
 		List<Method> methods = Arrays.asList(
 				getTestMethod(),

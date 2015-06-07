@@ -15,7 +15,7 @@ import java.util.List;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.text.MessageFormat.format;
-import static ophelia.util.CollectionUtils.first;
+import static ophelia.util.ListUtils.first;
 
 /**
  * @author Steven Weston

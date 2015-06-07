@@ -7,8 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static ophelia.util.CollectionUtils.first;
-import static ophelia.util.CollectionUtils.last;
+import static ophelia.util.ListUtils.first;
+import static ophelia.util.ListUtils.last;
 
 /**
  * @author Steven Weston
