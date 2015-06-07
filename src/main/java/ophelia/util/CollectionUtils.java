@@ -57,27 +57,57 @@ public class CollectionUtils {
 		return "[" + StringUtils.join(output, ", ") + "]";
 	}
 
+	/**
+	 * @param list the list of which we want the first entry
+	 * @param <T> the type of the entries in the list
+	 * @return the first element of the given list, which may be null because lists can contain null entries
+	 * @throws NoSuchElementException if the given list is empty
+	 */
 	@Nullable
-	public static <T> T first(List<T> list) {
-		return list.get(0);
+	public static <T> T first(@NotNull List<T> list) {
+		return getIfNotEmpty(list, 0);
 	}
 
 	@NotNull
-	public static <T> Maybe<T> maybeFirst(List<T> list) {
-		return maybe(
-				() -> {
-					if (list.isEmpty()) {
-						throw new NoSuchElementException();
-					} else {
-						return first(list);
-					}
-				}
-		);
+	public static <T> Maybe<T> maybeFirst(@NotNull List<T> list) {
+		return maybe(() -> first(list));
 	}
 
+	/**
+	 * @param list the list of which we want the last entry
+	 * @param <T> the type of the entries in the list
+	 * @return the last element of the given list, which may be null because lists can contain null entries
+	 * @throws NoSuchElementException if the given list is empty
+	 */
 	@Nullable
-	public static <T> T last(List<T> list) {
-		return list.get(list.size() - 1);
+	public static <T> T last(@NotNull List<T> list) {
+		return getIfNotEmpty(list, -1);
+	}
+
+	@NotNull
+	public static <T> Maybe<T> maybeLast(@NotNull List<T> list) {
+		return maybe(() -> last(list));
+	}
+
+	/**
+	 * @param list the list of which we want an entry
+	 * @param index the index in the list of the entry we want.  If it is less than zero, it gets from the end of the
+	 *              list instead e.g. -1 gets the last element of the list, -2 gets the penultimate &c.
+	 * @param <T> the type of the entries in the list
+	 * @return the (index)th or, if index < 0, the (size+index)th element of the list
+	 * @throws NoSuchElementException if the given list is empty
+	 */
+	@Nullable
+	public static <T> T getIfNotEmpty(@NotNull List<T> list, int index) {
+		if (list.isEmpty()) {
+			throw new NoSuchElementException();
+
+		} else if (index < 0) {
+			return list.get(list.size() + index);
+
+		} else {
+			return list.get(index);
+		}
 	}
 
 	@NotNull
