@@ -8,7 +8,7 @@ import ophelia.graph.edge.Edge;
  * A graph is a collection of nodes linked by a collection of edges.
  * @author Steven Weston
  */
-public interface Graph<N extends Node, E extends Edge<N, C>, C extends BaseCollection<N>> {
+public interface Graph<N, E extends Edge<N, C>, C extends BaseCollection<N>> {
 
 	/**
 	 * @return All the edges in the graph.
