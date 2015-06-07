@@ -13,19 +13,20 @@ import com.github.javaparser.ast.stmt.Statement;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import ophelia.util.ListUtils;
 import ophelia.util.StreamUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
 import static java.text.MessageFormat.format;
-import static ophelia.util.CollectionUtils.*;
+import static ophelia.util.CollectionUtils.emptyIfNull;
+import static ophelia.util.CollectionUtils.listOfClass;
 import static ophelia.util.FunctionUtils.image;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.AnyOf.anyOf;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 /**
@@ -42,14 +43,23 @@ public class WrapperMethodChecker {
 		this.wrappeeField = wrappeeField;
 	}
 
-	public void checkMethod(MethodDeclaration method) {
+	public void checkMethod(@NotNull MethodDeclaration method) {
 
 		List<AnnotationExpr> annotations = method.getAnnotations();
-		assertThat(
-				format("Method\n{0}\nin {1} should override something", method, wrapper),
-				image(annotations, a -> a.getName().getName()),
-				hasItems("Override")
-		);
+
+		if (image(annotations, a -> a.getName().getName()).contains("Override")) {
+			checkOverriddenMethod(method);
+		} else {
+			checkUnwrappedMethod(method);
+		}
+	}
+
+	private void checkUnwrappedMethod(@NotNull MethodDeclaration method) {
+
+		// todo: check the unwrapped method is not evil
+	}
+
+	private void checkOverriddenMethod(@NotNull MethodDeclaration method) {
 
 		List<BlockStmt> methodStatements = listOfClass(method.getChildrenNodes(), BlockStmt.class);
 		assertThat(
