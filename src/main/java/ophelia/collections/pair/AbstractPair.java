@@ -1,10 +1,9 @@
-package ophelia.collections;
+package ophelia.collections.pair;
 
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -13,29 +12,14 @@ import java.util.stream.Stream;
 /**
  * @author Steven Weston
  */
-public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIterator<E>> {
+abstract class AbstractPair<E> implements Pair<E> {
 
-	private final E first;
-	private final E second;
+	final E first;
+	final E second;
 
-	public UnorderedPair(@NotNull E first, @NotNull E second) {
+	AbstractPair(@NotNull E first, @NotNull E second) {
 		this.first = first;
 		this.second = second;
-	}
-
-	@Override
-	public int size() {
-		return 2;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c) {
-		return c.stream().allMatch(UnorderedPair.this::contains);
 	}
 
 	@Override
@@ -50,7 +34,7 @@ public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIter
 
 	@Override
 	public Stream<E> parallelStream() {
-		return getAsList().stream();
+		return getAsList().parallelStream();
 	}
 
 	@Override
@@ -72,7 +56,7 @@ public class UnorderedPair<E> implements IntegerFiniteCollection<E, StandardIter
 	}
 
 	@NotNull
-	private List<E> getAsList() {
+	List<E> getAsList() {
 		return Arrays.asList(first, second);
 	}
 
