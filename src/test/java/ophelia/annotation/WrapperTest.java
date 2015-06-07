@@ -5,6 +5,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import ophelia.util.javaparser.SourceFinder;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 import org.reflections.Reflections;
 
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
 
 import static java.lang.reflect.Modifier.*;
 import static java.text.MessageFormat.format;
-import static ophelia.util.ListUtils.first;
 import static ophelia.util.CollectionUtils.listOfClass;
+import static ophelia.util.ListUtils.first;
 import static ophelia.util.javaparser.SourceFinder.parseSource;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -54,7 +55,7 @@ public class WrapperTest {
 		}
 	}
 
-	private void checkClass(TypeDeclaration typeDeclaration, Class<?> wrapper) {
+	private void checkClass(@NotNull TypeDeclaration typeDeclaration, @NotNull Class<?> wrapper) {
 
 		assertThat(
 				format("Wrapper {0} must be public", wrapper),
