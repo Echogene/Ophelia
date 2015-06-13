@@ -11,6 +11,8 @@ import java.util.function.Function;
 public class TreeUtils {
 
 	/**
+	 * Represent an hierarchical tree nicely by printing each of its members on one line and indenting each of its
+	 * children one level.  The branches of a parent to their children are also displayed.
 	 * @param list the list of root nodes of the tree
 	 * @param presentationFunction how to represent each node
 	 * @param childrenFunction the function to recurse down
