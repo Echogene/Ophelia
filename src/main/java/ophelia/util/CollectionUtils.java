@@ -17,7 +17,7 @@ public class CollectionUtils {
 
 	@Contract("null -> null")
 	@Nullable
-	public static <T> T safeNext(Iterator<T> iterator) {
+	public static <T> T safeNext(@Nullable Iterator<T> iterator) {
 		if (iterator == null || !iterator.hasNext()) {
 			return null;
 		} else {
@@ -26,13 +26,13 @@ public class CollectionUtils {
 	}
 
 	@NotNull
-	public static String simpleNames(Collection<Class> classes) {
+	public static String simpleNames(@NotNull Collection<Class> classes) {
 		List<String> output = classes.stream().map(Class::getSimpleName).collect(Collectors.toList());
 		return "[" + StringUtils.join(output, ", ") + "]";
 	}
 
 	@NotNull
-	public static String arrayToString(Object[] objects, String afterEach) {
+	public static String arrayToString(@NotNull Object[] objects, @NotNull String afterEach) {
 		StringBuilder sb = new StringBuilder();
 		for (Object object : objects) {
 			sb.append(object.toString());
@@ -45,7 +45,7 @@ public class CollectionUtils {
 	 * Return a list of the elements in the given collection that are instances of the given class.
 	 */
 	@NotNull
-	public static <T, U> List<U> listOfClass(Collection<T> list, Class<U> clazz) {
+	public static <T, U> List<U> listOfClass(@NotNull Collection<T> list, @NotNull Class<U> clazz) {
 
 		return list.stream()
 				.filter(clazz::isInstance)
@@ -57,7 +57,7 @@ public class CollectionUtils {
 	 * Given a collection and a comparator, return a list that is the collection sorted using the comparator.
 	 */
 	@NotNull
-	public static <T> List<T> asSortedList(Collection<T> collection, Comparator<T> comparator) {
+	public static <T> List<T> asSortedList(@NotNull Collection<T> collection, @NotNull Comparator<T> comparator) {
 		List<T> output = new ArrayList<>(collection);
 		Collections.sort(output, comparator);
 		return output;
@@ -72,7 +72,7 @@ public class CollectionUtils {
 	}
 
 	@NotNull
-	public static <T> String toString(Collection<T> collection) {
+	public static <T> String toString(@NotNull Collection<T> collection) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
@@ -89,7 +89,7 @@ public class CollectionUtils {
 	}
 
 	@NotNull
-	public static <T> String debugToString(Collection<T> collection) {
+	public static <T> String debugToString(@NotNull Collection<T> collection) {
 
 		if (collection.size() > 10) {
 			return "size = " + collection.size();
@@ -119,9 +119,9 @@ public class CollectionUtils {
 	 */
 	@Nullable
 	public static <T, U, E extends Exception> T extractUnique(
-			Collection<U> collection,
-			Function<U, T> function,
-			ExceptionalTriConsumer<T, T, U, E> ifDifferent
+			@NotNull Collection<U> collection,
+			@NotNull Function<U, T> function,
+			@NotNull ExceptionalTriConsumer<T, T, U, E> ifDifferent
 	) throws E {
 
 		T output = null;
