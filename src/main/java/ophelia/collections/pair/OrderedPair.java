@@ -11,10 +11,12 @@ public class OrderedPair<E> extends AbstractPair<E> {
 		super(first, second);
 	}
 
+	@NotNull
 	public E getFirst() {
 		return first;
 	}
 
+	@NotNull
 	public E getSecond() {
 		return second;
 	}
