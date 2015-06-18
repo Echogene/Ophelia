@@ -5,8 +5,8 @@ import java.util.Spliterator;
 import java.util.stream.Stream;
 
 /**
- * Represents a potentially infinite collection of things.  It is a stripped-down version of
- * {@link Collection}.
+ * Represents a potentially infinite collection of things.  It is a stripped-down version of {@link Collection}.  It
+ * makes no reference to its size, iterators or any modification methods.
  * @author Steven Weston
  */
 public interface BaseCollection<E> {
