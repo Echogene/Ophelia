@@ -7,6 +7,7 @@ import java.util.Spliterator;
 import java.util.stream.Stream;
 
 /**
+ * A wrapper for {@link Collection} that only provides access to the methods present in {@link BaseCollection}.
  * @author Steven Weston
  */
 @Wrapper(Collection.class)
