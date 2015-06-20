@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
+ * A wrapper for {@link Collection} that only provides access to the methods present in {@link IntegerFiniteCollection}.
  * @author Steven Weston
  */
 @Wrapper(Collection.class)
