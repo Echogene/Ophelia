@@ -6,6 +6,7 @@ import ophelia.collections.iterator.StandardIterator;
 import java.util.Collection;
 
 /**
+ * A pair is a collection with two elements.
  * @author Steven Weston
  */
 public interface Pair<E> extends IntegerFiniteCollection<E, StandardIterator<E>> {
