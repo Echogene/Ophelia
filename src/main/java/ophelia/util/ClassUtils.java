@@ -11,6 +11,10 @@ import static ophelia.util.FunctionUtils.safeGet;
  */
 public class ClassUtils {
 
+	/**
+	 * @param clazz the class we want the simple name of
+	 * @return the simple name of the class if it is not null, or null otherwise.
+	 */
 	@Contract("null -> null")
 	public static String safeSimpleName(@Nullable Class clazz) {
 		return safeGet(clazz, Class::getSimpleName);
