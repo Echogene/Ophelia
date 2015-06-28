@@ -135,6 +135,11 @@ public class CollectionUtils {
 		return output;
 	}
 
+	/**
+	 * @param collection the collection to ignore if it is null
+	 * @param <T> the type of the collection
+	 * @return the given collection if it is not null or an empty set if it is null
+	 */
 	@Contract(pure = true)
 	@NotNull
 	public static <T> Collection<T> emptyIfNull(@Nullable Collection<T> collection) {
