@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
  */
 public class FunctionUtils {
 
+	/**
+	 * Safely get something from a potentially null object, returning null if that object is null.
+	 */
 	@Contract("null,_ -> null")
 	public static <S, T> T safeGet(@Nullable S s, @NotNull Function<S, T> getter) {
 		if (s == null) {
