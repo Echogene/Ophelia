@@ -1,6 +1,5 @@
 package ophelia.event.publisher;
 
-import ophelia.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -10,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * @author Steven Weston
  */
-abstract class AbstractPublisher<E extends Event> implements Publisher<E> {
+abstract class AbstractPublisher<E> implements Publisher<E> {
 
 	final Set<Consumer<E>> subscribers = new HashSet<>();
 

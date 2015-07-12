@@ -1,12 +1,11 @@
 package ophelia.event.publisher;
 
-import ophelia.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Steven Weston
  */
-public abstract class AbstractAsyncBroadcaster<E extends Event>
+public abstract class AbstractAsyncBroadcaster<E>
 		extends AbstractPublisher<E> implements AsyncBroadcaster<E> {
 
 	@Override

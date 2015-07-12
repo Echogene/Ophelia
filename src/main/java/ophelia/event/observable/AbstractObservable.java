@@ -1,6 +1,5 @@
 package ophelia.event.observable;
 
-import ophelia.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -10,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * @author Steven Weston
  */
-abstract class AbstractObservable<E extends Event> implements Observable<E> {
+abstract class AbstractObservable<E> implements Observable<E> {
 
 	final Set<Consumer<E>> observers = new HashSet<>();
 
