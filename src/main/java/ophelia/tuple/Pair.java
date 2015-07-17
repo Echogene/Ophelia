@@ -3,6 +3,7 @@ package ophelia.tuple;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * A pair of two things that are not null.
  * @author Steven Weston
  */
 public class Pair<S, T> {
