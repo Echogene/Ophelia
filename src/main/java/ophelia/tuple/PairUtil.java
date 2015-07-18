@@ -12,6 +12,9 @@ import java.util.function.BiFunction;
  */
 public class PairUtil {
 
+	/**
+	 * Consume a {@link Pair} with a {@link BiConsumer}.
+	 */
 	public static <S, T> void consume(
 			@NotNull BiConsumer<? super S, ? super T> consumer,
 			@NotNull Pair<S, T> pair
