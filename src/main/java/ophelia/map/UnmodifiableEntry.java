@@ -5,6 +5,7 @@ import ophelia.annotation.Wrapper;
 import java.util.Map;
 
 /**
+ * An {@link UnmodifiableMap} needs an UnmodifiableEntry.
  * @author Steven Weston
  */
 @Wrapper(Map.Entry.class)
