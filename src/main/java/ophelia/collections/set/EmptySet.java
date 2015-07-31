@@ -11,6 +11,15 @@ import java.util.stream.Stream;
 
 public final class EmptySet<E> implements BaseSet<E, EmptySet.EmptyIterator<E>> {
 
+	public static final EmptySet EMPTY_SET = new EmptySet();
+
+	public static <E> EmptySet<E> emptySet() {
+		//noinspection unchecked
+		return EMPTY_SET;
+	}
+
+	private EmptySet() {}
+
 	@Override
 	public int size() {
 		return 0;
