@@ -1,5 +1,6 @@
 package ophelia.collections.set.bounded;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.collections.iterator.StandardIterator;
 import ophelia.collections.set.HashSet;
 import ophelia.collections.set.ModifiableSet;
@@ -33,6 +34,7 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 		this.second = second;
 	}
 
+	@JsonValue
 	private Set<E> set() {
 		Set<E> output = new HashSet<>();
 		if (first != null) {
