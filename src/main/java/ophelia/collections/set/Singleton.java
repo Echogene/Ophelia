@@ -1,5 +1,6 @@
 package ophelia.collections.set;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +20,11 @@ public final class Singleton<E> implements BaseSet<E, UnmodifiableIterator<E>> {
 	public Singleton(@NotNull E element) {
 		this.element = element;
 		set = singleton(element);
+	}
+
+	@JsonValue
+	private Set<E> set() {
+		return set;
 	}
 
 	@Override
