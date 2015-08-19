@@ -1,5 +1,6 @@
 package ophelia.collections.set;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,11 @@ public final class UnmodifiableSet<E> implements BaseSet<E, UnmodifiableIterator
 
 	public UnmodifiableSet(@NotNull Collection<E> collection) {
 		this.collection = collection;
+	}
+
+	@JsonValue
+	private Collection<E> collection() {
+		return collection;
 	}
 
 	@Override

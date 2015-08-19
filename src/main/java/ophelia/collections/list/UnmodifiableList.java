@@ -1,5 +1,6 @@
 package ophelia.collections.list;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.annotation.Wrapper;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import ophelia.collections.iterator.UnmodifiableListIterator;
@@ -22,6 +23,11 @@ public final class UnmodifiableList<E> implements BaseList<E, UnmodifiableIterat
 
 	public UnmodifiableList(List<E> list) {
 		this.list = list;
+	}
+
+	@JsonValue
+	private List<E> list() {
+		return list;
 	}
 
 	@Override

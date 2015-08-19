@@ -1,8 +1,13 @@
 package ophelia.collections;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.annotation.Wrapper;
+import ophelia.collections.set.HashSet;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.stream.Stream;
 
@@ -17,6 +22,11 @@ public final class UnmodifiableCollection<E> implements BaseCollection<E> {
 
 	public UnmodifiableCollection(Collection<E> collection) {
 		this.collection = collection;
+	}
+
+	@JsonValue
+	private Collection<E> collection() {
+		return collection;
 	}
 
 	@Override
