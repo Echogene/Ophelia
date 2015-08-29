@@ -208,4 +208,18 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 	public E getSecond() {
 		return second;
 	}
+
+	@Nullable
+	public E getOther(@NotNull E e) {
+
+		if (e.equals(first)) {
+			return second;
+
+		} else if (e.equals(second)) {
+			return first;
+
+		} else {
+			return null;
+		}
+	}
 }
