@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import static ophelia.util.CollectionUtils.createSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ophelia.util.CollectionUtils.createSet;
 
 /**
  * @author Steven Weston

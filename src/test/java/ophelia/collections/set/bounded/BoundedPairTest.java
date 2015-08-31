@@ -6,9 +6,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class BoundedPairTest {
 

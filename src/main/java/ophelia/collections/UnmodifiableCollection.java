@@ -2,12 +2,8 @@ package ophelia.collections;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.annotation.Wrapper;
-import ophelia.collections.set.HashSet;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.stream.Stream;
 

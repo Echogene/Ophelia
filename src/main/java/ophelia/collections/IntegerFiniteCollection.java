@@ -1,7 +1,7 @@
 package ophelia.collections;
 
-import ophelia.collections.iterator.BaseIterator;
 import ophelia.collections.iterator.BaseIterable;
+import ophelia.collections.iterator.BaseIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

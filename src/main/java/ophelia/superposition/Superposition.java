@@ -1,8 +1,8 @@
 package ophelia.superposition;
 
 import ophelia.exceptions.AmbiguityException;
-import org.jetbrains.annotations.NotNull;
 import ophelia.function.ExceptionalConsumer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
