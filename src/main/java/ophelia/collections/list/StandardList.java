@@ -5,7 +5,10 @@ import ophelia.collections.iterator.StandardIterator;
 import ophelia.collections.iterator.StandardListIterator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
