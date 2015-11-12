@@ -163,6 +163,10 @@ public class StringUtils {
 		return sb.toString();
 	}
 
+	/**
+	 * @param string the string whose first character should be capitalised
+	 * @return the given string but ensuring that its first character is majuscule
+	 */
 	@NotNull
 	public static String uppercaseFirst(@NotNull String string) {
 		return string.substring(0, 1).toUpperCase() + string.substring(1);
