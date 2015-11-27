@@ -1,5 +1,6 @@
 package ophelia.generator;
 
+import ophelia.generator.constructor.ConstructorBuilder;
 import ophelia.generator.field.FieldBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -19,6 +20,11 @@ public class ClassBuilderTest {
 				.withImplements(TestInterface.class)
 				.withExtends(TestSuperClass.class)
 				.withAbstraction()
+				.withConstructor(
+						new ConstructorBuilder()
+								.withProtection()
+								.build()
+				)
 				.withField(
 						new FieldBuilder("INSTANCE")
 								.withType("ophelia.generator.TestImpl")
