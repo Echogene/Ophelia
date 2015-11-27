@@ -4,6 +4,7 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import ophelia.collections.list.UnmodifiableList;
 import ophelia.collections.set.UnmodifiableSet;
+import ophelia.generator.constructor.ConstructorWrapper;
 import ophelia.generator.field.FieldBuilder;
 import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodBuilder;
@@ -40,6 +41,9 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 	@NotNull MainClassBuilder withField(@NotNull FieldWrapper field);
 
 	@NotNull MainClassBuilder withAbstraction();
+
+	@NotNull
+	MainClassBuilder withConstructor(ConstructorWrapper constructor);
 
 	@NotNull
 	default MainClassBuilder withSetMember(@NotNull String fieldName, @NotNull String canonicalMemberName) {

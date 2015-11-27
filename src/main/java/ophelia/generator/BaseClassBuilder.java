@@ -5,10 +5,12 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import ophelia.generator.constructor.ConstructorWrapper;
 import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodWrapper;
 import ophelia.util.ClassUtils;
@@ -37,6 +39,7 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<ClassOrInterfaceType> implementations = new ArrayList<>();
 	private final List<FieldDeclaration> fields = new ArrayList<>();
 	private final List<MethodDeclaration> methods = new ArrayList<>();
+	private final List<ConstructorDeclaration> constructors = new ArrayList<>();
 
 	BaseClassBuilder(@NotNull String packageName, @NotNull String className) {
 		this.className = className;
@@ -92,6 +95,14 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	@NotNull
 	@Override
+	public MainClassBuilder withConstructor(ConstructorWrapper constructor) {
+		constructor.setClass(className);
+		constructors.add(constructor.getNode());
+		return this;
+	}
+
+	@NotNull
+	@Override
 	public String getSimpleClassName() {
 		return className;
 	}
@@ -121,7 +132,8 @@ class BaseClassBuilder implements MainClassBuilder {
 				new ArrayList<>()
 		);
 
-		fields.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
+		constructors.forEach(constructor -> ASTHelper.addMember(typeDeclaration, constructor));
+		fields.forEach(field -> ASTHelper.addMember(typeDeclaration, field));
 		methods.forEach(method -> ASTHelper.addMember(typeDeclaration, method));
 
 		return new CompilationUnit(
