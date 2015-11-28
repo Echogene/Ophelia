@@ -5,12 +5,19 @@ import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.ExpressionStmt;
+import com.github.javaparser.ast.stmt.Statement;
 import ophelia.collections.set.HashSet;
 import ophelia.collections.set.UnmodifiableSet;
+import ophelia.generator.NodeWrapper;
 import ophelia.generator.annotation.AnnotationWrapper;
+import ophelia.generator.expression.ExpressionWrapper;
 import ophelia.generator.method.parameter.ParameterWrapper;
 import ophelia.util.ClassUtils;
+import ophelia.util.FunctionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -26,7 +33,8 @@ public class ConstructorBuilder implements MainConstructorBuilder {
 
 	private final Set<String> imports = new HashSet<>();
 	private final List<Parameter> parameters = new ArrayList<>();
-	private BlockStmt block;
+	private Statement superCall;
+	private List<Statement> statements = new ArrayList<>();
 	private int modifiers = PUBLIC;
 	private final List<AnnotationExpr> annotations = new ArrayList<>();
 
@@ -41,8 +49,22 @@ public class ConstructorBuilder implements MainConstructorBuilder {
 
 	@NotNull
 	@Override
-	public ConstructorBuilder withImplementation(@NotNull String implementation) throws ParseException {
-		block = JavaParser.parseBlock("{" + implementation + "}");
+	public ConstructorBuilder withSuperCall(@NotNull ExpressionWrapper... arguments) throws ParseException {
+		List<Expression> args = FunctionUtils.image(arguments, NodeWrapper::getNode);
+		// A hack follows because parsing "super(arg)" doesn't quite work in javaparser.
+		MethodCallExpr superCall = new MethodCallExpr(null, "super", args);
+		this.superCall = new ExpressionStmt(superCall);
+
+		for (ExpressionWrapper argument : arguments) {
+			withImports(argument.getImports());
+		}
+		return this;
+	}
+
+	@NotNull
+	@Override
+	public ConstructorBuilder withStatement(@NotNull String statement) throws ParseException {
+		statements.add(JavaParser.parseStatement(statement));
 		return this;
 	}
 
@@ -114,11 +136,13 @@ public class ConstructorBuilder implements MainConstructorBuilder {
 				ConstructorDeclaration declaration = new ConstructorDeclaration(modifiers, className);
 				declaration.setAnnotations(annotations);
 				declaration.setParameters(parameters);
-				if (block != null) {
-					declaration.setBlock(block);
-				} else {
-					declaration.setBlock(new BlockStmt());
+				List<Statement> fullStatements = new ArrayList<>();
+				if (superCall != null) {
+					fullStatements.add(superCall);
 				}
+				fullStatements.addAll(statements);
+				BlockStmt block = new BlockStmt(fullStatements);
+				declaration.setBlock(block);
 				return declaration;
 			}
 		};
