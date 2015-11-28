@@ -5,8 +5,6 @@ import ophelia.generator.field.FieldBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
-import java.io.File;
-
 /**
  * @author Steven Weston
  */
@@ -37,6 +35,6 @@ public class ClassBuilderTest {
 				.withSetMember("setMember", TestInterface.class)
 				.withListMember("listMember", TestSuperClass.class)
 				.withMapMember("mapMember", TestSuperClass.class, TestInterface.class)
-				.writeToFile(new File("src/test/java/ophelia/generator/TestImpl.java.test"));
+				.writeToFile("src/test/java/ophelia/generator/TestImpl.java.test");
 	}
 }

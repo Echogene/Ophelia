@@ -14,10 +14,12 @@ import ophelia.map.UnmodifiableMap;
 import ophelia.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Steven Weston
@@ -164,13 +166,17 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 
 	@NotNull String getCanonicalClassName();
 
-	default void writeToFile(File file) {
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), UTF_8))) {
+	default void writeToFile(Path path) {
+		try (Writer writer = Files.newBufferedWriter(path)) {
 
 			writer.write(build().toString());
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	default void writeToFile(String path) {
+		writeToFile(Paths.get(path));
 	}
 }

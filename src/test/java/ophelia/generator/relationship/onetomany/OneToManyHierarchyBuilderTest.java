@@ -4,8 +4,6 @@ import ophelia.generator.ClassBuilder;
 import ophelia.generator.MainClassBuilder;
 import org.junit.Test;
 
-import java.io.File;
-
 /**
  * @author Steven Weston
  */
@@ -24,8 +22,8 @@ public class OneToManyHierarchyBuilderTest {
 				.withChildBuilder(childBuilder)
 				.build();
 
-		parentBuilder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedParent.java.test"));
-		childBuilder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedChild.java.test"));
+		parentBuilder.writeToFile("src/test/java/ophelia/generator/relationship/onetomany/GeneratedParent.java.test");
+		childBuilder.writeToFile("src/test/java/ophelia/generator/relationship/onetomany/GeneratedChild.java.test");
 	}
 
 	@Test
@@ -38,6 +36,6 @@ public class OneToManyHierarchyBuilderTest {
 				.withChildBuilder(builder)
 				.build();
 
-		builder.writeToFile(new File("src/test/java/ophelia/generator/relationship/onetomany/GeneratedHierarchyMember.java"));
+		builder.writeToFile("src/test/java/ophelia/generator/relationship/onetomany/GeneratedHierarchyMember.java");
 	}
 }
