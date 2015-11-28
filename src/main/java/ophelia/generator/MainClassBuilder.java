@@ -21,6 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+
 /**
  * @author Steven Weston
  */
@@ -167,10 +169,16 @@ public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, Mai
 	@NotNull String getCanonicalClassName();
 
 	default void writeToFile(Path path) {
-		try (Writer writer = Files.newBufferedWriter(path)) {
-
+		try {
+			Path directory = path.getParent();
+			if (!Files.exists(directory)) {
+				Files.createDirectories(directory);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		try (Writer writer = Files.newBufferedWriter(path, CREATE)) {
 			writer.write(build().toString());
-
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
