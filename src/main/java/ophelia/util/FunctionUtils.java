@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -36,6 +37,14 @@ public class FunctionUtils {
 	@NotNull
 	public static <T> UnaryOperator<T> safeWrap(UnaryOperator<T> getter) {
 		return s -> s == null ? null : getter.apply(s);
+	}
+
+	/**
+	 * @return the image (as a list) of the function on the given array.
+	 */
+	@NotNull
+	public static <S, T> List<T> image(@NotNull S[] list, @NotNull Function<? super S, T> function) {
+		return image(Arrays.asList(list), function);
 	}
 
 	/**
