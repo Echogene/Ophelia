@@ -40,11 +40,14 @@ class BaseClassBuilder implements MainClassBuilder {
 	private final List<FieldDeclaration> fields = new ArrayList<>();
 	private final List<MethodDeclaration> methods = new ArrayList<>();
 	private final List<ConstructorDeclaration> constructors = new ArrayList<>();
+	private final boolean isInterface;
 
-	BaseClassBuilder(@NotNull String packageName, @NotNull String className) {
+	BaseClassBuilder(@NotNull String packageName, @NotNull String className, boolean isInterface) {
 		this.className = className;
 
 		this.packageName = packageName;
+
+		this.isInterface = isInterface;
 	}
 
 	@NotNull
@@ -124,7 +127,7 @@ class BaseClassBuilder implements MainClassBuilder {
 		ClassOrInterfaceDeclaration typeDeclaration = new ClassOrInterfaceDeclaration(
 				modifiers,
 				null,
-				false,
+				isInterface,
 				className,
 				null,
 				extensions.isEmpty() ? null : extensions,
