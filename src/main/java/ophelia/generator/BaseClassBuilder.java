@@ -13,7 +13,7 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import ophelia.generator.constructor.ConstructorWrapper;
 import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodWrapper;
-import ophelia.util.ClassUtils;
+import ophelia.generator.type.TypeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -59,17 +59,17 @@ class BaseClassBuilder implements MainClassBuilder {
 
 	@NotNull
 	@Override
-	public MainClassBuilder withExtends(@NotNull String canonicalClassName) {
-		withImport(canonicalClassName);
-		extensions.add(new ClassOrInterfaceType(ClassUtils.getSimpleName(canonicalClassName)));
+	public MainClassBuilder withExtends(@NotNull TypeWrapper type) {
+		withImports(type.getImports());
+		extensions.add(type.getNode());
 		return this;
 	}
 
 	@NotNull
 	@Override
-	public MainClassBuilder withImplements(@NotNull String canonicalClassName) {
-		withImport(canonicalClassName);
-		implementations.add(new ClassOrInterfaceType(ClassUtils.getSimpleName(canonicalClassName)));
+	public MainClassBuilder withImplements(@NotNull TypeWrapper type) {
+		withImports(type.getImports());
+		implementations.add(type.getNode());
 		return this;
 	}
 

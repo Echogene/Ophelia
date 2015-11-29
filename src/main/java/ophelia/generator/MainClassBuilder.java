@@ -10,6 +10,7 @@ import ophelia.generator.field.FieldWrapper;
 import ophelia.generator.method.MethodBuilder;
 import ophelia.generator.method.MethodWrapper;
 import ophelia.generator.type.TypeBuilder;
+import ophelia.generator.type.TypeWrapper;
 import ophelia.map.UnmodifiableMap;
 import ophelia.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -28,13 +29,21 @@ import static java.nio.file.StandardOpenOption.CREATE;
  */
 public interface MainClassBuilder extends WithImportBuilder<CompilationUnit, MainClassBuilder> {
 
-	@NotNull MainClassBuilder withExtends(@NotNull String canonicalClassName);
+	@NotNull MainClassBuilder withExtends(@NotNull TypeWrapper type);
+
+	@NotNull default MainClassBuilder withExtends(@NotNull String canonicalClassName) {
+		return withExtends(new TypeBuilder(canonicalClassName).build());
+	}
 
 	@NotNull default MainClassBuilder withExtends(@NotNull Class<?> clazz) {
 		return withExtends(clazz.getCanonicalName());
 	}
 
-	@NotNull MainClassBuilder withImplements(@NotNull String canonicalClassName);
+	@NotNull MainClassBuilder withImplements(@NotNull TypeWrapper type);
+
+	@NotNull default MainClassBuilder withImplements(@NotNull String canonicalClassName) {
+		return withImplements(new TypeBuilder(canonicalClassName).build());
+	}
 
 	@NotNull default MainClassBuilder withImplements(@NotNull Class<?> clazz) {
 		return withImplements(clazz.getCanonicalName());
