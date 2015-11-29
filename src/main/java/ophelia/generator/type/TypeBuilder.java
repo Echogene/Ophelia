@@ -96,7 +96,7 @@ public class TypeBuilder implements WithImportBuilder<TypeWrapper, TypeBuilder>,
 
 			@NotNull
 			@Override
-			public Type getNode() {
+			public ClassOrInterfaceType getNode() {
 				ClassOrInterfaceType type = new ClassOrInterfaceType(typeName);
 				type.setAnnotations(annotations);
 				type.setTypeArgs(genericTypes);
