@@ -196,6 +196,13 @@ public class JavaParserReflector {
 		return Class.forName(packageName + "." + className);
 	}
 
+	/**
+	 * Get a method from a class given a method declaration.
+	 * @param declaration the declaration of the method we want to find reflectively
+	 * @param clazz the class that owns the method
+	 * @return the method represented by the given method declaration
+	 * @throws NoSuchMethodException
+	 */
 	@NotNull
 	public static Method findMethod(MethodDeclaration declaration, Class<?> clazz) throws NoSuchMethodException {
 
