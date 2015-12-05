@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
+ * A builder that has can import some strings (generally package names).
  * @author Steven Weston
  */
 public interface WithImportBuilder<T, B extends WithImportBuilder<T, B>> extends Builder<T, B> {
