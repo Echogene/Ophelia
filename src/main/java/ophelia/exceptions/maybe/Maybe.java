@@ -22,6 +22,9 @@ import java.util.stream.Stream;
  */
 public interface Maybe<D> extends SuccessHandler<D> {
 
+	/**
+	 * Convert an exceptional function into a function of maybes.
+	 */
 	@NotNull
 	static <D, R> Function<D, Maybe<R>> wrapOutput(
 			@NotNull ExceptionalFunction<D, R, ? extends Exception> function
