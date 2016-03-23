@@ -2,8 +2,12 @@ package ophelia.util;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Spliterator;
 import java.util.function.BiConsumer;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 /**
@@ -25,5 +29,19 @@ public class StreamUtils {
 
 		//noinspection StatementWithEmptyBody
 		while (leftSpliterator.tryAdvance(s -> rightSpliterator.tryAdvance(t -> consumer.accept(s, t))));
+	}
+
+	public static <T> Collector<T, List<T>, Optional<T>> findUnique() {
+		return Collector.of(
+				ArrayList::new,
+				List::add,
+				(left, right) -> { left.addAll(right); return left; },
+				list -> {
+					if (list.size() != 1) {
+						return Optional.empty();
+					}
+					return Optional.of(list.get(0));
+				}
+		);
 	}
 }
