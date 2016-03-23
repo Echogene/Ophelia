@@ -1,5 +1,6 @@
 package ophelia.exceptions.maybe;
 
+import ophelia.exceptions.StackedException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;

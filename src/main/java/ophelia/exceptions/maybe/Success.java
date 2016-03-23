@@ -1,5 +1,6 @@
 package ophelia.exceptions.maybe;
 
+import ophelia.exceptions.StackedException;
 import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
