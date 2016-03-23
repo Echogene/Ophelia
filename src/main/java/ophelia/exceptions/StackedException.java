@@ -1,4 +1,4 @@
-package ophelia.exceptions.maybe;
+package ophelia.exceptions;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
