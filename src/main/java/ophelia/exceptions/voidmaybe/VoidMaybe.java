@@ -82,7 +82,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 				));
 	}
 
-	static VoidMaybe failIfSuccessNotUnique(Collection<VoidMaybe> maybes) throws CollectedException {
+	static VoidMaybe failIfSuccessNotUnique(Collection<VoidMaybe> maybes) {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		return maybes.stream()
 				.map(VoidMaybeHandler::getException)
