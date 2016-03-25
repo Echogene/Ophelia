@@ -40,7 +40,7 @@ public class StreamUtils {
 					if (list.size() != 1) {
 						return Optional.empty();
 					}
-					return Optional.of(list.get(0));
+					return Optional.ofNullable(list.get(0));
 				}
 		);
 	}
