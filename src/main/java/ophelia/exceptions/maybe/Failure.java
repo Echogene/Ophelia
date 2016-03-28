@@ -23,6 +23,11 @@ class Failure<R> implements Maybe<R> {
 	public VoidFailureHandler consumeOnSuccess(@NotNull Consumer<R> consumer) {
 		return new VoidFailureHandler() {
 			@Override
+			public <F extends Exception> void throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F {
+				throw exceptionTransformer.apply(exception);
+			}
+
+			@Override
 			public void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler) {
 				exceptionHandler.accept(exception);
 			}
