@@ -46,6 +46,12 @@ class Success<R> implements Maybe<R> {
 		return new DefaultFailureHandler<>(value);
 	}
 
+	@NotNull
+	@Override
+	public <S> FailureHandler<S> mapOnSuccess(Function<R, S> map) {
+		return new DefaultFailureHandler<>(map.apply(value));
+	}
+
 	@Override
 	public boolean isSuccess() {
 		return true;

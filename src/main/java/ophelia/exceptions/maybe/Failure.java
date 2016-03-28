@@ -43,6 +43,12 @@ class Failure<R> implements Maybe<R> {
 		return new DefaultFailureHandler<>(exception);
 	}
 
+	@NotNull
+	@Override
+	public <S> FailureHandler<S> mapOnSuccess(Function<R, S> map) {
+		return new DefaultFailureHandler<>(exception);
+	}
+
 	@Override
 	public boolean isSuccess() {
 		return false;
