@@ -1,10 +1,10 @@
 package ophelia.util;
 
+import ophelia.exceptions.maybe.Maybe;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Spliterator;
 import java.util.function.BiConsumer;
 import java.util.stream.Collector;
@@ -31,17 +31,29 @@ public class StreamUtils {
 		while (leftSpliterator.tryAdvance(s -> rightSpliterator.tryAdvance(t -> consumer.accept(s, t))));
 	}
 
-	public static <T> Collector<T, List<T>, Optional<T>> findUnique() {
+	public static <T> Collector<T, List<T>, Maybe<T>> findUnique() {
 		return Collector.of(
 				ArrayList::new,
 				List::add,
 				(left, right) -> { left.addAll(right); return left; },
 				list -> {
-					if (list.size() != 1) {
-						return Optional.empty();
+					if (list.isEmpty()) {
+						return Maybe.failure(new EmptyException());
+					} else if (list.size() > 1) {
+						return Maybe.failure(new NonUniqueException(list));
+					} else {
+						return Maybe.success(list.get(0));
 					}
-					return Optional.ofNullable(list.get(0));
 				}
 		);
+	}
+
+	private static class EmptyException extends Exception {
+	}
+
+	private static class NonUniqueException extends Exception {
+		<T> NonUniqueException(List<T> list) {
+			super(list.toString());
+		}
 	}
 }
