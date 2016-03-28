@@ -72,8 +72,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	static void throwIfSuccessNotUnique(Collection<VoidMaybe> maybes) throws CollectedException {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		maybes.stream()
-				.map(VoidMaybeHandler::getException)
-				.filter(e -> e == null)
+				.filter(VoidMaybeHandler::isSuccess)
 				.collect(StreamUtils.findUnique())
 				.consumeOnSuccess(m -> {})
 				.throwMappedFailure(e -> new CollectedException(
@@ -86,8 +85,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	static VoidMaybe failIfSuccessNotUnique(Collection<VoidMaybe> maybes) {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		return maybes.stream()
-				.map(VoidMaybeHandler::getException)
-				.filter(e -> e == null)
+				.filter(VoidMaybeHandler::isSuccess)
 				.collect(StreamUtils.findUnique())
 				.mapOnSuccess(e -> (VoidMaybe) new Success())
 				.resolveFailure(e -> new Failure(new CollectedException(
