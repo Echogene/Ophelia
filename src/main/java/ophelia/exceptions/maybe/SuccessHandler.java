@@ -12,6 +12,10 @@ public interface SuccessHandler<T> {
 
 	@NotNull VoidFailureHandler consumeOnSuccess(@NotNull Consumer<T> consumer);
 
+	@NotNull default VoidFailureHandler ignoreOnSuccess() {
+		return consumeOnSuccess(t -> {});
+	}
+
 	@NotNull FailureHandler<T> returnOnSuccess();
 
 	@NotNull <S> FailureHandler<S> mapOnSuccess(Function<T, S> map);

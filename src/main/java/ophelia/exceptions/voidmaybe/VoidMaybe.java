@@ -74,7 +74,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		maybes.stream()
 				.filter(VoidMaybeHandler::isSuccess)
 				.collect(StreamUtils.findUnique())
-				.consumeOnSuccess(m -> {})
+				.ignoreOnSuccess()
 				.throwMappedFailure(e -> new CollectedException(
 						maybes.stream()
 								.map(VoidMaybeHandler::getException)
@@ -87,7 +87,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		return maybes.stream()
 				.filter(VoidMaybeHandler::isSuccess)
 				.collect(StreamUtils.findUnique())
-				.mapOnSuccess(e -> (VoidMaybe) new Success())
+				.mapOnSuccess(uniqueMaybe -> (VoidMaybe) new Success())
 				.resolveFailure(e -> new Failure(new CollectedException(
 						maybes.stream()
 								.map(VoidMaybeHandler::getException)
