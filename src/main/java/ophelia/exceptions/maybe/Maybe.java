@@ -106,4 +106,12 @@ public interface Maybe<D> extends SuccessHandler<D> {
 			return new Failure<>(new NullPointerException());
 		}
 	}
+
+	static <R> Maybe<R> success(@Nullable R r) {
+		return new Success<>(r);
+	}
+
+	static <R> Maybe<R> failure(Exception e) {
+		return new Failure<>(e);
+	}
 }
