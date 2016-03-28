@@ -37,7 +37,7 @@ public interface FailureHandler<S> {
 		return throwMappedFailure(e -> supplier.get());
 	}
 
-	@NotNull S defaultOnFailure(@NotNull S defaultValue);
+	@Nullable S defaultOnFailure(@NotNull S defaultValue);
 
 	@Nullable S nullOnFailure();
 
