@@ -28,6 +28,12 @@ class Success<R> implements Maybe<R> {
 				consumer.accept(value);
 			}
 
+			@Nullable
+			@Override
+			public StackedException getException() {
+				return null;
+			}
+
 			@Override
 			public void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler) {
 				consumer.accept(value);

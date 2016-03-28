@@ -28,6 +28,12 @@ class Failure<R> implements Maybe<R> {
 				throw exceptionTransformer.apply(exception);
 			}
 
+			@Nullable
+			@Override
+			public StackedException getException() {
+				return exception;
+			}
+
 			@Override
 			public void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler) {
 				exceptionHandler.accept(exception);

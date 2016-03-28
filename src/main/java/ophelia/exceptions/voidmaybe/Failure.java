@@ -5,6 +5,7 @@ import ophelia.function.ExceptionalRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -20,8 +21,13 @@ class Failure implements VoidMaybe {
 
 	@Nullable
 	@Override
-	public Exception getException() {
+	public StackedException getException() {
 		return exception;
+	}
+
+	@Override
+	public void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler) {
+		exceptionHandler.accept(exception);
 	}
 
 	@Override
@@ -30,9 +36,12 @@ class Failure implements VoidMaybe {
 	}
 
 	@Override
-	public void throwOnFailure() throws Exception {
+	public void throwOnFailure() throws StackedException {
 		throw exception;
 	}
+
+	@Override
+	public void ignoreOnFailure() {}
 
 	@Override
 	public <F extends Exception> void throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F {
