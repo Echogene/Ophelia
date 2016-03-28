@@ -25,6 +25,11 @@ class Failure implements VoidMaybe {
 	}
 
 	@Override
+	public boolean isSuccess() {
+		return false;
+	}
+
+	@Override
 	public void throwOnFailure() throws Exception {
 		throw exception;
 	}

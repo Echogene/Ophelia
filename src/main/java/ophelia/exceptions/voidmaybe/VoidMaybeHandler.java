@@ -19,6 +19,8 @@ public interface VoidMaybeHandler {
 	@Nullable
 	Exception getException();
 
+	boolean isSuccess();
+
 	void throwOnFailure() throws Exception;
 
 	<F extends Exception> void throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F;

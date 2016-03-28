@@ -18,6 +18,11 @@ class Success implements VoidMaybe {
 	}
 
 	@Override
+	public boolean isSuccess() {
+		return true;
+	}
+
+	@Override
 	public void throwOnFailure() throws Exception {}
 
 	@Override
