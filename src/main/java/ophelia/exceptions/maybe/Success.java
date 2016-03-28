@@ -79,7 +79,7 @@ class Success<R> implements Maybe<R> {
 			return t;
 		}
 
-		@NotNull
+		@Nullable
 		@Override
 		public T defaultOnFailure(@NotNull Object defaultValue) {
 			return t;

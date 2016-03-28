@@ -3,6 +3,7 @@ package ophelia.exceptions.maybe;
 import ophelia.exceptions.StackedException;
 import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -85,7 +86,7 @@ class Failure<R> implements Maybe<R> {
 			throw exceptionTransformer.apply(exception);
 		}
 
-		@NotNull
+		@Nullable
 		@Override
 		public S defaultOnFailure(@NotNull S defaultValue) {
 			return defaultValue;
