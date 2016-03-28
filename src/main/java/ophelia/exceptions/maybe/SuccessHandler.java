@@ -12,4 +12,6 @@ public interface SuccessHandler<T> {
 	@NotNull VoidFailureHandler consumeOnSuccess(@NotNull Consumer<T> consumer);
 
 	@NotNull FailureHandler<T> returnOnSuccess();
+
+	boolean isSuccess();
 }

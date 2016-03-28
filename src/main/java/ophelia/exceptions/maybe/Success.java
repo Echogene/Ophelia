@@ -46,6 +46,11 @@ class Success<R> implements Maybe<R> {
 		return new DefaultFailureHandler<>(value);
 	}
 
+	@Override
+	public boolean isSuccess() {
+		return true;
+	}
+
 	static class DefaultFailureHandler<T> implements FailureHandler<T> {
 		private final T t;
 

@@ -43,6 +43,11 @@ class Failure<R> implements Maybe<R> {
 		return new DefaultFailureHandler<>(exception);
 	}
 
+	@Override
+	public boolean isSuccess() {
+		return false;
+	}
+
 	static class DefaultFailureHandler<S> implements FailureHandler<S> {
 
 		private final StackedException exception;
