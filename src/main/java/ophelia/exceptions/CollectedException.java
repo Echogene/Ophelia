@@ -1,9 +1,6 @@
 package ophelia.exceptions;
 
-import ophelia.collections.iterator.BaseIterator;
-import ophelia.collections.iterator.BaseListIterator;
-import ophelia.collections.list.BaseList;
-import ophelia.collections.list.StandardList;
+import ophelia.collections.list.UnmodifiableList;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -59,7 +56,7 @@ public class CollectedException extends Exception {
 		list.stream().forEach(e -> e.printStackTrace(s));
 	}
 
-	public BaseList<Exception, ? extends BaseIterator<Exception>, ? extends BaseListIterator<Exception>> getExceptions() {
-		return new StandardList<>(list);
+	public UnmodifiableList<Exception> getExceptions() {
+		return new UnmodifiableList<>(list);
 	}
 }
