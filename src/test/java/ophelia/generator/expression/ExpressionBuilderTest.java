@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -25,7 +26,7 @@ public class ExpressionBuilderTest {
 				.withImplementation("new ExpressionBuilder()")
 				.withImport(ExpressionBuilder.class)
 				.build();
-		assertThat(expressionWrapper.getNode().toString(), is("new ExpressionBuilder()"));
+		assertThat(expressionWrapper.getNode().toString(), is(equalToIgnoringWhiteSpace("new ExpressionBuilder()")));
 		assertThat(expressionWrapper.getImports().getUnmodifiableInnerSet(),
 				containsInAnyOrder(ExpressionBuilder.class.getCanonicalName()));
 	}
