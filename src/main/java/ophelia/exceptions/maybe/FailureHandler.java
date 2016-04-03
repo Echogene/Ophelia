@@ -8,9 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static ophelia.util.ListUtils.first;
-import static ophelia.util.ListUtils.last;
-
 /**
  * @author Steven Weston
  */
@@ -21,16 +18,6 @@ public interface FailureHandler<S> {
 	S throwAllFailures() throws StackedException;
 
 	<F extends Exception> S throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F;
-
-	default S throwFirstFailure() throws Exception {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		return throwMappedFailure(e -> first(e.getExceptions()));
-	}
-
-	default S throwLastFailure() throws Exception {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		return throwMappedFailure(e -> last(e.getExceptions()));
-	}
 
 	default <E extends Exception> S throwInstead(@NotNull Supplier<E> supplier) throws E {
 		//noinspection ThrowableResultOfMethodCallIgnored

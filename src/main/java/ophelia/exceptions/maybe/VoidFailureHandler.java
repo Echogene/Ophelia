@@ -8,25 +8,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static ophelia.util.ListUtils.first;
-import static ophelia.util.ListUtils.last;
-
 /**
  * @author Steven Weston
  */
 public interface VoidFailureHandler {
 
 	<F extends Exception> void throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F;
-
-	default void throwFirstFailure() throws Exception {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		throwMappedFailure(e -> first(e.getExceptions()));
-	}
-
-	default void throwLastFailure() throws Exception {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		throwMappedFailure(e -> last(e.getExceptions()));
-	}
 
 	default <E extends Exception> void throwInstead(@NotNull Supplier<E> supplier) throws E {
 		//noinspection ThrowableResultOfMethodCallIgnored
