@@ -4,7 +4,9 @@ import ophelia.collections.list.UnmodifiableList;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Steven Weston
@@ -58,5 +60,21 @@ public class CollectedException extends Exception {
 
 	public UnmodifiableList<Exception> getExceptions() {
 		return new UnmodifiableList<>(list);
+	}
+
+	public static UnmodifiableList<Exception> flatten(Exception exception) {
+		return new UnmodifiableList<>(innerFlatten(exception));
+	}
+
+	private static List<Exception> innerFlatten(Exception exception) {
+		if (exception instanceof CollectedException) {
+			CollectedException collectedException = (CollectedException) exception;
+			return collectedException.getExceptions().stream()
+					.map(CollectedException::innerFlatten)
+					.flatMap(List::stream)
+					.collect(Collectors.toList());
+		} else {
+			return Collections.singletonList(exception);
+		}
 	}
 }
