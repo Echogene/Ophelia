@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -83,5 +84,10 @@ public class FunctionUtils {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@NotNull
+	public static <T> Predicate<T> not(@NotNull Predicate<? super T> predicate) {
+		return t -> !predicate.test(t);
 	}
 }
