@@ -81,11 +81,15 @@ public interface VoidMaybe extends VoidMaybeHandler {
 						ArrayList::new,
 						List::add,
 						(left, right) -> { left.addAll(right); return left; },
-						a -> {
-							if (a.isEmpty()) {
+						exceptions -> {
+							if (exceptions.isEmpty()) {
 								return new Success();
+
+							} else if (exceptions.size() == 1) {
+								return new Failure(exceptions.get(0));
+
 							} else {
-								return new Failure(new CollectedException(a));
+								return new Failure(new CollectedException(exceptions));
 							}
 						}
 				));
