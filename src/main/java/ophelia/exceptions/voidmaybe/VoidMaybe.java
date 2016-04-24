@@ -4,14 +4,17 @@ import ophelia.exceptions.CollectedException;
 import ophelia.function.ExceptionalBiConsumer;
 import ophelia.function.ExceptionalConsumer;
 import ophelia.function.ExceptionalRunnable;
-import ophelia.util.StreamUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
+import java.util.stream.Collector;
+
+import static ophelia.util.FunctionUtils.not;
 
 /**
  * @author Steven Weston
@@ -69,29 +72,22 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		};
 	}
 
-	static void throwIfSuccessNotUnique(Collection<VoidMaybe> maybes) throws CollectedException {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		maybes.stream()
-				.filter(VoidMaybeHandler::isSuccess)
-				.collect(StreamUtils.findUnique())
-				.ignoreOnSuccess()
-				.throwMappedFailure(e -> new CollectedException(
-						maybes.stream()
-								.map(VoidMaybeHandler::getException)
-								.collect(Collectors.toList())
-				));
-	}
-
-	static VoidMaybe failIfSuccessNotUnique(Collection<VoidMaybe> maybes) {
+	static VoidMaybe mergeFailures(Collection<VoidMaybe> maybes) {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		return maybes.stream()
-				.filter(VoidMaybeHandler::isSuccess)
-				.collect(StreamUtils.findUnique())
-				.mapOnSuccess(uniqueMaybe -> (VoidMaybe) new Success())
-				.resolveFailure(e -> new Failure(new CollectedException(
-						maybes.stream()
-								.map(VoidMaybeHandler::getException)
-								.collect(Collectors.toList())
-				)));
+				.filter(not(VoidMaybe::isSuccess))
+				.map(VoidMaybe::getException)
+				.collect(Collector.<Exception, List<Exception>, VoidMaybe>of(
+						ArrayList::new,
+						List::add,
+						(left, right) -> { left.addAll(right); return left; },
+						a -> {
+							if (a.isEmpty()) {
+								return new Success();
+							} else {
+								return new Failure(new CollectedException(a));
+							}
+						}
+				));
 	}
 }
