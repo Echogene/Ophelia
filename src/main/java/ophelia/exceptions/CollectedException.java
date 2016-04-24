@@ -21,10 +21,9 @@ public class CollectedException extends Exception {
 
 	@Override
 	public String getMessage() {
-
 		return list.stream()
 				.map(Exception::getMessage)
-				.reduce("", (s, t) -> s + "\n" + t);
+				.collect(Collectors.joining("\n"));
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class CollectedException extends Exception {
 
 		return list.stream()
 				.map(Exception::getLocalizedMessage)
-				.reduce("", (s, t) -> s + "\n" + t);
+				.collect(Collectors.joining("\n"));
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class CollectedException extends Exception {
 
 		return list.stream()
 				.map(Exception::toString)
-				.reduce("", (s, t) -> s + "\n" + t);
+				.collect(Collectors.joining("\n"));
 	}
 
 	@Override
