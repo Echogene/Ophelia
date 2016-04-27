@@ -5,8 +5,10 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static ophelia.exceptions.maybe.Maybe.maybe;
 
@@ -29,6 +31,29 @@ public class ListUtils {
 			return null;
 		}
 		return list.get(index);
+	}
+
+	@NotNull
+	public static <T> Maybe<T> maybeGet(@Nullable List<T> list, int index) {
+		if (list == null) {
+			return Maybe.failure(new NullPointerException("List was null"));
+		}
+		if (index >= list.size() || index < 0) {
+			return Maybe.failure(new IndexOutOfBoundsException(MessageFormat.format(
+					"List index out of bounds.  Tried to get {0} element of list of size {1}",
+					NumberUtils.ordinal(index),
+					list.size()
+			)));
+		}
+		return Maybe.success(list.get(index));
+	}
+
+	@NotNull
+	public static <T> Optional<T> optionalGet(@Nullable List<T> list, int index) {
+		if (list == null || index >= list.size() || index < 0) {
+			return Optional.empty();
+		}
+		return Optional.of(list.get(index));
 	}
 
 	/**
