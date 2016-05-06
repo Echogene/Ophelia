@@ -34,6 +34,10 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 		this.second = second;
 	}
 
+	public BoundedPair(@NotNull Collection<? extends E> collection) {
+		collection.forEach(this::add);
+	}
+
 	@JsonValue
 	private Set<E> set() {
 		Set<E> output = new HashSet<>();
