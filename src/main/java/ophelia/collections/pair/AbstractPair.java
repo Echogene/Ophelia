@@ -88,15 +88,12 @@ abstract class AbstractPair<E> implements Pair<E> {
 
 		AbstractPair<?> that = (AbstractPair<?>) o;
 
-		if (!first.equals(that.first)) return false;
-		return second.equals(that.second);
-
+		return (first.equals(that.first) && second.equals(that.second))
+				|| (first.equals(that.second) && second.equals(that.first));
 	}
 
 	@Override
 	public int hashCode() {
-		int result = first.hashCode();
-		result = 31 * result + second.hashCode();
-		return result;
+		return first.hashCode() * second.hashCode();
 	}
 }
