@@ -1,5 +1,6 @@
 package ophelia.collections.pair;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,8 +15,8 @@ import java.util.stream.Stream;
  */
 abstract class AbstractPair<E> implements Pair<E> {
 
-	final E first;
-	final E second;
+	protected final E first;
+	protected final E second;
 
 	AbstractPair(@NotNull E first, @NotNull E second) {
 		this.first = first;
@@ -55,8 +56,9 @@ abstract class AbstractPair<E> implements Pair<E> {
 		consumer.accept(second);
 	}
 
+	@JsonValue
 	@NotNull
-	List<E> getAsList() {
+	private List<E> getAsList() {
 		return Arrays.asList(first, second);
 	}
 
