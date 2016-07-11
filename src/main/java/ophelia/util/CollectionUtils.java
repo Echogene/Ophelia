@@ -163,7 +163,7 @@ public class CollectionUtils {
 	}
 
 	@NotNull
-	private <T, E extends T> E getUniqueElementOfClass(
+	public <T, E extends T> E getUniqueElementOfClass(
 			@NotNull Class<E> clazz,
 			@NotNull Collection<T> list
 	) throws StackedException {
