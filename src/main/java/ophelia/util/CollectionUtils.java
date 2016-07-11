@@ -1,5 +1,6 @@
 package ophelia.util;
 
+import ophelia.exceptions.StackedException;
 import ophelia.function.ExceptionalTriConsumer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -159,5 +160,18 @@ public class CollectionUtils {
 			@NotNull BiConsumer<? super S, ? super T> consumer
 	) {
 		StreamUtils.consume(left.stream(), right.stream(), consumer);
+	}
+
+	@NotNull
+	private <T, E extends T> E getUniqueElementOfClass(
+			@NotNull Class<E> clazz,
+			@NotNull Collection<T> list
+	) throws StackedException {
+		return list.stream()
+				.filter(clazz::isInstance)
+				.map(clazz::cast)
+				.collect(StreamUtils.findUnique())
+				.returnOnSuccess()
+				.throwAllFailures();
 	}
 }
