@@ -13,7 +13,7 @@ public class BagCollectorsTest {
 
 	@Test
 	public void should_collect_array_stream_to_bag() throws Exception {
-		HashBag<Integer> bag = Arrays.stream(new Integer[] {1, 2, 3, 4, 1, 1, 2, 1})
+		ModifiableIntegerBag<Integer> bag = Arrays.stream(new Integer[] {1, 2, 3, 4, 1, 1, 2, 1})
 				.collect(BagCollectors.toBag());
 
 		assertThat(bag.getNumberOf(1), is(4));
@@ -25,7 +25,7 @@ public class BagCollectorsTest {
 
 	@Test
 	public void should_collect_map_to_bag() throws Exception {
-		HashBag<Integer> bag = new HashMap<Integer, Integer>() {{
+		ModifiableIntegerBag<Integer> bag = new HashMap<Integer, Integer>() {{
 			put(1, 4);
 			put(2, 2);
 			put(3, 1);

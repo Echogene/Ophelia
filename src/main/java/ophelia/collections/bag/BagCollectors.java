@@ -10,8 +10,8 @@ import java.util.stream.Collector;
 public interface BagCollectors {
 
 	@NotNull
-	static <E> Collector<E, ?, HashBag<E>> toBag() {
-		return new Collector<E, HashBag<E>, HashBag<E>>() {
+	static <E> Collector<E, ?, ModifiableIntegerBag<E>> toBag() {
+		return new Collector<E, HashBag<E>, ModifiableIntegerBag<E>>() {
 
 			@Override
 			public Supplier<HashBag<E>> supplier() {
@@ -32,8 +32,8 @@ public interface BagCollectors {
 			}
 
 			@Override
-			public Function<HashBag<E>, HashBag<E>> finisher() {
-				return Function.identity();
+			public Function<HashBag<E>, ModifiableIntegerBag<E>> finisher() {
+				return e -> e;
 			}
 
 			@Override
@@ -44,11 +44,11 @@ public interface BagCollectors {
 	}
 
 	@NotNull
-	static <T, E> Collector<T, ?, HashBag<E>> toBag(
+	static <T, E> Collector<T, ?, ModifiableIntegerBag<E>> toBag(
 			@NotNull Function<? super T, ? extends E> elementMapper,
 			@NotNull ToIntFunction<? super T> intMapper
 	) {
-		return new Collector<T, HashBag<E>, HashBag<E>>() {
+		return new Collector<T, HashBag<E>, ModifiableIntegerBag<E>>() {
 
 			@Override
 			public Supplier<HashBag<E>> supplier() {
@@ -69,8 +69,8 @@ public interface BagCollectors {
 			}
 
 			@Override
-			public Function<HashBag<E>, HashBag<E>> finisher() {
-				return Function.identity();
+			public Function<HashBag<E>, ModifiableIntegerBag<E>> finisher() {
+				return e -> e;
 			}
 
 			@Override
