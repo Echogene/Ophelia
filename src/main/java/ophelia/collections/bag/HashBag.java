@@ -40,6 +40,15 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 				.map(entry -> new Pair<>(entry.getKey(), entry.getValue().get()));
 	}
 
+	@NotNull
+	@Override
+	public HashBag<E> getDifference(@NotNull BaseBag<? extends E, ? extends Integer> subtrahend) {
+		HashBag<E> difference = new HashBag<>();
+		forEach(difference::modifyNumberOf);
+		subtrahend.forEach((e, copies) -> difference.modifyNumberOf(e, -copies));
+		return difference;
+	}
+
 	@Override
 	public void forEach(@NotNull BiConsumer<? super E, ? super Integer> consumer) {
 		bag.entrySet().forEach(entry -> {

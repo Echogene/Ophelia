@@ -22,6 +22,12 @@ public interface BaseBag<E, N extends Number> {
 	Stream<Pair<E, N>> stream();
 
 	/**
+	 * @return the bag that results from taking all the copies of the elements from the subtrahend bag out of this one
+	 */
+	@NotNull
+	BaseBag<E, N> getDifference(@NotNull BaseBag<? extends E,  ? extends N> subtrahend);
+
+	/**
 	 * Consume all the elements alongside their non-zero numbers of copies in this bag.  Elements that have had copies
 	 * in this bag but they have since all been removed, will not be consumed.
 	 */

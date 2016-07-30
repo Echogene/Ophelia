@@ -97,4 +97,18 @@ public class HashBagTest {
 		bag.takeOne(1);
 		assertThat(bag.getNumberOf(1), is(0));
 	}
+
+	@Test
+	public void difference_should_be_correct() throws Exception {
+		HashBag<Integer> minuend = new HashBag<>(Arrays.asList(0, 1, 1, 2));
+		HashBag<Integer> subtrahend = new HashBag<>(Arrays.asList(1, 2, 3));
+
+		HashBag<Integer> difference = minuend.getDifference(subtrahend);
+
+		assertThat(difference.getNumberOf(0), is (1));
+		assertThat(difference.getNumberOf(1), is (1));
+		assertThat(difference.getNumberOf(2), is (0));
+		assertThat(difference.getNumberOf(3), is (-1));
+		assertThat(difference.getNumberOf(4), is (0));
+	}
 }
