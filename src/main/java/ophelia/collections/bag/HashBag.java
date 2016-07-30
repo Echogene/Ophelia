@@ -4,6 +4,7 @@ import ophelia.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
@@ -12,6 +13,10 @@ import java.util.stream.Stream;
 public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	private Map<E, AtomicInteger> bag = new HashMap<>();
+
+	public HashBag(List<E> list) {
+		list.forEach(this::addOne);
+	}
 
 	@NotNull
 	@Override
