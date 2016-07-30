@@ -25,7 +25,7 @@ public interface BaseBag<E, N extends Number> {
 	 * Consume all the elements alongside their non-zero numbers of copies in this bag.  Elements that have had copies
 	 * in this bag but they have since all been removed, will not be consumed.
 	 */
-	void forEach(@NotNull BiConsumer<E, N> consumer);
+	void forEach(@NotNull BiConsumer<? super E, ? super N> consumer);
 
 	/**
 	 * @return the total number of copies of elements in this bag.

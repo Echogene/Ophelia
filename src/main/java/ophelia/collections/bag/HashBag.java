@@ -34,7 +34,7 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 	}
 
 	@Override
-	public void forEach(@NotNull BiConsumer<E, Integer> consumer) {
+	public void forEach(@NotNull BiConsumer<? super E, ? super Integer> consumer) {
 		bag.entrySet().forEach(entry -> {
 			int value = entry.getValue().get();
 			if (value != 0) {
