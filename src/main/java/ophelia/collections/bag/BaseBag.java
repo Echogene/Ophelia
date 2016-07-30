@@ -28,6 +28,11 @@ public interface BaseBag<E, N extends Number> {
 	void forEach(@NotNull BiConsumer<? super E, ? super N> consumer);
 
 	/**
+	 * @return whether this bag contains no elements that have a non-zero number of copies in it.
+	 */
+	boolean isEmpty();
+
+	/**
 	 * @return the total number of copies of elements in this bag.
 	 */
 	@NotNull

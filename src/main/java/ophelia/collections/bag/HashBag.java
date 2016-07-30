@@ -43,6 +43,12 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 		});
 	}
 
+	@Override
+	public boolean isEmpty() {
+		return bag.values().stream()
+				.allMatch(copies -> copies.get() == 0);
+	}
+
 	@NotNull
 	@Override
 	public Integer modifyNumberOf(@NotNull E element, @NotNull Integer number) {
