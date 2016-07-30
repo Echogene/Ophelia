@@ -55,4 +55,12 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 			return 0;
 		}
 	}
+
+	@NotNull
+	@Override
+	public Integer size() {
+		return bag.values().stream()
+				.mapToInt(AtomicInteger::get)
+				.sum();
+	}
 }
