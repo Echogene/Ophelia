@@ -14,6 +14,8 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	private Map<E, AtomicInteger> bag = new HashMap<>();
 
+	public HashBag() {}
+
 	public HashBag(List<E> list) {
 		list.forEach(this::addOne);
 	}
