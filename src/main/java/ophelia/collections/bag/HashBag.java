@@ -62,7 +62,8 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 	@Override
 	public boolean isEmpty() {
 		return bag.values().stream()
-				.allMatch(copies -> copies.get() == 0);
+				.map(AtomicInteger::get)
+				.allMatch(i -> i == 0);
 	}
 
 	@Override
