@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
  */
 public class FunctionUtils {
 
+	private static final Predicate<?> NOT_NULL = o -> o != null;
+	private static final Predicate<?> NULL = o -> o == null;
+
 	/**
 	 * Safely get something from a potentially null object, returning null if that object is null.
 	 */
@@ -89,5 +92,17 @@ public class FunctionUtils {
 	@NotNull
 	public static <T> Predicate<T> not(@NotNull Predicate<? super T> predicate) {
 		return t -> !predicate.test(t);
+	}
+
+	@NotNull
+	public static <T> Predicate<T> notNull() {
+		//noinspection unchecked
+		return (Predicate<T>) NOT_NULL;
+	}
+
+	@NotNull
+	public static <T> Predicate<T> isNull() {
+		//noinspection unchecked
+		return (Predicate<T>) NULL;
 	}
 }
