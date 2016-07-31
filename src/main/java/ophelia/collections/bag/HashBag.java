@@ -65,6 +65,13 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 				.allMatch(copies -> copies.get() == 0);
 	}
 
+	@Override
+	public boolean isLacking() {
+		return bag.values().stream()
+				.map(AtomicInteger::get)
+				.anyMatch(i -> i < 0);
+	}
+
 	@NotNull
 	@Override
 	public Integer modifyNumberOf(@NotNull E element, @NotNull Integer number) {

@@ -8,6 +8,14 @@ import org.jetbrains.annotations.NotNull;
  * @param <E>
  */
 public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
+
+	@Override
+	default boolean isLacking() {
+		return stream()
+				.mapToInt(Pair::getRight)
+				.anyMatch(i -> i < 0);
+	}
+
 	@NotNull
 	@Override
 	default Integer size() {

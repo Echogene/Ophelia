@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class HashBagTest {
@@ -110,5 +111,16 @@ public class HashBagTest {
 		assertThat(difference.getNumberOf(2), is (0));
 		assertThat(difference.getNumberOf(3), is (-1));
 		assertThat(difference.getNumberOf(4), is (0));
+	}
+	@Test
+	public void lacking_should_be_correct() throws Exception {
+		HashBag<Integer> bag;
+
+		bag = new HashBag<>(Collections.singletonList(1));
+		assertFalse(bag.isLacking());
+		bag.takeOne(1);
+		assertFalse(bag.isLacking());
+		bag.takeOne(1);
+		assertTrue(bag.isLacking());
 	}
 }
