@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class HashBag<E> implements ModifiableIntegerBag<E> {
@@ -61,16 +62,12 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	@Override
 	public boolean isEmpty() {
-		return bag.values().stream()
-				.map(AtomicInteger::get)
-				.allMatch(i -> i == 0);
+		return copiesStream().allMatch(i -> i == 0);
 	}
 
 	@Override
 	public boolean isLacking() {
-		return bag.values().stream()
-				.map(AtomicInteger::get)
-				.anyMatch(i -> i < 0);
+		return copiesStream().anyMatch(i -> i < 0);
 	}
 
 	@NotNull
@@ -89,8 +86,11 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 	@NotNull
 	@Override
 	public Integer size() {
+		return copiesStream().sum();
+	}
+
+	private IntStream copiesStream() {
 		return bag.values().stream()
-				.mapToInt(AtomicInteger::get)
-				.sum();
+				.mapToInt(AtomicInteger::get);
 	}
 }
