@@ -18,6 +18,10 @@ public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 
 	@NotNull
 	@Override
+	BaseIntegerBag<E> getDifference(@NotNull BaseBag<? extends E, ? extends Integer> subtrahend);
+
+	@NotNull
+	@Override
 	default Integer size() {
 		return stream()
 				.mapToInt(Pair::getRight)
