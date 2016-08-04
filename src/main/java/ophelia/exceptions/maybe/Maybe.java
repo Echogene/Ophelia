@@ -107,10 +107,12 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		}
 	}
 
+	@NotNull
 	static <R> Maybe<R> success(@Nullable R r) {
 		return new Success<>(r);
 	}
 
+	@NotNull
 	static <R> Maybe<R> failure(Exception e) {
 		return new Failure<>(e);
 	}
