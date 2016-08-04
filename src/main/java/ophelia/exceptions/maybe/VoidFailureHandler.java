@@ -2,7 +2,6 @@ package ophelia.exceptions.maybe;
 
 import ophelia.exceptions.StackedException;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -19,9 +18,6 @@ public interface VoidFailureHandler {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		throwMappedFailure(e -> supplier.get());
 	}
-
-	@Nullable
-	StackedException getException();
 
 	void consumeOnFailure(@NotNull Consumer<StackedException> exceptionHandler);
 

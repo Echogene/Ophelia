@@ -5,6 +5,7 @@ import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,12 +27,6 @@ class Success<R> implements Maybe<R> {
 			@Override
 			public <F extends Exception> void throwMappedFailure(@NotNull Function<StackedException, F> exceptionTransformer) throws F {
 				consumer.accept(value);
-			}
-
-			@Nullable
-			@Override
-			public StackedException getException() {
-				return null;
 			}
 
 			@Override
@@ -66,6 +61,12 @@ class Success<R> implements Maybe<R> {
 	@Override
 	public boolean isSuccess() {
 		return true;
+	}
+
+	@NotNull
+	@Override
+	public Optional<StackedException> getException() {
+		return Optional.empty();
 	}
 
 	static class DefaultFailureHandler<T> implements FailureHandler<T> {
