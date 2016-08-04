@@ -3,8 +3,8 @@ package ophelia.exceptions.voidmaybe;
 import ophelia.exceptions.StackedException;
 import ophelia.function.ExceptionalRunnable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -19,10 +19,10 @@ class Failure implements VoidMaybe {
 		this.exception = new StackedException(exception);
 	}
 
-	@Nullable
+	@NotNull
 	@Override
-	public StackedException getException() {
-		return exception;
+	public Optional<StackedException> getException() {
+		return Optional.of(exception);
 	}
 
 	@Override
