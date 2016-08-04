@@ -10,15 +10,19 @@ import java.util.function.Function;
  */
 public interface SuccessHandler<T> {
 
-	@NotNull VoidFailureHandler consumeOnSuccess(@NotNull Consumer<T> consumer);
+	@NotNull
+	VoidFailureHandler consumeOnSuccess(@NotNull Consumer<T> consumer);
 
-	@NotNull default VoidFailureHandler ignoreOnSuccess() {
+	@NotNull
+	default VoidFailureHandler ignoreOnSuccess() {
 		return consumeOnSuccess(t -> {});
 	}
 
-	@NotNull FailureHandler<T> returnOnSuccess();
+	@NotNull
+	FailureHandler<T> returnOnSuccess();
 
-	@NotNull <S> FailureHandler<S> mapOnSuccess(Function<T, S> map);
+	@NotNull
+	<S> FailureHandler<S> mapOnSuccess(@NotNull Function<T, S> map);
 
 	boolean isSuccess();
 }

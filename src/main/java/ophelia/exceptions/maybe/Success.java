@@ -59,7 +59,7 @@ class Success<R> implements Maybe<R> {
 
 	@NotNull
 	@Override
-	public <S> FailureHandler<S> mapOnSuccess(Function<R, S> map) {
+	public <S> FailureHandler<S> mapOnSuccess(@NotNull Function<R, S> map) {
 		return new DefaultFailureHandler<>(map.apply(value));
 	}
 
