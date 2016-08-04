@@ -1,6 +1,7 @@
 package ophelia.exceptions.maybe;
 
 import ophelia.exceptions.StackedException;
+import ophelia.function.ExceptionalFunction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -31,4 +32,7 @@ public interface SuccessHandler<T> {
 
 	@NotNull
 	Optional<StackedException> getException();
+
+	@NotNull
+	<S> Maybe<S> map(@NotNull ExceptionalFunction<T, S, ?> map);
 }

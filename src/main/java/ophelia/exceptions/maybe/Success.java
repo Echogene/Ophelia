@@ -1,6 +1,7 @@
 package ophelia.exceptions.maybe;
 
 import ophelia.exceptions.StackedException;
+import ophelia.function.ExceptionalFunction;
 import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -67,6 +68,16 @@ class Success<R> implements Maybe<R> {
 	@Override
 	public Optional<StackedException> getException() {
 		return Optional.empty();
+	}
+
+	@NotNull
+	@Override
+	public <S> Maybe<S> map(@NotNull ExceptionalFunction<R, S, ?> map) {
+		try {
+			return new Success<>(map.apply(value));
+		} catch (Exception e) {
+			return new Failure<>(e);
+		}
 	}
 
 	static class DefaultFailureHandler<T> implements FailureHandler<T> {
