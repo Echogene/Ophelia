@@ -9,12 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-
-import static ophelia.util.FunctionUtils.not;
 
 /**
  * @author Steven Weston
@@ -75,8 +74,9 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	static VoidMaybe mergeFailures(Collection<VoidMaybe> maybes) {
 		//noinspection ThrowableResultOfMethodCallIgnored
 		return maybes.stream()
-				.filter(not(VoidMaybe::isSuccess))
 				.map(VoidMaybe::getException)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
 				.collect(Collector.<Exception, List<Exception>, VoidMaybe>of(
 						ArrayList::new,
 						List::add,
