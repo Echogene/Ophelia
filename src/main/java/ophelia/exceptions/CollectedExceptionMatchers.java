@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public interface CollectedExceptionMatchers {
 
 	@NotNull
-	static Matcher<CollectedException> hasException(@NotNull Matcher<? super Exception> matcher) {
+	static Matcher<CollectedException> hasException(@NotNull Matcher<? super CollectedException> matcher) {
 		return new BaseMatcher<CollectedException>() {
 			@Override
 			public boolean matches(Object o) {
@@ -31,6 +31,11 @@ public interface CollectedExceptionMatchers {
 				if (o instanceof CollectedException) {
 					description.appendText("did not have an exception that ");
 					matcher.describeTo(description);
+					description.appendText(":");
+					CollectedException collectedException = (CollectedException) o;
+					collectedException.getExceptions().stream()
+							.peek(e -> description.appendText("\n\t"))
+							.forEach(e -> matcher.describeMismatch(e, description));
 
 				} else {
 					description.appendText("was ");
