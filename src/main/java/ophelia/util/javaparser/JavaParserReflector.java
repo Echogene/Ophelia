@@ -34,9 +34,9 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Double;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Float;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Long;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.*;
+import static ophelia.exceptions.maybe.MaybeCollectors.toListOfSuccesses;
 import static ophelia.util.ListUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
@@ -134,10 +134,10 @@ public class JavaParserReflector {
 						() -> {
 							List<ImportDeclaration> imports = cu.getImports();
 
-							List<? extends Class<?>> classesFromImports = filterPassingValues(
-									imports.stream().filter(decl -> importRefersToClassName(decl, className)),
-									JavaParserReflector::getClassForImport
-							).collect(toList());
+							List<? extends Class<?>> classesFromImports = imports.stream()
+									.filter(decl -> importRefersToClassName(decl, className))
+									.map(wrapOutput(JavaParserReflector::getClassForImport))
+									.collect(toListOfSuccesses());
 
 							if (!classesFromImports.isEmpty()) {
 								return first(classesFromImports);
