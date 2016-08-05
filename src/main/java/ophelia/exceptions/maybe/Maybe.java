@@ -1,10 +1,14 @@
 package ophelia.exceptions.maybe;
 
+import ophelia.exceptions.AmbiguityException;
+import ophelia.exceptions.CollectedException;
 import ophelia.function.ExceptionalFunction;
 import ophelia.function.ExceptionalSupplier;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -98,5 +102,15 @@ public interface Maybe<D> extends SuccessHandler<D> {
 	@NotNull
 	static <R> Maybe<R> failure(Exception e) {
 		return new Failure<>(e);
+	}
+
+	@NotNull
+	static <R> Maybe<R> ambiguity(@NotNull Collection<R> collection) {
+		return failure(new AmbiguityException("There were multiple elements: {0}", collection));
+	}
+
+	@NotNull
+	static <R> Maybe<R> multipleFailures(@NotNull List<Exception> exceptions) {
+		return failure(new CollectedException(exceptions));
 	}
 }
