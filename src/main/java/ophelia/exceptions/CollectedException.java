@@ -44,17 +44,17 @@ public class CollectedException extends Exception {
 
 	@Override
 	public void printStackTrace() {
-		list.stream().forEach(Exception::printStackTrace);
+		list.forEach(Exception::printStackTrace);
 	}
 
 	@Override
 	public void printStackTrace(PrintWriter s) {
-		list.stream().forEach(e -> e.printStackTrace(s));
+		list.forEach(e -> e.printStackTrace(s));
 	}
 
 	@Override
 	public void printStackTrace(PrintStream s) {
-		list.stream().forEach(e -> e.printStackTrace(s));
+		list.forEach(e -> e.printStackTrace(s));
 	}
 
 	public UnmodifiableList<Exception> getExceptions() {
