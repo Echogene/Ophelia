@@ -8,9 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 /**
@@ -104,5 +102,51 @@ public class FunctionUtils {
 	public static <T> Predicate<T> isNull() {
 		//noinspection unchecked
 		return (Predicate<T>) NULL;
+	}
+
+	@NotNull
+	public static <T> Consumer<T> checkThenMaybeConsume(@NotNull Predicate<T> predicate, @NotNull Consumer<T> consumer) {
+		return t -> {
+			if (predicate.test(t)) {
+				consumer.accept(t);
+			}
+		};
+	}
+
+	@NotNull
+	public static <S, T> BiConsumer<S, T> checkThenMaybeConsume(@NotNull BiPredicate<S, T> predicate, @NotNull BiConsumer<S, T> consumer) {
+		return (s, t) -> {
+			if (predicate.test(s, t)) {
+				consumer.accept(s, t);
+			}
+		};
+	}
+
+	@NotNull
+	public static <S, T> BiConsumer<S, T> checkFirstThenMaybeConsume(@NotNull Predicate<S> predicate, @NotNull BiConsumer<S, T> consumer) {
+		return (s, t) -> {
+			if (predicate.test(s)) {
+				consumer.accept(s, t);
+			}
+		};
+	}
+
+	@NotNull
+	public static <S, T> BiConsumer<S, T> checkSecondThenMaybeConsume(@NotNull Predicate<T> predicate, @NotNull BiConsumer<S, T> consumer) {
+		return (s, t) -> {
+			if (predicate.test(t)) {
+				consumer.accept(s, t);
+			}
+		};
+	}
+
+	@NotNull
+	public static <R, S, T> BiConsumer<R, T> mapFirstThenConsume(@NotNull Function<R, S> function, @NotNull BiConsumer<S, T> consumer) {
+		return (r, t) -> consumer.accept(function.apply(r), t);
+	}
+
+	@NotNull
+	public static <R, S, T> BiConsumer<S, R> mapSecondThenConsume(@NotNull Function<R, T> function, @NotNull BiConsumer<S, T> consumer) {
+		return (s, r) -> consumer.accept(s, function.apply(r));
 	}
 }
