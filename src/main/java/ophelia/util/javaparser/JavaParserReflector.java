@@ -72,7 +72,7 @@ public class JavaParserReflector {
 				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
 					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
 					for (int i = 0; i < n.getArrayCount(); i++) {
-						baseClass = Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
+						baseClass = baseClass.map(JavaParserReflector::getArrayClass);
 					}
 					return baseClass;
 				}
@@ -108,7 +108,7 @@ public class JavaParserReflector {
 				public Maybe<Class<?>> visit(ReferenceType n, CompilationUnit cu) {
 
 					Maybe<Class<?>> baseClass = n.getType().accept(CLASS_GETTER, cu);
-					return Maybe.transform(baseClass, JavaParserReflector::getArrayClass);
+					return baseClass.map(JavaParserReflector::getArrayClass);
 				}
 
 				@Override
