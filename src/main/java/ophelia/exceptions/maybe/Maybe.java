@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * Like {@link Optional}, but stores the exception in case of failure for future processing.
@@ -48,30 +47,6 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		} catch (Exception e) {
 			return new Failure<>(e);
 		}
-	}
-
-	@NotNull
-	static <D> Maybe<D> maybe(@Nullable D d) {
-		return new Success<>(d);
-	}
-
-	@NotNull
-	static <D> Maybe<D> maybePresent(
-			@NotNull Optional<? extends D> optional,
-			@NotNull Supplier<? extends Exception> exceptionSupplier
-	) {
-		if (optional.isPresent()) {
-			return new Success<>(optional.get());
-		} else {
-			return new Failure<>(exceptionSupplier.get());
-		}
-	}
-
-	@NotNull
-	static <D> Maybe<D> maybePresent(
-			@NotNull Optional<? extends D> optional
-	) {
-		return maybePresent(optional, NullPointerException::new);
 	}
 
 	@NotNull

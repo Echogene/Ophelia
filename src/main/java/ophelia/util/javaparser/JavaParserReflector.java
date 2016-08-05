@@ -80,7 +80,7 @@ public class JavaParserReflector {
 				@Override
 				public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
 					final Class<?> clazz = primitiveClasses.get(n.getType());
-					return maybe(clazz);
+					return notNull(clazz);
 				}
 	};
 
@@ -98,7 +98,7 @@ public class JavaParserReflector {
 		@Override
 		public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
 			final Class<?> clazz = primitiveClasses.get(n.getType());
-			return maybe(clazz);
+			return notNull(clazz);
 		}
 	};
 
@@ -114,7 +114,7 @@ public class JavaParserReflector {
 				@Override
 				public Maybe<Class<?>> visit(PrimitiveType n, CompilationUnit cu) {
 					final Class<?> clazz = primitiveClasses.get(n.getType());
-					return maybe(getArrayClass(clazz));
+					return notNull(getArrayClass(clazz));
 				}
 	};
 
