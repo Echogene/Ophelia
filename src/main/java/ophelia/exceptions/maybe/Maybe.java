@@ -29,7 +29,7 @@ public interface Maybe<D> extends SuccessHandler<D> {
 	 * Convert an exceptional function into a function of maybes.
 	 */
 	@NotNull
-	static <D, R> Function<D, Maybe<R>> wrapOutput(
+	static <D, R> Function<D, Maybe<R>> wrap(
 			@NotNull ExceptionalFunction<D, R, ? extends Exception> function
 	) {
 		return d -> {

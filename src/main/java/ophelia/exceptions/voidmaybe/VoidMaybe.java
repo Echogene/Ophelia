@@ -24,7 +24,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	 * Convert an exceptional runnable into a supplier of maybes.
 	 */
 	@NotNull
-	static Supplier<VoidMaybe> wrapOutput(
+	static Supplier<VoidMaybe> wrap(
 			@NotNull ExceptionalRunnable<? extends Exception> runnable
 	) {
 		return () -> {
@@ -41,7 +41,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	 * Convert an exceptional consumer into a function of maybes.
 	 */
 	@NotNull
-	static <T> Function<T, VoidMaybe> wrapOutput(
+	static <T> Function<T, VoidMaybe> wrap(
 			@NotNull ExceptionalConsumer<T, ? extends Exception> consumer
 	) {
 		return t -> {
@@ -58,7 +58,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	 * Convert an exceptional biconsumer into a bifunction of maybes.
 	 */
 	@NotNull
-	static <T, U> BiFunction<T, U, VoidMaybe> wrapOutput(
+	static <T, U> BiFunction<T, U, VoidMaybe> wrap(
 			@NotNull ExceptionalBiConsumer<T, U, ? extends Exception> consumer
 	) {
 		return (t, u) -> {

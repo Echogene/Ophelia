@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.codepoetics.protonpack.StreamUtils.zip;
-import static ophelia.exceptions.maybe.Maybe.wrapOutput;
+import static ophelia.exceptions.maybe.Maybe.wrap;
 import static ophelia.util.CollectionUtils.listOfClass;
 import static ophelia.util.ListUtils.first;
 import static ophelia.util.javaparser.JavaParserReflector.findClass;
@@ -130,7 +130,7 @@ public class JavaParserReflectorTest {
 
 		Stream<Method> foundMethods =
 				methodDeclarations.stream()
-				.map(wrapOutput((MethodDeclaration d) -> findMethod(d, TestClass.class)))
+				.map(wrap((MethodDeclaration d) -> findMethod(d, TestClass.class)))
 				.map(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure());
 
 		Stream<Pair<Method, Method>> zip = zip(foundMethods, methods.stream(), Pair::new);

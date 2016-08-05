@@ -136,7 +136,7 @@ public class JavaParserReflector {
 
 							List<? extends Class<?>> classesFromImports = imports.stream()
 									.filter(decl -> importRefersToClassName(decl, className))
-									.map(wrapOutput(JavaParserReflector::getClassForImport))
+									.map(wrap(JavaParserReflector::getClassForImport))
 									.collect(toListOfSuccesses());
 
 							if (!classesFromImports.isEmpty()) {
@@ -147,7 +147,7 @@ public class JavaParserReflector {
 										.map(ImportDeclaration::getName)
 										.map(NameExpr::toStringWithoutComments)
 										.map(name -> name + "." + className)
-										.map(wrapOutput(Class::forName))
+										.map(wrap(Class::forName))
 										.collect(toUniqueSuccess())
 										.returnOnSuccess()
 										.throwMappedFailure((e) -> new ClassNotFoundException(className, e));
@@ -176,7 +176,7 @@ public class JavaParserReflector {
 				iterate(qualifiedClassName, name -> replaceLast(name, ".", "$")),
 				name -> name.contains(".")
 		);
-		return stringStream.map(wrapOutput(Class::forName))
+		return stringStream.map(wrap(Class::forName))
 				.collect(toUniqueSuccess())
 				.returnOnSuccess()
 				.throwMappedFailure((e) -> new ClassNotFoundException(qualifiedClassName, e));
