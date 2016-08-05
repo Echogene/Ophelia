@@ -17,7 +17,7 @@ class Failure<R> implements Maybe<R> {
 
 	private final StackedException exception;
 
-	Failure(Exception e) {
+	Failure(@NotNull Exception e) {
 		this.exception = new StackedException(e);
 	}
 

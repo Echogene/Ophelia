@@ -75,6 +75,9 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		};
 	}
 
+	/**
+	 * Get the supplied value of the given exceptional supplier by wrapping it in a maybe in case it fails.
+	 */
 	@NotNull
 	static <D> Maybe<D> maybe(@NotNull ExceptionalSupplier<? extends D, ? extends Exception> supplier) {
 		try {
@@ -84,6 +87,10 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		}
 	}
 
+	/**
+	 * Create a maybe that is successful if and only if the given argument is not null.
+	 * {@see Optional#ofNullable(Object)}
+	 */
 	@NotNull
 	static <D> Maybe<D> notNull(@Nullable D d) {
 		if (d != null) {
@@ -93,21 +100,33 @@ public interface Maybe<D> extends SuccessHandler<D> {
 		}
 	}
 
+	/**
+	 * Create maybe that is a successful value.
+	 */
 	@NotNull
 	static <R> Maybe<R> success(@Nullable R r) {
 		return new Success<>(r);
 	}
 
+	/**
+	 * Create maybe that is an unsuccessful value.
+	 */
 	@NotNull
-	static <R> Maybe<R> failure(Exception e) {
+	static <R> Maybe<R> failure(@NotNull Exception e) {
 		return new Failure<>(e);
 	}
 
+	/**
+	 * Create a maybe that represents failed uniqueness.
+	 */
 	@NotNull
 	static <R> Maybe<R> ambiguity(@NotNull Collection<R> collection) {
 		return failure(new AmbiguityException("There were multiple elements: {0}", collection));
 	}
 
+	/**
+	 * Create a maybe that wraps multiple failures.
+	 */
 	@NotNull
 	static <R> Maybe<R> multipleFailures(@NotNull List<Exception> exceptions) {
 		return failure(new CollectedException(exceptions));
