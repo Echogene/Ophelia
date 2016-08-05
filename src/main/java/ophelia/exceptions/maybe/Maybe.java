@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 /**
  * Like {@link Optional}, but stores the exception in case of failure for future processing.
@@ -40,16 +39,6 @@ public interface Maybe<D> extends SuccessHandler<D> {
 				return new Failure<>(e);
 			}
 		};
-	}
-
-	/**
-	 * @return a stream containing each of the outputs of the given function for which it did not throw an exception
-	 */
-	@NotNull
-	static <S, T> Stream<T> filterPassingValues(Stream<S> source, ExceptionalFunction<S, T, ? extends Exception> map) {
-		return source.map(wrapOutput(map))
-				.map(maybe -> maybe.returnOnSuccess().nullOnFailure())
-				.filter(t -> t != null);
 	}
 
 	@NotNull

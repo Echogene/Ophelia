@@ -26,7 +26,6 @@ import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 import static com.codepoetics.protonpack.StreamUtils.takeWhile;
-import static com.codepoetics.protonpack.collectors.CollectorUtils.unique;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Boolean;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Byte;
 import static com.github.javaparser.ast.type.PrimitiveType.Primitive.*;
@@ -37,6 +36,7 @@ import static com.github.javaparser.ast.type.PrimitiveType.Primitive.Short;
 import static java.util.stream.Stream.iterate;
 import static ophelia.exceptions.maybe.Maybe.*;
 import static ophelia.exceptions.maybe.MaybeCollectors.toListOfSuccesses;
+import static ophelia.exceptions.maybe.MaybeCollectors.toUniqueSuccess;
 import static ophelia.util.ListUtils.first;
 import static ophelia.util.MapUtils.$;
 import static ophelia.util.MapUtils.map;
@@ -142,14 +142,15 @@ public class JavaParserReflector {
 							if (!classesFromImports.isEmpty()) {
 								return first(classesFromImports);
 							} else {
-								return filterPassingValues(
-										imports.stream().filter(ImportDeclaration::isAsterisk),
-										decl -> Class.forName(
-												decl.getName()
-														.toStringWithoutComments() + "." + className
-										)
-								).collect(unique())
-										.orElseThrow(() -> new ClassNotFoundException(className));
+								return imports.stream()
+										.filter(ImportDeclaration::isAsterisk)
+										.map(ImportDeclaration::getName)
+										.map(NameExpr::toStringWithoutComments)
+										.map(name -> name + "." + className)
+										.map(wrapOutput(Class::forName))
+										.collect(toUniqueSuccess())
+										.returnOnSuccess()
+										.throwMappedFailure((e) -> new ClassNotFoundException(className, e));
 							}
 						}
 				)
@@ -175,9 +176,10 @@ public class JavaParserReflector {
 				iterate(qualifiedClassName, name -> replaceLast(name, ".", "$")),
 				name -> name.contains(".")
 		);
-		return Maybe.<String, Class<?>>filterPassingValues(stringStream, Class::forName)
-				.findFirst()
-				.orElseThrow(() -> new ClassNotFoundException(qualifiedClassName));
+		return stringStream.map(wrapOutput(Class::forName))
+				.collect(toUniqueSuccess())
+				.returnOnSuccess()
+				.throwMappedFailure((e) -> new ClassNotFoundException(qualifiedClassName, e));
 	}
 
 	@NotNull
