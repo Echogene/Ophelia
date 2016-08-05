@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import static ophelia.exceptions.CollectedExceptionMatchers.hasException;
 import static ophelia.exceptions.maybe.MaybeCollectors.toUniqueSuccess;
+import static ophelia.exceptions.maybe.MaybeCollectors.unique;
 import static ophelia.exceptions.maybe.MaybeMatchers.failure;
 import static ophelia.exceptions.maybe.MaybeMatchers.success;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -68,6 +69,27 @@ public class MaybeCollectorsTest {
 		Maybe<String> failure2 = Maybe.failure(new IllegalArgumentException());
 
 		Maybe<String> unique = Stream.of(success, failure, failure2).collect(toUniqueSuccess());
+
+		assertThat(unique, success(is("lol")));
+	}
+
+	@Test
+	public void empty_set_should_not_be_unique2() throws Exception {
+		Maybe<String> unique = Stream.<String>empty().collect(unique());
+
+		assertThat(unique, failure(hasException(is(instanceOf(NoSuchElementException.class)))));
+	}
+
+	@Test
+	public void multiple_elements_should_not_be_unique() throws Exception {
+		Maybe<String> unique = Stream.of("lol", "rofl").collect(unique());
+
+		assertThat(unique, failure(hasException(is(instanceOf(AmbiguityException.class)))));
+	}
+
+	@Test
+	public void single_element_should_be_unique() throws Exception {
+		Maybe<String> unique = Stream.of("lol").collect(unique());
 
 		assertThat(unique, success(is("lol")));
 	}

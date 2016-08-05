@@ -101,4 +101,25 @@ public interface MaybeCollectors {
 				}
 		);
 	}
+
+	@NotNull
+	static <T> Collector<T, Set<T>, Maybe<T>> unique() {
+		return Collector.of(
+				HashSet::new,
+				Set::add,
+				(left, right) -> {
+					left.addAll(right);
+					return left;
+				},
+				set -> {
+					if (set.isEmpty()) {
+						return failure(new NoSuchElementException());
+					} else if (set.size() > 1) {
+						return ambiguity(set);
+					} else {
+						return success(set.iterator().next());
+					}
+				}
+		);
+	}
 }
