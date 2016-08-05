@@ -2,7 +2,6 @@ package ophelia.exceptions.maybe;
 
 import ophelia.collections.list.UnmodifiableList;
 import ophelia.exceptions.CollectedException;
-import ophelia.util.MapUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -17,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 import static ophelia.exceptions.maybe.Maybe.*;
 import static ophelia.util.FunctionUtils.checkSecondThenMaybeConsume;
 import static ophelia.util.FunctionUtils.mapSecondThenConsume;
+import static ophelia.util.MapUtils.updateSetBasedMap;
 
 public interface MaybeCollectors {
 
@@ -65,7 +65,7 @@ public interface MaybeCollectors {
 	static <T> Collector<Maybe<T>, Map<Boolean, Set<Maybe<T>>>, Maybe<T>> toUniqueSuccess() {
 		return Collector.of(
 				HashMap::new,
-				(map, m) -> MapUtils.updateSetBasedMap(map, m.isSuccess(), m),
+				(map, m) -> updateSetBasedMap(map, m.isSuccess(), m),
 				(left, right) -> {
 					left.putAll(right);
 					return left;
