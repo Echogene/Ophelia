@@ -34,4 +34,8 @@ public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 				.mapToInt(Pair::getRight)
 				.sum();
 	}
+
+	@NotNull
+	@Override
+	BaseIntegerBag<E> getInverse();
 }
