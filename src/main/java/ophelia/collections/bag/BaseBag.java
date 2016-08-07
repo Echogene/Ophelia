@@ -45,6 +45,12 @@ public interface BaseBag<E, N extends Number> {
 	boolean isLacking();
 
 	/**
+	 * @return whether this has some copies of an element, <i>i.e.</i> an element in the bag has a positive number
+	 * of copies.
+	 */
+	boolean hasItems();
+
+	/**
 	 * @return the total number of copies of elements in this bag.
 	 */
 	@NotNull

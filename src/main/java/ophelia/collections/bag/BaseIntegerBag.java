@@ -16,6 +16,13 @@ public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 				.anyMatch(i -> i < 0);
 	}
 
+	@Override
+	default boolean hasItems() {
+		return stream()
+				.mapToInt(Pair::getRight)
+				.anyMatch(i -> i > 0);
+	}
+
 	@NotNull
 	@Override
 	BaseIntegerBag<E> getDifference(@NotNull BaseBag<? extends E, ? extends Integer> subtrahend);

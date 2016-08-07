@@ -70,6 +70,11 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 		return copiesStream().anyMatch(i -> i < 0);
 	}
 
+	@Override
+	public boolean hasItems() {
+		return copiesStream().anyMatch(i -> i > 0);
+	}
+
 	@NotNull
 	@Override
 	public Integer modifyNumberOf(@NotNull E element, @NotNull Integer number) {
