@@ -15,4 +15,9 @@ public interface ModifiableIntegerBag<E> extends ModifiableBag<E, Integer>, Base
 	default Integer takeOne(@NotNull E element) {
 		return modifyNumberOf(element, -1);
 	}
+
+	@Override
+	default void subtract(@NotNull BaseBag<E, Integer> subtrahend) {
+		subtrahend.forEach((e, n) -> modifyNumberOf(e, -n));
+	}
 }

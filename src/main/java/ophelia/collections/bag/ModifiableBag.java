@@ -21,10 +21,14 @@ public interface ModifiableBag<E, N extends Number> extends BaseBag<E, N> {
 	N takeOne(@NotNull E element);
 
 	/**
-	 *
 	 * @param toMergeIn another bag whose numbers of copies of elements should be merged into this one
 	 */
 	default void merge(@NotNull BaseBag<E, N> toMergeIn) {
-		toMergeIn.stream().forEach(pair -> modifyNumberOf(pair.getLeft(), pair.getRight()));
+		toMergeIn.forEach(this::modifyNumberOf);
 	}
+
+	/**
+	 * @param subtrahend another bag whose numbers of copies of elements should be subtracted from this one
+	 */
+	void subtract(@NotNull BaseBag<E, N> subtrahend);
 }
