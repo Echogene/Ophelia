@@ -55,4 +55,11 @@ public interface BaseBag<E, N extends Number> {
 	 */
 	@NotNull
 	N size();
+
+	/**
+	 * @return the bag that is the additive inverse of this.  <i>i.e.</i> were you to add this bag to its inverse, you
+	 * would get the empty bag.
+	 */
+	@NotNull
+	BaseBag<E, N> getInverse();
 }

@@ -17,7 +17,7 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	public HashBag() {}
 
-	public HashBag(List<E> list) {
+	public HashBag(@NotNull List<E> list) {
 		list.forEach(this::addOne);
 	}
 
@@ -97,5 +97,13 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 	private IntStream copiesStream() {
 		return bag.values().stream()
 				.mapToInt(AtomicInteger::get);
+	}
+
+	@NotNull
+	@Override
+	public HashBag<E> getInverse() {
+		HashBag<E> inverse = new HashBag<>();
+		forEach((e, n) -> inverse.modifyNumberOf(e, -n));
+		return inverse;
 	}
 }
