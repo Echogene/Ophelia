@@ -7,5 +7,8 @@ package ophelia.builder;
  */
 public interface VoidBuilder<B extends VoidBuilder<B>> extends SelfReturner<B> {
 
+	/**
+	 * Do something using the configuration that has been passed into this {@code VoidBuilder}.
+	 */
 	void build();
 }
