@@ -3,9 +3,18 @@ package ophelia.collections.bag;
 import ophelia.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
+/**
+ * A {@code Bag} is like a {@link Set} but it can have multiple copies of each of the elements.  This interface
+ * actually allows elements to have multiplicities that are negative numbers.  These elements would be considered to be
+ * lacking from the {@code Bag}.
+ * @param <E> the type of the elements contained in the {@code Bag}
+ * @param <N> the type of number that the multiplicities of the elements can take.  Theoretically, one could implement
+ *            a {@code Bag} where the elements can be in the bag a complex number of times.
+ */
 public interface BaseBag<E, N extends Number> {
 
 	/**
