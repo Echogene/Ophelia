@@ -14,6 +14,11 @@ public interface ModifiableBag<E, N extends Number> extends BaseBag<E, N> {
 	@NotNull
 	N modifyNumberOf(@NotNull E element, @NotNull N number);
 
+	/**
+	 * Add an element to this bag.
+	 * @param element the element we want to add one copy of to the bag
+	 * @return the previous number of copies of the given element in the bag before the new one was been added
+	 */
 	@NotNull
 	N addOne(@NotNull E element);
 
