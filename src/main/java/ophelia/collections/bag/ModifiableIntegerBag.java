@@ -2,6 +2,10 @@ package ophelia.collections.bag;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A {@link ModifiableIntegerBag} that can have {@link Integer} multiplicities of its elements.
+ * @param <E> the type of the elements contained in the {@code Bag}
+ */
 public interface ModifiableIntegerBag<E> extends ModifiableBag<E, Integer>, BaseIntegerBag<E> {
 
 	@NotNull
