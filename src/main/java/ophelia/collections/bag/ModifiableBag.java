@@ -2,6 +2,11 @@ package ophelia.collections.bag;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A {@link BaseBag} that can have elements added and removed from it.
+ * @param <E> the type of the elements contained in the {@code Bag}
+ * @param <N> the type of number that the multiplicities of the elements can take
+ */
 public interface ModifiableBag<E, N extends Number> extends BaseBag<E, N> {
 
 	/**
