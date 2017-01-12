@@ -36,6 +36,7 @@ public interface ModifiableBag<E, N extends Number> extends BaseBag<E, N> {
 	N takeOne(@NotNull E element);
 
 	/**
+	 * Merge another bag into this bag by adding all the copies of its elements to this bag.
 	 * @param toMergeIn another bag whose numbers of copies of elements should be merged into this one
 	 */
 	default void merge(@NotNull BaseBag<E, N> toMergeIn) {
