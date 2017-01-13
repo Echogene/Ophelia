@@ -44,6 +44,7 @@ public interface ModifiableBag<E, N extends Number> extends BaseBag<E, N> {
 	}
 
 	/**
+	 * Subtract another bag from this bag by taking away all the copy of its elements from this bag.
 	 * @param subtrahend another bag whose numbers of copies of elements should be subtracted from this one
 	 */
 	void subtract(@NotNull BaseBag<E, N> subtrahend);
