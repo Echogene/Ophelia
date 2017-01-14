@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link BaseBag} that can contain integer numbers of copies of elements.
- * @param <E>
+ * @param <E> the type of the elements contained in the {@code Bag}
  */
 public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 
