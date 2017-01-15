@@ -11,6 +11,10 @@ import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * An implementation of {@link ModifiableIntegerBag} based on a {@link HashMap}.
+ * @param <E> the type of the elements contained in the {@code Bag}
+ */
 public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	private Map<E, AtomicInteger> bag = new HashMap<>();
