@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
+ * An abstract implementation of {@link Pair} that is extended to make {@link OrderedPair}s and {@link UnorderedPair}s.
+ * @param <E> the type of the elements in the pair
  * @author Steven Weston
  */
 abstract class AbstractPair<E> implements Pair<E> {
