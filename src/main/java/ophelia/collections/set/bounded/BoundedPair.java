@@ -14,6 +14,11 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * A {@link ModifiableSet} that can contain at most two non-null elements.  It cannot contain null elements.  If a
+ * third non-null element is attempted to be added, a {@link BoundedSetOverflowException} will be thrown.
+ * @param <E> the elements of the set
+ */
 public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 
 	@Nullable
