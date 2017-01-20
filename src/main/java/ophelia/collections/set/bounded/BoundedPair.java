@@ -26,6 +26,9 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 	@Nullable
 	private E second = null;
 
+	/**
+	 * Construct an initially empty {@code BoundedPair}.
+	 */
 	public BoundedPair() {}
 
 	@SuppressWarnings("NullableProblems")
