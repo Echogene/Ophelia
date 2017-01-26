@@ -31,10 +31,18 @@ public interface BaseBag<E, N extends Number> {
 	Stream<Pair<E, N>> stream();
 
 	/**
-	 * @return the bag that results from taking all the copies of the elements from the subtrahend bag out of this one
+	 * @return the bag that results from the taking of all the copies of the elements from the subtrahend bag out of
+	 *         this one (the minuend)
 	 */
 	@NotNull
 	BaseBag<E, N> getDifference(@NotNull BaseBag<? extends E,  ? extends N> subtrahend);
+
+	/**
+	 * @return the bag that results from the adding of all the copies of the elements from the addend bag to this one
+	 *         (the augend)
+	 */
+	@NotNull
+	BaseBag<E, N> getSum(@NotNull BaseBag<? extends E,  ? extends N> addend);
 
 	/**
 	 * Consume all the elements alongside their non-zero numbers of copies in this bag.  Elements that have had copies

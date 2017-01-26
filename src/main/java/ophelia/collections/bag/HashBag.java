@@ -54,6 +54,15 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 		return difference;
 	}
 
+	@NotNull
+	@Override
+	public HashBag<E> getSum(@NotNull BaseBag<? extends E, ? extends Integer> addend) {
+		HashBag<E> difference = new HashBag<>();
+		forEach(difference::modifyNumberOf);
+		addend.forEach(difference::modifyNumberOf);
+		return difference;
+	}
+
 	@Override
 	public void forEach(@NotNull BiConsumer<? super E, ? super Integer> consumer) {
 		bag.entrySet().forEach(entry -> {

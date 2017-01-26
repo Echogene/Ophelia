@@ -29,6 +29,10 @@ public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 
 	@NotNull
 	@Override
+	BaseIntegerBag<E> getSum(@NotNull BaseBag<? extends E, ? extends Integer> addend);
+
+	@NotNull
+	@Override
 	default Integer size() {
 		return stream()
 				.mapToInt(Pair::getRight)
