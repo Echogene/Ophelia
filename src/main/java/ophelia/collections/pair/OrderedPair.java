@@ -3,7 +3,6 @@ package ophelia.collections.pair;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * todo: the hash code and equals need overriding so that they aren't symmetrical
  * @author Steven Weston
  */
 public class OrderedPair<E> extends AbstractPair<E> {
