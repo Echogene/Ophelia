@@ -10,18 +10,26 @@ import org.jetbrains.annotations.NotNull;
 public interface BaseIntegerBag<E> extends BaseBag<E, Integer> {
 
 	@Override
-	default boolean isLacking() {
+	default boolean hasLackingItems() {
 		return stream()
 				.mapToInt(Pair::getRight)
 				.anyMatch(i -> i < 0);
 	}
 
+	@NotNull
 	@Override
-	default boolean hasItems() {
+	BaseIntegerBag<E> getLackingItems();
+
+	@Override
+	default boolean hasSurplusItems() {
 		return stream()
 				.mapToInt(Pair::getRight)
 				.anyMatch(i -> i > 0);
 	}
+
+	@NotNull
+	@Override
+	BaseIntegerBag<E> getSurplusItems();
 
 	@NotNull
 	@Override

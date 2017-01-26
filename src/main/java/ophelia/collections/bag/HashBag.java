@@ -79,13 +79,37 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 	}
 
 	@Override
-	public boolean isLacking() {
+	public boolean hasLackingItems() {
 		return copiesStream().anyMatch(i -> i < 0);
 	}
 
+	@NotNull
 	@Override
-	public boolean hasItems() {
+	public HashBag<E> getLackingItems() {
+		HashBag<E> lackingItems = new HashBag<>();
+		forEach((e, i) -> {
+			if (i < 0) {
+				lackingItems.modifyNumberOf(e, i);
+			}
+		});
+		return lackingItems;
+	}
+
+	@Override
+	public boolean hasSurplusItems() {
 		return copiesStream().anyMatch(i -> i > 0);
+	}
+
+	@NotNull
+	@Override
+	public HashBag<E> getSurplusItems() {
+		HashBag<E> surplusItems = new HashBag<>();
+		forEach((e, i) -> {
+			if (i > 0) {
+				surplusItems.modifyNumberOf(e, i);
+			}
+		});
+		return surplusItems;
 	}
 
 	@NotNull

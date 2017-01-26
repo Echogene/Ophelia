@@ -117,10 +117,10 @@ public class HashBagTest {
 		HashBag<Integer> bag;
 
 		bag = new HashBag<>(Collections.singletonList(1));
-		assertFalse(bag.isLacking());
+		assertFalse(bag.hasLackingItems());
 		bag.takeOne(1);
-		assertFalse(bag.isLacking());
+		assertFalse(bag.hasLackingItems());
 		bag.takeOne(1);
-		assertTrue(bag.isLacking());
+		assertTrue(bag.hasLackingItems());
 	}
 }
