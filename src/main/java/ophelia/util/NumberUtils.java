@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class NumberUtils {
 
+	@NotNull
 	@Contract(pure = true)
 	public static String ordinal(final int integer) {
 		int modOneHundred = integer % 100;
@@ -32,6 +33,7 @@ public class NumberUtils {
 	/**
 	 * todo: support numbers after 999,999
 	 */
+	@NotNull
 	@Contract(pure = true)
 	public static String cardinal(final int integer) {
 		final int modOneMillion = integer % 1_000_000;
