@@ -21,8 +21,15 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	public HashBag() {}
 
-	public HashBag(@NotNull List<E> list) {
+	public HashBag(@NotNull final List<E> list) {
 		list.forEach(this::addOne);
+	}
+
+	public static <E> HashBag<E> differenceOf(@NotNull final List<E> surplusList, @NotNull final List<E> lackingList) {
+		HashBag<E> bag = new HashBag<>();
+		surplusList.forEach(bag::addOne);
+		lackingList.forEach(bag::takeOne);
+		return bag;
 	}
 
 	@NotNull
