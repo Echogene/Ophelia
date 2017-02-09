@@ -1,5 +1,7 @@
 package ophelia.collections.bag;
 
+import ophelia.collections.iterator.BaseIterable;
+import ophelia.collections.iterator.BaseIterator;
 import ophelia.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,16 +21,53 @@ public class HashBag<E> implements ModifiableIntegerBag<E> {
 
 	private Map<E, AtomicInteger> bag = new HashMap<>();
 
+	/**
+	 * Create an empty bag.  It has no elements.
+	 */
 	public HashBag() {}
 
+	/**
+	 * Create a bag from a list.  Elements appearing in the list multiple times will appear in the constructed bag
+	 * multiple times.
+	 */
 	public HashBag(@NotNull final List<E> list) {
 		list.forEach(this::addOne);
 	}
 
+	/**
+	 * Create a bag from a {@link BaseIterable}.  Elements appearing in the iterable multiple times will appear in the
+	 * constructed bag multiple times.
+	 */
+	public <I extends BaseIterator<E>> HashBag(@NotNull final BaseIterable<E, I> list) {
+		list.forEach(this::addOne);
+	}
+
+	@NotNull
 	public static <E> HashBag<E> differenceOf(@NotNull final List<E> surplusList, @NotNull final List<E> lackingList) {
 		HashBag<E> bag = new HashBag<>();
 		surplusList.forEach(bag::addOne);
 		lackingList.forEach(bag::takeOne);
+		return bag;
+	}
+
+	@NotNull
+	public static <E, I extends BaseIterator<E>> HashBag<E> differenceOf(
+			@NotNull final BaseIterable<E, I> surplusList,
+			@NotNull final BaseIterable<E, I> lackingList
+	) {
+		HashBag<E> bag = new HashBag<>();
+		surplusList.forEach(bag::addOne);
+		lackingList.forEach(bag::takeOne);
+		return bag;
+	}
+
+	@NotNull
+	public static <E> HashBag<E> of(
+			final int number,
+			@NotNull final E element
+	) {
+		HashBag<E> bag = new HashBag<>();
+		bag.modifyNumberOf(element, number);
 		return bag;
 	}
 

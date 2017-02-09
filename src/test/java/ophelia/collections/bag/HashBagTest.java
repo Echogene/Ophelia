@@ -112,6 +112,18 @@ public class HashBagTest {
 		assertThat(difference.getNumberOf(3), is (-1));
 		assertThat(difference.getNumberOf(4), is (0));
 	}
+
+	@Test
+	public void differenceOf_should_be_correct() throws Exception {
+		HashBag<Integer> difference = HashBag.differenceOf(Arrays.asList(0, 1, 1, 2), Arrays.asList(1, 2, 3));
+
+		assertThat(difference.getNumberOf(0), is (1));
+		assertThat(difference.getNumberOf(1), is (1));
+		assertThat(difference.getNumberOf(2), is (0));
+		assertThat(difference.getNumberOf(3), is (-1));
+		assertThat(difference.getNumberOf(4), is (0));
+	}
+
 	@Test
 	public void lacking_should_be_correct() throws Exception {
 		HashBag<Integer> bag;
