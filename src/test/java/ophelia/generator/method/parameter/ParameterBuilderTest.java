@@ -5,8 +5,8 @@ import ophelia.generator.type.TypeBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 public class ParameterBuilderTest {
@@ -23,7 +23,7 @@ public class ParameterBuilderTest {
 
 		assertThat(parameter.getNode().toString(), is("final @NotNull ParameterBuilderTest test"));
 
-		assertThat(parameter.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(parameter.getImports(), containsInAnyOrder(
 				NotNull.class.getCanonicalName(),
 				ParameterBuilderTest.class.getCanonicalName()
 		));

@@ -2,9 +2,9 @@ package ophelia.generator.relationship.onetomany;
 
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsEmptyCollection.empty;
+import static ophelia.collections.matchers.IsIterableContainingInOrder.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 
@@ -21,11 +21,11 @@ public class OneToManyHierarchyTest {
 		GeneratedHierarchyMember child = new GeneratedHierarchyMember();
 		child.setParent(root);
 
-		assertThat(root.getChildren().getUnmodifiableInnerSet(), contains(child));
+		assertThat(root.getChildren(), contains(child));
 
 		child.setParent(null);
 
-		assertThat(root.getChildren().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(root.getChildren(), is(empty()));
 	}
 
 	@Test

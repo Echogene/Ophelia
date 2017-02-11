@@ -2,10 +2,10 @@ package ophelia.generator.field;
 
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsIterableContainingInOrder.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class FieldBuilderTest {
 
@@ -17,7 +17,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("private final FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("public final FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("protected final FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("final FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("private static final FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class FieldBuilderTest {
 
 		assertThat(test.getNode().toString(), is("private FieldBuilderTest test;"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 
 	@Test
@@ -92,6 +92,6 @@ public class FieldBuilderTest {
 				equalToIgnoringWhiteSpace("private final FieldBuilderTest test = new FieldBuilderTest();")
 		);
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), contains(FieldBuilderTest.class.getCanonicalName()));
+		assertThat(test.getImports(), contains(FieldBuilderTest.class.getCanonicalName()));
 	}
 }

@@ -6,8 +6,6 @@ import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -85,10 +83,5 @@ public final class UnmodifiableSet<E> implements BaseSet<E, UnmodifiableIterator
 	@Override
 	public void forEach(Consumer<? super E> consumer) {
 		collection.forEach(consumer);
-	}
-
-	@NotNull
-	public Set<E> getUnmodifiableInnerSet() {
-		return Collections.unmodifiableSet(new HashSet<>(collection));
 	}
 }

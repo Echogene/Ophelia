@@ -5,9 +5,12 @@ import ophelia.generator.method.parameter.ParameterBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsEmptyCollection.empty;
+import static ophelia.collections.matchers.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static ophelia.generator.expression.ExpressionBuilder.e;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
 
 /**
  * @author steven
@@ -24,7 +27,7 @@ public class ConstructorBuilderTest {
 
 		assertThat(test.getNode().toString(), equalToIgnoringWhiteSpace("@Override\n@NotNull\npublic Test() {\n}"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				Override.class.getCanonicalName(),
 				NotNull.class.getCanonicalName()
 		));
@@ -39,7 +42,7 @@ public class ConstructorBuilderTest {
 
 		assertThat(test.getNode().toString(), equalToIgnoringWhiteSpace("private Test() {\n}"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -51,7 +54,7 @@ public class ConstructorBuilderTest {
 
 		assertThat(test.getNode().toString(), equalToIgnoringWhiteSpace("protected Test() {\n}"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -63,7 +66,7 @@ public class ConstructorBuilderTest {
 
 		assertThat(test.getNode().toString(), equalToIgnoringWhiteSpace("Test() {\n}"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -78,7 +81,7 @@ public class ConstructorBuilderTest {
 				"public Test(final ConstructorBuilder test) {\n    this.test = test;\n}"
 		));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				ConstructorBuilder.class.getCanonicalName()
 		));
 	}
@@ -95,7 +98,7 @@ public class ConstructorBuilderTest {
 				"public Test(final ConstructorBuilder test) {\n    super(test);\n}"
 		));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				ConstructorBuilder.class.getCanonicalName()
 		));
 	}
@@ -112,7 +115,7 @@ public class ConstructorBuilderTest {
 				"public Test(final ConstructorBuilder test) {\n    super(test);\n    this.test = test;\n}"
 		));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				ConstructorBuilder.class.getCanonicalName()
 		));
 	}

@@ -2,8 +2,8 @@ package ophelia.generator.expression;
 
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.core.Is.is;
 
@@ -27,7 +27,7 @@ public class ExpressionBuilderTest {
 				.withImport(ExpressionBuilder.class)
 				.build();
 		assertThat(expressionWrapper.getNode().toString(), is(equalToIgnoringWhiteSpace("new ExpressionBuilder()")));
-		assertThat(expressionWrapper.getImports().getUnmodifiableInnerSet(),
+		assertThat(expressionWrapper.getImports(),
 				containsInAnyOrder(ExpressionBuilder.class.getCanonicalName()));
 	}
 }

@@ -5,8 +5,11 @@ import ophelia.generator.method.parameter.ParameterBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import static ophelia.collections.matchers.IsEmptyCollection.empty;
+import static ophelia.collections.matchers.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.text.IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace;
 
 public class MethodBuilderTest {
 
@@ -21,7 +24,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(final MethodBuilder test);"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
 		));
@@ -37,7 +40,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("@Override\n@NotNull\npublic void test();"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				Override.class.getCanonicalName(),
 				NotNull.class.getCanonicalName()
 		));
@@ -52,7 +55,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("public static void test();"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -64,7 +67,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("private void test();"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -76,7 +79,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("protected void test();"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -88,7 +91,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("void test();"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), is(empty()));
+		assertThat(test.getImports(), is(empty()));
 	}
 
 	@Test
@@ -101,7 +104,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("public void test(final MethodBuilder test, final MethodBuilderTest test2);"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
 		));
@@ -117,7 +120,7 @@ public class MethodBuilderTest {
 
 		assertThat(test.getNode().toString(), is("public MethodBuilderTest test(final MethodBuilder test) {\n    return null;\n}"));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
 		));
@@ -141,7 +144,7 @@ public class MethodBuilderTest {
 						"}"
 		)));
 
-		assertThat(test.getImports().getUnmodifiableInnerSet(), containsInAnyOrder(
+		assertThat(test.getImports(), containsInAnyOrder(
 				MethodBuilderTest.class.getCanonicalName(),
 				MethodBuilder.class.getCanonicalName()
 		));

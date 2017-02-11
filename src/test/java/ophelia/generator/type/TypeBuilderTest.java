@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.util.Map;
 import java.util.Set;
 
+import static ophelia.collections.matchers.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 public class TypeBuilderTest {
@@ -20,7 +20,7 @@ public class TypeBuilderTest {
 		assertThat(test.getNode().toString(), is("Set<TypeBuilderTest>"));
 
 		assertThat(
-				test.getImports().getUnmodifiableInnerSet(),
+				test.getImports(),
 				containsInAnyOrder(
 						Set.class.getCanonicalName(),
 						TypeBuilderTest.class.getCanonicalName()
@@ -38,7 +38,7 @@ public class TypeBuilderTest {
 		assertThat(test.getNode().toString(), is("Map<TypeBuilder, TypeBuilderTest>"));
 
 		assertThat(
-				test.getImports().getUnmodifiableInnerSet(),
+				test.getImports(),
 				containsInAnyOrder(
 						Map.class.getCanonicalName(),
 						TypeBuilder.class.getCanonicalName(),
