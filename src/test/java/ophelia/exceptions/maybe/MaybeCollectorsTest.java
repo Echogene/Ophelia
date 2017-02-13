@@ -44,6 +44,16 @@ public class MaybeCollectorsTest {
 	}
 
 	@Test
+	public void multiple_successes_for_the_same_value_should_be_unique() throws Exception {
+		Maybe<String> success = Maybe.success("lol");
+		Maybe<String> success2 = Maybe.success("lol");
+
+		Maybe<String> unique = Stream.of(success, success2).collect(toUniqueSuccess());
+
+		assertThat(unique, success(is("lol")));
+	}
+
+	@Test
 	public void multiple_successes_should_not_be_unique() throws Exception {
 		Maybe<String> success = Maybe.success("lol");
 		Maybe<String> success2 = Maybe.success("rofl");
