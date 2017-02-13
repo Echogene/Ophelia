@@ -12,6 +12,11 @@ import java.util.function.Function;
  * @author Steven Weston
  */
 class Success implements VoidMaybe {
+
+	public static final VoidMaybe SUCCESS = new Success();
+
+	private Success() {}
+
 	@NotNull
 	@Override
 	public Optional<StackedException> getException() {
@@ -39,5 +44,15 @@ class Success implements VoidMaybe {
 	@Override
 	public VoidMaybeHandler tryAgain(@NotNull ExceptionalRunnable<Exception> runnable) {
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return this == o || o != null && getClass() == o.getClass();
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
 	}
 }

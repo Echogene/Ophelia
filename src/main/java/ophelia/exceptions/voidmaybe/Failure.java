@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static ophelia.exceptions.voidmaybe.Success.SUCCESS;
+
 /**
  * @author Steven Weston
  */
@@ -53,7 +55,7 @@ class Failure implements VoidMaybe {
 	public VoidMaybeHandler tryAgain(@NotNull ExceptionalRunnable<Exception> runnable) {
 		try {
 			runnable.run();
-			return new Success();
+			return SUCCESS;
 		} catch (Exception e) {
 			exception.addException(e);
 			return this;

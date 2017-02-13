@@ -4,6 +4,7 @@ import ophelia.exceptions.CollectedException;
 import ophelia.function.ExceptionalBiConsumer;
 import ophelia.function.ExceptionalConsumer;
 import ophelia.function.ExceptionalRunnable;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+
+import static ophelia.exceptions.voidmaybe.Success.SUCCESS;
 
 /**
  * @author Steven Weston
@@ -30,7 +33,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		return () -> {
 			try {
 				runnable.run();
-				return new Success();
+				return SUCCESS;
 			} catch (Exception e) {
 				return new Failure(e);
 			}
@@ -47,7 +50,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		return t -> {
 			try {
 				consumer.accept(t);
-				return new Success();
+				return SUCCESS;
 			} catch (Exception e) {
 				return new Failure(e);
 			}
@@ -64,11 +67,36 @@ public interface VoidMaybe extends VoidMaybeHandler {
 		return (t, u) -> {
 			try {
 				consumer.accept(t, u);
-				return new Success();
+				return SUCCESS;
 			} catch (Exception e) {
 				return new Failure(e);
 			}
 		};
+	}
+
+	/**
+	 * Create maybe that is a success.
+	 */
+	@NotNull
+	@Contract(pure = true)
+	static VoidMaybe success() {
+		return SUCCESS;
+	}
+
+	/**
+	 * Create maybe that is unsuccessful.
+	 */
+	@NotNull
+	static VoidMaybe failure(@NotNull Exception e) {
+		return new Failure(e);
+	}
+
+	/**
+	 * Create a maybe that wraps multiple failures.
+	 */
+	@NotNull
+	static VoidMaybe multipleFailures(@NotNull List<Exception> exceptions) {
+		return failure(new CollectedException(exceptions));
 	}
 
 	static VoidMaybe mergeFailures(Collection<VoidMaybe> maybes) {
@@ -83,7 +111,7 @@ public interface VoidMaybe extends VoidMaybeHandler {
 						(left, right) -> { left.addAll(right); return left; },
 						exceptions -> {
 							if (exceptions.isEmpty()) {
-								return new Success();
+								return SUCCESS;
 
 							} else if (exceptions.size() == 1) {
 								return new Failure(exceptions.get(0));
