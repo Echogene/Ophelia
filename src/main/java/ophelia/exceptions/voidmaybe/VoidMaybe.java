@@ -7,14 +7,10 @@ import ophelia.function.ExceptionalRunnable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collector;
 
 import static ophelia.exceptions.voidmaybe.Success.SUCCESS;
 
@@ -97,29 +93,5 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	@NotNull
 	static VoidMaybe multipleFailures(@NotNull List<Exception> exceptions) {
 		return failure(new CollectedException(exceptions));
-	}
-
-	static VoidMaybe mergeFailures(Collection<VoidMaybe> maybes) {
-		//noinspection ThrowableResultOfMethodCallIgnored
-		return maybes.stream()
-				.map(VoidMaybe::getException)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
-				.collect(Collector.<Exception, List<Exception>, VoidMaybe>of(
-						ArrayList::new,
-						List::add,
-						(left, right) -> { left.addAll(right); return left; },
-						exceptions -> {
-							if (exceptions.isEmpty()) {
-								return SUCCESS;
-
-							} else if (exceptions.size() == 1) {
-								return new Failure(exceptions.get(0));
-
-							} else {
-								return new Failure(new CollectedException(exceptions));
-							}
-						}
-				));
 	}
 }

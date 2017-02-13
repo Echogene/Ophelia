@@ -12,7 +12,7 @@ import static ophelia.exceptions.voidmaybe.Success.SUCCESS;
 import static ophelia.util.MapUtils.updateSetBasedMap;
 
 public interface VoidMaybeCollectors {
-	static Collector<VoidMaybe, Map<Boolean, Set<VoidMaybe>>, VoidMaybe> toUniqueSuccess() {
+	static Collector<VoidMaybe, Map<Boolean, Set<VoidMaybe>>, VoidMaybe> merge() {
 		return Collector.of(
 				HashMap::new,
 				(map, m) -> updateSetBasedMap(map, m.isSuccess(), m),
