@@ -41,6 +41,17 @@ public interface BagUtils {
 		}
 		return surplusString + lackingString;
 	}
+
+	@NotNull
+	static <E> String presentBag(
+			@NotNull final BaseIntegerBag<E> bag,
+			@NotNull final BiFunction<E, Integer, String> elementPresenter,
+			@NotNull final Collector<CharSequence, ?, String> surplusCollector,
+			@NotNull final Collector<CharSequence, ?, String> lackingCollector
+	) {
+		return presentBag(bag, elementPresenter, surplusCollector, lackingCollector, NOTHING);
+	}
+
 	@NotNull
 	static <E> String presentBag(
 			@NotNull final BaseIntegerBag<E> bag,
