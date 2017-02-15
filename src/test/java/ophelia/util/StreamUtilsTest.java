@@ -34,6 +34,34 @@ public class StreamUtilsTest {
 	}
 
 	@Test
+	public void test_consume_two_streams_in_parallel_with_left_shorter() throws Exception {
+
+		List<String> lol = Arrays.asList("a", "b", "c");
+		List<String> wut = Arrays.asList("α", "β", "γ", "δ");
+
+		String expected = "aαbβcγ";
+		StringBuilder actual = new StringBuilder();
+
+		StreamUtils.consume(lol.stream(), wut.stream(), (s, t) -> actual.append(s).append(t));
+
+		assertThat(actual.toString(), is(expected));
+	}
+
+	@Test
+	public void test_consume_two_streams_in_parallel_with_right_shorter() throws Exception {
+
+		List<String> lol = Arrays.asList("a", "b", "c", "d");
+		List<String> wut = Arrays.asList("α", "β", "γ");
+
+		String expected = "aαbβcγ";
+		StringBuilder actual = new StringBuilder();
+
+		StreamUtils.consume(lol.stream(), wut.stream(), (s, t) -> actual.append(s).append(t));
+
+		assertThat(actual.toString(), is(expected));
+	}
+
+	@Test
 	public void should_not_find_unique_for_empty_collection() {
 		Maybe<Object> notPresent = EmptySet.emptySet().stream()
 				.collect(StreamUtils.findUnique());
