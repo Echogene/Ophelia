@@ -17,12 +17,16 @@ public class AmbiguityException extends Exception {
 		super();
 	}
 
+	public AmbiguityException(@NotNull String message) {
+		super(message);
+	}
+
 	public <T> AmbiguityException(
 			@NotNull String message,
 			@NotNull Collection<T> ambiguousCollection,
 			@NotNull Function<? super T, String> presenter
 	) {
-		super(MessageFormat.format(
+		this(MessageFormat.format(
 				message,
 				ambiguousCollection.stream()
 						.map(presenter)
