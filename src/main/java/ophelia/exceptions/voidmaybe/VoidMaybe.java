@@ -71,6 +71,20 @@ public interface VoidMaybe extends VoidMaybeHandler {
 	}
 
 	/**
+	 * Run the given exceptional runnable by wrapping it in a maybe in case it fails.
+	 */
+	@NotNull
+	static VoidMaybe maybe(@NotNull ExceptionalRunnable<? extends Exception> runnable) {
+		try {
+			runnable.run();
+			return SUCCESS;
+		} catch (Exception e) {
+			return failure(e);
+		}
+	}
+
+
+	/**
 	 * Create maybe that is a success.
 	 */
 	@NotNull
