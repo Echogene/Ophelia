@@ -136,6 +136,18 @@ public class CollectionUtils {
 		return output;
 	}
 
+	@NotNull
+	public static <T, C extends Collection<T>> C mergeToLeft(@NotNull C left, @NotNull C right) {
+		left.addAll(right);
+		return left;
+	}
+
+	@NotNull
+	public static <K, V , C extends Map<K, V>> C mergeToLeft(@NotNull C left, @NotNull C right) {
+		left.putAll(right);
+		return left;
+	}
+
 	/**
 	 * @param collection the collection to ignore if it is null
 	 * @param <T> the type of the collection
