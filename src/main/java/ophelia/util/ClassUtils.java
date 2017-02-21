@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static ophelia.util.FunctionUtils.safeGet;
+import static ophelia.util.function.FunctionUtils.safeGet;
 
 /**
  * @author Steven Weston

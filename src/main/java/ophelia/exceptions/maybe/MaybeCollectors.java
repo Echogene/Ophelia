@@ -14,8 +14,8 @@ import java.util.stream.Collector;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static ophelia.exceptions.maybe.Maybe.*;
-import static ophelia.util.FunctionUtils.checkSecondThenMaybeConsume;
-import static ophelia.util.FunctionUtils.mapSecondThenConsume;
+import static ophelia.util.function.FunctionUtils.checkSecondThenMaybeConsume;
+import static ophelia.util.function.FunctionUtils.mapSecondThenConsume;
 import static ophelia.util.MapUtils.updateSetBasedMap;
 
 public interface MaybeCollectors {

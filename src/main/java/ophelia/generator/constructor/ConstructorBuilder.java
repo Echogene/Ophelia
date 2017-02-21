@@ -17,7 +17,7 @@ import ophelia.generator.annotation.AnnotationWrapper;
 import ophelia.generator.expression.ExpressionWrapper;
 import ophelia.generator.method.parameter.ParameterWrapper;
 import ophelia.util.ClassUtils;
-import ophelia.util.FunctionUtils;
+import ophelia.util.function.FunctionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

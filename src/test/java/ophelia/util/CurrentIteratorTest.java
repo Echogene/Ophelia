@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static ophelia.util.FunctionUtils.ignoreExceptions;
+import static ophelia.util.function.FunctionUtils.ignoreExceptions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
