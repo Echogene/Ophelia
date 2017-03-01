@@ -15,12 +15,12 @@ public interface ExceptionalRunnable<E extends Exception> {
 	 * Try to run this runnable and always run the given runnable whether or not this one fails.
 	 */
 	@NotNull
-	default ExceptionalRunnable<E> andFinally(@NotNull Runnable r) {
+	default ExceptionalRunnable<E> andFinally(@NotNull Runnable after) {
 		return () -> {
 			try {
 				run();
 			} finally {
-				r.run();
+				after.run();
 			}
 		};
 	}
@@ -29,12 +29,12 @@ public interface ExceptionalRunnable<E extends Exception> {
 	 * Try to run this runnable and always try to run the given runnable whether or not this one fails.
 	 */
 	@NotNull
-	default ExceptionalRunnable<E> andFinally(@NotNull ExceptionalRunnable<E> r) {
+	default ExceptionalRunnable<E> andFinally(@NotNull ExceptionalRunnable<E> after) {
 		return () -> {
 			try {
 				run();
 			} finally {
-				r.run();
+				after.run();
 			}
 		};
 	}
