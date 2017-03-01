@@ -2,6 +2,7 @@ package ophelia.function;
 
 /**
  * A functional interface that accepts three objects and can throw an exception.
+ * @see TriConsumer
  * @author Steven Weston
  */
 @FunctionalInterface
