@@ -152,6 +152,11 @@ public interface FunctionUtils {
 	}
 
 	@NotNull
+	static <R, S> Function<R, Predicate<S>> curry(@NotNull BiPredicate<R, S> predicate) {
+		return r -> s -> predicate.test(r, s);
+	}
+
+	@NotNull
 	static <R, S> Function<R, Consumer<S>> curry(@NotNull BiConsumer<R, S> consumer) {
 		return r -> s -> consumer.accept(r, s);
 	}
@@ -159,6 +164,11 @@ public interface FunctionUtils {
 	@NotNull
 	static <Q, R, S, T> Function<Q, Function<R, Function<S, T>>> curry(@NotNull TriFunction<Q, R, S, T> function) {
 		return q -> r -> s -> function.apply(q, r, s);
+	}
+
+	@NotNull
+	static <Q, R, S> Function<Q, Function<R, Predicate<S>>> curry(@NotNull TriPredicate<Q, R, S> predicate) {
+		return q -> r -> s -> predicate.test(q, r, s);
 	}
 
 	@NotNull
@@ -172,6 +182,11 @@ public interface FunctionUtils {
 	}
 
 	@NotNull
+	static <R, S, E extends Exception> Function<R, ExceptionalPredicate<S, E>> curry(@NotNull ExceptionalBiPredicate<R, S, E> predicate) {
+		return r -> s -> predicate.test(r, s);
+	}
+
+	@NotNull
 	static <R, S, E extends Exception> Function<R, ExceptionalConsumer<S, E>> curry(@NotNull ExceptionalBiConsumer<R, S, E> consumer) {
 		return r -> s -> consumer.accept(r, s);
 	}
@@ -179,6 +194,11 @@ public interface FunctionUtils {
 	@NotNull
 	static <Q, R, S, T, E extends Exception> Function<Q, Function<R, ExceptionalFunction<S, T, E>>> curry(@NotNull ExceptionalTriFunction<Q, R, S, T, E> function) {
 		return q -> r -> s -> function.apply(q, r, s);
+	}
+
+	@NotNull
+	static <Q, R, S, E extends Exception> Function<Q, Function<R, ExceptionalPredicate<S, E>>> curry(@NotNull ExceptionalTriPredicate<Q, R, S, E> predicate) {
+		return q -> r -> s -> predicate.test(q, r, s);
 	}
 
 	@NotNull
