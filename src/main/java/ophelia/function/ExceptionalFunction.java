@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Function;
 
 /**
- * Like a {@link java.util.function.Function}, but can throw an exception.
+ * Like a {@link Function}, but can throw an exception.
  * @author Steven Weston
  */
 public interface ExceptionalFunction<D, R, E extends Exception> {
