@@ -1,6 +1,7 @@
 package ophelia.util.function;
 
-import ophelia.function.ExceptionalSupplier;
+import com.codepoetics.protonpack.functions.TriFunction;
+import ophelia.function.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -128,5 +129,45 @@ public class FunctionUtils {
 	@NotNull
 	public static <R, S, T> BiConsumer<S, R> mapSecondThenConsume(@NotNull Function<R, T> function, @NotNull BiConsumer<S, T> consumer) {
 		return (s, r) -> consumer.accept(s, function.apply(r));
+	}
+
+	@NotNull
+	public <R, S, T> Function<R, Function<S, T>> curry(@NotNull BiFunction<R, S, T> function) {
+		return r -> s -> function.apply(r, s);
+	}
+
+	@NotNull
+	public <R, S> Function<R, Consumer<S>> curry(@NotNull BiConsumer<R, S> consumer) {
+		return r -> s -> consumer.accept(r, s);
+	}
+
+	@NotNull
+	public <Q, R, S, T> Function<Q, Function<R, Function<S, T>>> curry(@NotNull TriFunction<Q, R, S, T> function) {
+		return q -> r -> s -> function.apply(q, r, s);
+	}
+
+	@NotNull
+	public <Q, R, S> Function<Q, Function<R, Consumer<S>>> curry(@NotNull TriConsumer<Q, R, S> consumer) {
+		return q -> r -> s -> consumer.accept(q, r, s);
+	}
+
+	@NotNull
+	public <R, S, T, E extends Exception> Function<R, ExceptionalFunction<S, T, E>> curry(@NotNull ExceptionalBiFunction<R, S, T, E> function) {
+		return r -> s -> function.apply(r, s);
+	}
+
+	@NotNull
+	public <R, S, E extends Exception> Function<R, ExceptionalConsumer<S, E>> curry(@NotNull ExceptionalBiConsumer<R, S, E> consumer) {
+		return r -> s -> consumer.accept(r, s);
+	}
+
+	@NotNull
+	public <Q, R, S, T, E extends Exception> Function<Q, Function<R, ExceptionalFunction<S, T, E>>> curry(@NotNull ExceptionalTriFunction<Q, R, S, T, E> function) {
+		return q -> r -> s -> function.apply(q, r, s);
+	}
+
+	@NotNull
+	public <Q, R, S, E extends Exception> Function<Q, Function<R, ExceptionalConsumer<S, E>>> curry(@NotNull ExceptionalTriConsumer<Q, R, S, E> consumer) {
+		return q -> r -> s -> consumer.accept(q, r, s);
 	}
 }
