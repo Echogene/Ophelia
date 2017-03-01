@@ -23,12 +23,12 @@ public interface ExceptionalFunction<D, R, E extends Exception> {
 	}
 
 	@NotNull
-	default <V> ExceptionalFunction<V, R, E> compose(@NotNull ExceptionalFunction<? super V, ? extends D, E> before) {
+	default <V> ExceptionalFunction<V, R, E> compose(@NotNull ExceptionalFunction<? super V, ? extends D, ? extends E> before) {
 		return v -> apply(before.apply(v));
 	}
 
 	@NotNull
-	default <V> ExceptionalFunction<D, V, E> andThen(@NotNull ExceptionalFunction<? super R, ? extends V, E> after) {
+	default <V> ExceptionalFunction<D, V, E> andThen(@NotNull ExceptionalFunction<? super R, ? extends V, ? extends E> after) {
 		return d -> after.apply(apply(d));
 	}
 
