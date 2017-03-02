@@ -15,6 +15,7 @@ import com.github.javaparser.ast.type.ReferenceType;
 import com.github.javaparser.ast.type.Type;
 import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 import ophelia.exceptions.maybe.Maybe;
+import ophelia.function.ExceptionalFunction;
 import ophelia.map.UnmodifiableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
@@ -118,6 +120,10 @@ public class JavaParserReflector {
 				}
 	};
 
+	private static final Function<String, Maybe<Class<?>>> MAYBE_CLASS = wrap(
+			(ExceptionalFunction<String, Class<?>, Exception>) Class::forName
+	);
+
 	private static Class<?> getArrayClass(Class<?> c) {
 
 		return Array.newInstance(c, 0).getClass();
@@ -147,7 +153,7 @@ public class JavaParserReflector {
 										.map(ImportDeclaration::getName)
 										.map(NameExpr::toStringWithoutComments)
 										.map(name -> name + "." + className)
-										.map(wrap(Class::forName))
+										.map(MAYBE_CLASS)
 										.collect(toUniqueSuccess())
 										.returnOnSuccess()
 										.throwMappedFailure((e) -> new ClassNotFoundException(className, e));
@@ -176,7 +182,7 @@ public class JavaParserReflector {
 				iterate(qualifiedClassName, name -> replaceLast(name, ".", "$")),
 				name -> name.contains(".")
 		);
-		return stringStream.map(wrap(Class::forName))
+		return stringStream.map(MAYBE_CLASS)
 				.collect(toUniqueSuccess())
 				.returnOnSuccess()
 				.throwMappedFailure((e) -> new ClassNotFoundException(qualifiedClassName, e));
