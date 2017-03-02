@@ -1,10 +1,12 @@
 package ophelia.exceptions.maybe;
 
+import com.codepoetics.protonpack.functions.TriFunction;
 import ophelia.exceptions.AmbiguityException;
 import ophelia.exceptions.CollectedException;
 import ophelia.function.ExceptionalBiFunction;
 import ophelia.function.ExceptionalFunction;
 import ophelia.function.ExceptionalSupplier;
+import ophelia.function.ExceptionalTriFunction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +50,7 @@ public interface Maybe<D> extends SuccessHandler<D> {
 	 */
 	@NotNull
 	static <D, R> Function<D, Maybe<R>> wrap(
-			@NotNull ExceptionalFunction<D, R, ? extends Exception> function
+			@NotNull ExceptionalFunction<? super D, ? extends R, ? extends Exception> function
 	) {
 		return d -> {
 			try {
@@ -63,12 +65,28 @@ public interface Maybe<D> extends SuccessHandler<D> {
 	 * Convert an exceptional bifunction into a bifunction of maybes.
 	 */
 	@NotNull
-	static <D, F, R> BiFunction<D, F, Maybe<R>> wrap(
-			@NotNull ExceptionalBiFunction<D, F, R, ? extends Exception> function
+	static <T, U, R> BiFunction<T, U, Maybe<R>> wrap(
+			@NotNull ExceptionalBiFunction<? super T, ? super U, ? extends R, ? extends Exception> function
 	) {
-		return (d, f) -> {
+		return (t, u) -> {
 			try {
-				return new Success<>(function.apply(d, f));
+				return new Success<>(function.apply(t, u));
+			} catch (Exception e) {
+				return new Failure<>(e);
+			}
+		};
+	}
+
+	/**
+	 * Convert an exceptional trifunction into a trifunction of maybes.
+	 */
+	@NotNull
+	static <A, B, C, R> TriFunction<A, B, C, Maybe<R>> wrap(
+			@NotNull ExceptionalTriFunction<? super A, ? super B, ? super C, ? extends R, ? extends Exception> function
+	) {
+		return (a, b, c) -> {
+			try {
+				return new Success<>(function.apply(a, b, c));
 			} catch (Exception e) {
 				return new Failure<>(e);
 			}
