@@ -38,7 +38,7 @@ public interface PredicateUtils {
 
 	@NotNull
 	@Contract(pure = true)
-	static <T> Predicate<? super T> equals(@Nullable T equalTo) {
+	static <T> Predicate<? super T> equalTo(@Nullable T equalTo) {
 		if (equalTo == null) {
 			return isNull();
 		} else {
@@ -48,7 +48,7 @@ public interface PredicateUtils {
 
 	@NotNull
 	@Contract(pure = true)
-	static <T> Predicate<? super T> notEquals(@Nullable T equalTo) {
+	static <T> Predicate<? super T> notEqualTo(@Nullable T equalTo) {
 		if (equalTo == null) {
 			return notNull();
 		} else {
