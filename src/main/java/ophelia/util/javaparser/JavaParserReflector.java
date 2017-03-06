@@ -17,7 +17,6 @@ import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 import ophelia.exceptions.maybe.Maybe;
 import ophelia.function.ExceptionalFunction;
 import ophelia.map.UnmodifiableMap;
-import ophelia.util.function.PredicateUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -219,7 +218,7 @@ public class JavaParserReflector {
 		if (parameters == null || parameters.isEmpty()) {
 			return clazz.getMethod(declaration.getName());
 		} else {
-			CompilationUnit cu = takeWhile(iterate(declaration, Node::getParentNode), PredicateUtils.notNull())
+			CompilationUnit cu = takeWhile(iterate(declaration, Node::getParentNode), node -> node != null)
 					.filter(CompilationUnit.class::isInstance)
 					.map(CompilationUnit.class::cast)
 					.findFirst().get();
