@@ -1,4 +1,4 @@
-package ophelia.util;
+package ophelia.util.hierarchy;
 
 import org.junit.Test;
 

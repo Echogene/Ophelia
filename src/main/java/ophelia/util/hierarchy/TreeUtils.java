@@ -1,5 +1,6 @@
-package ophelia.util;
+package ophelia.util.hierarchy;
 
+import ophelia.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

@@ -52,7 +52,7 @@ class TestClass {
 
 	public void test(TestEnum lol) {}
 
-	public void test(ophelia.util.TreeUtils lol) {}
+	public void test(ophelia.util.hierarchy.TreeUtils lol) {}
 
 	public void test(String... lols) {}
 	public void test(boolean... lols) {}

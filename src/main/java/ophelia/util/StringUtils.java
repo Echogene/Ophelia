@@ -130,7 +130,7 @@ public class StringUtils {
 		return sb.toString();
 	}
 
-	static void repeatedlyAppend(int times, StringBuilder sb, String toAppend) {
+	public static void repeatedlyAppend(int times, StringBuilder sb, String toAppend) {
 		for (int i = 0; i < times; i++) {
 			sb.append(toAppend);
 		}
