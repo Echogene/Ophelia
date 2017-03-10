@@ -1,6 +1,5 @@
-package ophelia.util;
+package ophelia.util.hierarchy;
 
-import ophelia.util.hierarchy.HierarchyParser;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
