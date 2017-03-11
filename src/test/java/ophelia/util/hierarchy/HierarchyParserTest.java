@@ -250,6 +250,52 @@ public class HierarchyParserTest {
 	}
 
 	@Test
+	public void should_parse_a_root_node_that_is_its_own_child_and_has_another() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						" lol",
+						" rofl"
+				);
+
+		assertThat(hierarchy, hasSize(1));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, hasSize(2));
+
+		Foo lol2 = lol.children.get(0);
+		assertThat(lol2, is(sameInstance(lol)));
+
+		Foo rofl = lol.children.get(1);
+		assertThat(rofl.bar, is("rofl"));
+		assertThat(rofl.children, is(empty()));
+	}
+
+	@Test
+	public void should_parse_a_root_node_that_has_a_child_and_is_its_own_child() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						" rofl",
+						" lol"
+				);
+
+		assertThat(hierarchy, hasSize(1));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, hasSize(2));
+
+		Foo rofl = lol.children.get(0);
+		assertThat(rofl.bar, is("rofl"));
+		assertThat(rofl.children, is(empty()));
+
+		Foo lol2 = lol.children.get(1);
+		assertThat(lol2, is(sameInstance(lol)));
+	}
+
+	@Test
 	public void complex_hierarchy_should_look_alright() throws Exception {
 		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
 				.parse(
