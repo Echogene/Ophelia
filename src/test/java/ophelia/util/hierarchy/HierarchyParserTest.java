@@ -352,6 +352,24 @@ public class HierarchyParserTest {
 	}
 
 	@Test
+	public void should_merge_two_root_rows() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						"lol"
+				);
+
+		assertThat(hierarchy, hasSize(2));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, is(empty()));
+
+		Foo lol2 = hierarchy.get(1);
+		assertThat(lol2, is(sameInstance(lol)));
+	}
+
+	@Test
 	public void complex_hierarchy_should_look_alright() throws Exception {
 		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
 				.parse(
