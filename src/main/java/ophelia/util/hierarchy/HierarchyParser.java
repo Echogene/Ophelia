@@ -105,11 +105,11 @@ public class HierarchyParser<T, C extends Collection<T>> {
 			}
 			final T currentNode = nodes.get(unindentedString);
 
-			if (currentIndentation >= lastIndentation) {
+			if (currentIndentation > lastIndentation) {
 				if (currentIndentation - lastIndentation > 1) {
 					throw new RuntimeException("A child node cannot be indented more than once after its parent.");
 
-				} else if (currentIndentation - lastIndentation == 1) {
+				} else {
 					// We've gone down another level, so the last node is the new parent.
 					currentAncestors.push(lastNode);
 					if (!parentToChildren.containsKey(lastNode)) {
@@ -117,7 +117,7 @@ public class HierarchyParser<T, C extends Collection<T>> {
 					}
 				}
 			} else {
-				// We've gone back up at least one level, so we need to update the current parent.
+				// We've gone back up at least zero levels, so we need to update the current parent.
 				int goBackUp = lastIndentation - currentIndentation;
 				for (int i = 0; i < goBackUp; i++) {
 					currentAncestors.pop();
