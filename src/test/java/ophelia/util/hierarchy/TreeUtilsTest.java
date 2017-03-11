@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.*;
 
 import static java.util.function.Function.identity;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * @author Steven Weston
@@ -37,6 +39,38 @@ public class TreeUtilsTest {
 				1
 		);
 
-//		System.out.print(prettyPrint);
+		assertThat(prettyPrint, is(
+				  "a\n"
+				+ "├─b\n"
+				+ "│ ├─d\n"
+				+ "│ │ ├─h\n"
+				+ "│ │ │ ├─p\n"
+				+ "│ │ │ └─q\n"
+				+ "│ │ └─i\n"
+				+ "│ │   ├─r\n"
+				+ "│ │   └─s\n"
+				+ "│ └─e\n"
+				+ "│   ├─j\n"
+				+ "│   │ ├─t\n"
+				+ "│   │ └─u\n"
+				+ "│   └─k\n"
+				+ "│     ├─w\n"
+				+ "│     └─x\n"
+				+ "└─c\n"
+				+ "  ├─f\n"
+				+ "  │ ├─l\n"
+				+ "  │ │ ├─y\n"
+				+ "  │ │ └─z\n"
+				+ "  │ └─m\n"
+				+ "  │   ├─α\n"
+				+ "  │   └─β\n"
+				+ "  └─g\n"
+				+ "    ├─n\n"
+				+ "    │ ├─γ\n"
+				+ "    │ └─δ\n"
+				+ "    └─o\n"
+				+ "      ├─ε\n"
+				+ "      └─ζ\n"
+		));
 	}
 }
