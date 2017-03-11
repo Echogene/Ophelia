@@ -79,6 +79,8 @@ public class HierarchyParser<T, C extends Collection<T>> {
 		@NotNull
 		final Stack<T> currentAncestors = new Stack<>();
 
+		final Map<String, T> nodes = new HashMap<>();
+
 		@NotNull
 		final String[] rows;
 
@@ -96,8 +98,12 @@ public class HierarchyParser<T, C extends Collection<T>> {
 
 		void process(@NotNull String currentRow) {
 
-			int currentIndentation = indentation.getLevelOfIndentation(currentRow);
-			T currentNode = nodeConstructor.apply(indentation.getUnindentedString(currentRow));
+			final int currentIndentation = indentation.getLevelOfIndentation(currentRow);
+			final String unindentedString = indentation.getUnindentedString(currentRow);
+			if (!nodes.containsKey(unindentedString)) {
+				nodes.put(unindentedString, nodeConstructor.apply(unindentedString));
+			}
+			final T currentNode = nodes.get(unindentedString);
 
 			if (currentIndentation >= lastIndentation) {
 				if (currentIndentation - lastIndentation > 1) {
