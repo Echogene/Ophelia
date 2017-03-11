@@ -28,22 +28,22 @@ public class TreeUtils {
 			@NotNull Function<T, List<T>> childrenFunction,
 			int indentation
 	) {
-		StringBuilder output = new StringBuilder();
+		final StringBuilder output = new StringBuilder();
 		for (T parent : list) {
 			output.append(presentationFunction.apply(parent));
 			output.append("\n");
-			List<T> children = childrenFunction.apply(parent);
+			final List<T> children = childrenFunction.apply(parent);
 			if (children == null || children.isEmpty()) {
 				continue;
 			}
-			String childString = prettyPrint(children, presentationFunction, childrenFunction, indentation);
-			String[] split = childString.split("\n");
+			final String childString = prettyPrint(children, presentationFunction, childrenFunction, indentation);
+			final String[] split = childString.split("\n");
 			for (int i = 0; i < split.length; i++) {
-				String s = split[i];
-				String trimmed = s.trim();
-				Boolean isAnotherChild = false;
+				final String s = split[i];
+				final String trimmed = s.trim();
+				boolean isAnotherChild = false;
 				for (int j = i + 1; j < split.length; j++) {
-					String t = split[j].trim();
+					final String t = split[j].trim();
 					if (!isPartOfTree(t)) {
 						isAnotherChild = true;
 					}
