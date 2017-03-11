@@ -112,7 +112,9 @@ public class HierarchyParser<T, C extends Collection<T>> {
 				} else if (currentIndentation - lastIndentation == 1) {
 					// We've gone down another level, so the last node is the new parent.
 					currentAncestors.push(lastNode);
-					parentToChildren.put(lastNode, childrenConstructor.get());
+					if (!parentToChildren.containsKey(lastNode)) {
+						parentToChildren.put(lastNode, childrenConstructor.get());
+					}
 				}
 			} else {
 				// We've gone back up at least one level, so we need to update the current parent.

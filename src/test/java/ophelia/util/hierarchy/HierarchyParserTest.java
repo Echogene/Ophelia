@@ -296,6 +296,62 @@ public class HierarchyParserTest {
 	}
 
 	@Test
+	public void should_merge_children_if_node_appears_in_two_places() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						" rofl",
+						" lol",
+						"  garply"
+				);
+
+		assertThat(hierarchy, hasSize(1));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, hasSize(3));
+
+		Foo rofl = lol.children.get(0);
+		assertThat(rofl.bar, is("rofl"));
+		assertThat(rofl.children, is(empty()));
+
+		Foo lol2 = lol.children.get(1);
+		assertThat(lol2, is(sameInstance(lol)));
+
+		Foo garply = lol.children.get(2);
+		assertThat(garply.bar, is("garply"));
+		assertThat(garply.children, is(empty()));
+	}
+
+	@Test
+	public void should_merge_children_if_node_appears_in_two_places_2() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						" lol",
+						"  garply",
+						" rofl"
+				);
+
+		assertThat(hierarchy, hasSize(1));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, hasSize(3));
+
+		Foo lol2 = lol.children.get(0);
+		assertThat(lol2, is(sameInstance(lol)));
+
+		Foo garply = lol.children.get(1);
+		assertThat(garply.bar, is("garply"));
+		assertThat(garply.children, is(empty()));
+
+		Foo rofl = lol.children.get(2);
+		assertThat(rofl.bar, is("rofl"));
+		assertThat(rofl.children, is(empty()));
+	}
+
+	@Test
 	public void complex_hierarchy_should_look_alright() throws Exception {
 		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
 				.parse(
