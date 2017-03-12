@@ -358,15 +358,44 @@ public class HierarchyParserTest {
 						"lol",
 						"lol"
 				);
+	}
+
+	@Test
+	public void should_merge_two_root_rows_and_children() throws Exception {
+		List<Foo> hierarchy = HierarchyParser.forChildList(Foo::new, Foo::setChildren)
+				.parse(
+						"lol",
+						" rofl",
+						" qux",
+						"lol",
+						" fred",
+						" garply"
+				);
 
 		assertThat(hierarchy, hasSize(2));
 
 		Foo lol = hierarchy.get(0);
 		assertThat(lol.bar, is("lol"));
-		assertThat(lol.children, is(empty()));
+		assertThat(lol.children, hasSize(4));
+
+		Foo rofl = lol.children.get(0);
+		assertThat(rofl.bar, is("rofl"));
+		assertThat(rofl.children, is(empty()));
+
+		Foo qux = lol.children.get(1);
+		assertThat(qux.bar, is("qux"));
+		assertThat(qux.children, is(empty()));
 
 		Foo lol2 = hierarchy.get(1);
 		assertThat(lol2, is(sameInstance(lol)));
+
+		Foo fred = lol.children.get(2);
+		assertThat(fred.bar, is("fred"));
+		assertThat(fred.children, is(empty()));
+
+		Foo garply = lol.children.get(3);
+		assertThat(garply.bar, is("garply"));
+		assertThat(garply.children, is(empty()));
 	}
 
 	@Test
