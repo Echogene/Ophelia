@@ -358,6 +358,15 @@ public class HierarchyParserTest {
 						"lol",
 						"lol"
 				);
+
+		assertThat(hierarchy, hasSize(2));
+
+		Foo lol = hierarchy.get(0);
+		assertThat(lol.bar, is("lol"));
+		assertThat(lol.children, is(empty()));
+
+		Foo lol2 = hierarchy.get(1);
+		assertThat(lol2, is(sameInstance(lol)));
 	}
 
 	@Test
