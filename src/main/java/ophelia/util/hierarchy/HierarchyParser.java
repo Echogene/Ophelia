@@ -9,6 +9,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * A utility that parses indented strings and produces a hierarchy of objects based on the indentation.  Lines indented
+ * one more than the previous line are considered its children.
+ *
+ * @param <T> the type of the nodes of the hierarchy
+ * @param <C> the type of the collection of child nodes of the hierarchy
+ */
 public class HierarchyParser<T, C extends Collection<T>> {
 
 	@NotNull
