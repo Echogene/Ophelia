@@ -4,6 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static java.lang.Math.min;
 
+/**
+ * An abstract representation of an indentation style.  A string can be indented, potentially multiple times, by some
+ * pattern of characters.  A common indentation style uses tab characters.  Another example uses groups of four spaces.
+ */
 public interface Indentation {
 	@NotNull
 	String getUnindentedString(@NotNull String indented);
