@@ -107,7 +107,7 @@ public class IsIterableContainingInAnyOrder<T> extends TypeSafeDiagnosingMatcher
 	@NotNull
 	@Factory
 	public static <T> Matcher<BaseIterable<? extends T, ?>> containsInAnyOrder(@NotNull Matcher<? super T>... itemMatchers) {
-		return containsInAnyOrder(Arrays.asList(itemMatchers));
+		return containsInAnyOrder(Arrays.<Matcher<? super T>>asList(itemMatchers));
 	}
 
 	/**

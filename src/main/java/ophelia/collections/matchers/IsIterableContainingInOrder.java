@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -136,7 +136,7 @@ public class IsIterableContainingInOrder<T> extends TypeSafeDiagnosingMatcher<Ba
 	@NotNull
 	@Factory
 	public static <T> Matcher<BaseIterable<? extends T, ?>> contains(@NotNull Matcher<? super T>... itemMatchers) {
-		return contains(asList(itemMatchers));
+		return contains(Arrays.<Matcher<? super T>>asList(itemMatchers));
 	}
 
 

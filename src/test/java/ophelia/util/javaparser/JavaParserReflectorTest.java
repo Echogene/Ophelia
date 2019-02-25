@@ -4,9 +4,9 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
-import javafx.util.Pair;
 import ophelia.collections.set.StandardSet;
 import ophelia.function.ExceptionalFunction;
+import ophelia.tuple.Pair;
 import ophelia.util.ClassUtils;
 import ophelia.util.CollectionUtils;
 import ophelia.util.hierarchy.TreeUtils;
@@ -134,7 +134,7 @@ public class JavaParserReflectorTest {
 				.map(maybeMethod -> maybeMethod.returnOnSuccess().nullOnFailure());
 
 		Stream<Pair<Method, Method>> zip = zip(foundMethods, methods.stream(), Pair::new);
-		zip.forEach(pair -> assertThat(pair.getKey(), is(pair.getValue())));
+		zip.forEach(pair -> assertThat(pair.getLeft(), is(pair.getRight())));
 	}
 
 	private Method getTestMethod(Class<?>... parameterTypes) throws NoSuchMethodException {

@@ -62,14 +62,14 @@ public class IsCollectionContaining<T> extends TypeSafeDiagnosingMatcher<BaseIte
 	}
 
 	@Factory
-	public static <T> Matcher<BaseIterable<? super T, ?>> hasItems(Matcher<? super T>... itemMatchers) {
-		return allOf(Arrays.stream(itemMatchers)
-				.map(IsCollectionContaining::new)
-				.collect(Collectors.toList()));
+	public static <T> Matcher<BaseIterable<T, ?>> hasItems(Matcher<? super T>... itemMatchers) {
+		return allOf(Arrays.<Matcher<? super T>>stream(itemMatchers)
+				.map(m -> new IsCollectionContaining<T>(m))
+				.collect(Collectors.<Matcher<? super BaseIterable<T, ?>>>toList()));
 	}
 
 	@Factory
-	public static <T> Matcher<BaseIterable<? super T, ?>> hasItems(T... items) {
+	public static <T> Matcher<BaseIterable<T, ?>> hasItems(T... items) {
 		return allOf(Arrays.stream(items)
 				.map(IsCollectionContaining::hasItem)
 				.collect(Collectors.toList()));
