@@ -21,4 +21,12 @@ public interface Graph<N, E extends BaseCollection<N>> {
 	 */
 	@NotNull
 	BaseCollection<N> getNodes();
+
+	/**
+	 * Two nodes are adjacent when there is an edge that contains them both.
+	 */
+	default boolean isAdjacentTo(@NotNull N node1, @NotNull N node2) {
+		return getEdges().stream()
+				.anyMatch(e -> e.contains(node1) && e.contains(node2));
+	}
 }
