@@ -86,7 +86,7 @@ public class StreamUtilsTest {
 
 	@Test
 	public void should_not_find_unique_for_payr() {
-		Maybe<Object> notPresent = new UnorderedPair<>(1, 2).stream()
+		Maybe<Object> notPresent = UnorderedPair.of(1, 2).stream()
 				.collect(StreamUtils.findUnique());
 		assertThat(notPresent.isSuccess(), is(false));
 	}

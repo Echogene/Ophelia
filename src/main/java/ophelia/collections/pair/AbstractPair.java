@@ -82,20 +82,4 @@ abstract class AbstractPair<E> implements Pair<E> {
 			return (T[]) toArray();
 		}
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		AbstractPair<?> that = (AbstractPair<?>) o;
-
-		return (first.equals(that.first) && second.equals(that.second))
-				|| (first.equals(that.second) && second.equals(that.first));
-	}
-
-	@Override
-	public int hashCode() {
-		return first.hashCode() * second.hashCode();
-	}
 }
