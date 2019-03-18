@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * third non-null element is attempted to be added, a {@link BoundedSetOverflowException} will be thrown.
  * @param <E> the elements of the set
  */
-public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
+public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
 
 	@Nullable
 	private E first = null;
@@ -31,19 +31,17 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 	 */
 	public BoundedPair() {}
 
-	@SuppressWarnings("NullableProblems")
 	public BoundedPair(@NotNull E first) {
 		this.first = first;
 	}
 
-	@SuppressWarnings("NullableProblems")
 	public BoundedPair(@NotNull E first, @NotNull E second) {
 		this(first);
 		this.second = second;
 	}
 
 	public BoundedPair(@NotNull Collection<? extends E> collection) {
-		collection.forEach(this::add);
+		addAll(collection);
 	}
 
 	@JsonValue
@@ -133,17 +131,17 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> c) {
-		return c.stream().map(this::add).anyMatch(b -> b);
+	public boolean addAll(@NotNull Collection<? extends E> c) {
+		return c.stream().anyMatch(this::add);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
-		return c.stream().map(this::remove).anyMatch(b -> b);
+	public boolean removeAll(@NotNull Collection<?> c) {
+		return c.stream().anyMatch(this::remove);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(@NotNull Collection<?> c) {
 		return removeIf(e -> !c.contains(e));
 	}
 
@@ -176,8 +174,8 @@ public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>> {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
-		return c.stream().map(this::contains).allMatch(b -> b);
+	public boolean containsAll(@NotNull Collection<?> c) {
+		return c.stream().allMatch(this::contains);
 	}
 
 	@NotNull
