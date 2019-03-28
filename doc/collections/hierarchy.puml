@@ -1,0 +1,46 @@
+@startuml
+
+interface BaseCollection
+
+interface IntegerFiniteCollection
+BaseCollection <|-- IntegerFiniteCollection
+
+interface ModifiableCollection
+BaseCollection <|-- ModifiableCollection
+
+interface BaseSet
+BaseCollection <|-- BaseSet
+
+interface IntegerFiniteSet
+BaseSet <|-- IntegerFiniteSet
+IntegerFiniteCollection <|-- IntegerFiniteSet
+
+interface ModifiableSet
+BaseSet <|-- ModifiableSet
+ModifiableCollection <|-- ModifiableSet
+
+class HashSet
+ModifiableSet <|-- HashSet
+IntegerFiniteSet <|-- HashSet
+java.util.HashSet <|-- HashSet
+
+abstract class java.util.AbstractSet
+java.util.AbstractSet <|-- java.util.HashSet
+
+abstract class java.util.AbstractCollection
+java.util.AbstractCollection <|-- java.util.AbstractSet
+
+interface java.util.Collection
+java.util.Collection <|-- java.util.AbstractCollection
+
+interface java.util.Set
+java.util.Set <|-- java.util.HashSet
+java.util.Set <|-- java.util.AbstractSet
+java.util.Collection <|-- java.util.Set
+
+IntegerFiniteCollection <|.. java.util.Collection
+ModifiableCollection <|.. java.util.Collection
+
+IntegerFiniteSet <|.. java.util.Set
+ModifiableSet <|.. java.util.Set
+@enduml

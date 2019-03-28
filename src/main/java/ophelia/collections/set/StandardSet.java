@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * @author Steven Weston
  */
 @Wrapper(Set.class)
-public class StandardSet<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
+public class StandardSet<E> implements ModifiableSet<E>, IntegerFiniteSet<E, StandardIterator<E>>, Set<E> {
 
 	private final Set<E> set;
 

@@ -1,5 +1,6 @@
 package ophelia.collections.set;
 
+import ophelia.collections.IntegerFiniteCollection;
 import ophelia.collections.iterator.StandardIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * @author Steven Weston
  */
-public class HashSet<E> extends java.util.HashSet<E> implements ModifiableSet<E, StandardIterator<E>> {
+public class HashSet<E> extends java.util.HashSet<E> implements ModifiableSet<E>, IntegerFiniteSet<E, StandardIterator<E>> {
 
 	public HashSet() {
 		super();

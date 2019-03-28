@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * @author Steven Weston
  */
 @Wrapper(Collection.class)
-public final class UnmodifiableSet<E> implements BaseSet<E, UnmodifiableIterator<E>> {
+public final class UnmodifiableSet<E> implements BaseSet<E>, IntegerFiniteSet<E, UnmodifiableIterator<E>> {
 
 	private final Collection<E> collection;
 

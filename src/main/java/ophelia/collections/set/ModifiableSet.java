@@ -6,6 +6,6 @@ import ophelia.collections.iterator.BaseIterator;
 /**
  * @author Steven Weston
  */
-public interface ModifiableSet<E, I extends BaseIterator<E>> extends BaseSet<E, I>, ModifiableCollection<E> {
+public interface ModifiableSet<E> extends BaseSet<E>, ModifiableCollection<E> {
 
 }

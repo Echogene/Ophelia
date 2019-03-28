@@ -3,6 +3,7 @@ package ophelia.collections.set.bounded;
 import com.fasterxml.jackson.annotation.JsonValue;
 import ophelia.collections.iterator.StandardIterator;
 import ophelia.collections.set.HashSet;
+import ophelia.collections.set.IntegerFiniteSet;
 import ophelia.collections.set.ModifiableSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +20,7 @@ import java.util.stream.Stream;
  * third non-null element is attempted to be added, a {@link BoundedSetOverflowException} will be thrown.
  * @param <E> the elements of the set
  */
-public class BoundedPair<E> implements ModifiableSet<E, StandardIterator<E>>, Set<E> {
+public class BoundedPair<E> implements ModifiableSet<E>, IntegerFiniteSet<E, StandardIterator<E>>, Set<E> {
 
 	@Nullable
 	private E first = null;

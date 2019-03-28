@@ -1,6 +1,7 @@
 package ophelia.collections.set;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import ophelia.collections.IntegerFiniteCollection;
 import ophelia.collections.iterator.UnmodifiableIterator;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +13,7 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.singleton;
 
-public final class Singleton<E> implements BaseSet<E, UnmodifiableIterator<E>> {
+public final class Singleton<E> implements BaseSet<E>, IntegerFiniteSet<E, UnmodifiableIterator<E>> {
 
 	private final E element;
 	private final Set<E> set;

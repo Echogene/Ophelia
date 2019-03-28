@@ -9,9 +9,9 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public final class EmptySet<E> implements BaseSet<E, EmptySet.EmptyIterator<E>> {
+public final class EmptySet<E> implements BaseSet<E>, IntegerFiniteSet<E, EmptySet.EmptyIterator<E>> {
 
-	public static final EmptySet EMPTY_SET = new EmptySet();
+	private static final EmptySet EMPTY_SET = new EmptySet();
 
 	public static <E> EmptySet<E> emptySet() {
 		//noinspection unchecked
@@ -70,7 +70,7 @@ public final class EmptySet<E> implements BaseSet<E, EmptySet.EmptyIterator<E>> 
 
 	@Override
 	public Stream<E> stream() {
-		return Collections.<E>emptySet().stream();
+		return Stream.empty();
 	}
 
 	@Override
