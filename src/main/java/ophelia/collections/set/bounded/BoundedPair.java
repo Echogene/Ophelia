@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -133,12 +134,26 @@ public class BoundedPair<E> implements ModifiableSet<E>, IntegerFiniteSet<E, Sta
 
 	@Override
 	public boolean addAll(@NotNull Collection<? extends E> c) {
-		return c.stream().anyMatch(this::add);
+		boolean modified = false;
+		for (E e : c) {
+			if (add(e)) {
+				modified = true;
+			}
+		}
+		return modified;
 	}
 
 	@Override
 	public boolean removeAll(@NotNull Collection<?> c) {
-		return c.stream().anyMatch(this::remove);
+		boolean modified = false;
+		Iterator<?> it = iterator();
+		while (it.hasNext()) {
+			if (c.contains(it.next())) {
+				it.remove();
+				modified = true;
+			}
+		}
+		return modified;
 	}
 
 	@Override
